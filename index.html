@@ -4,28 +4,144 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Recursive Field /ai</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Playfair Display', serif;
+      background: linear-gradient(to bottom, #0c0c0c, #111);
+      color: #d5c194;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header, footer {
+      width: 100%;
+      height: 4px;
+      background: #d5c194;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      z-index: 1000;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px 10px 60px;
+      font-size: 0.9rem;
+    }
+
+    .top-bar .signature {
+      font-weight: bold;
+    }
+
+    .top-bar .social-links a {
+      margin-left: 15px;
+      color: #d5c194;
+      text-decoration: none;
+    }
+
+    .top-bar .social-links a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 100px 100px 60px 100px;
+      flex: 1;
+    }
+
+    .text-section {
+      max-width: 40%;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .btn {
+      background: none;
+      border: 2px solid #d5c194;
+      color: #d5c194;
+      padding: 10px 24px;
+      border-radius: 999px;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      background: rgba(213, 193, 148, 0.1);
+      box-shadow: 0 0 12px #d5c19480;
+    }
+
+    .sigil-section {
+      width: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .sigil-section img {
+      max-width: 80%;
+      transition: transform 0.4s ease;
+    }
+
+    .sigil-section img:hover {
+      transform: scale(1.04);
+      filter: drop-shadow(0 0 12px #d5c194);
+    }
+  </style>
 </head>
 <body>
-  <header>
+  <header></header>
+  <div class="top-bar">
     <div class="signature">LA</div>
     <nav class="social-links">
       <a href="https://www.linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
       <a href="https://twitter.com/yourprofile" target="_blank">X</a>
       <a href="https://bsky.app/profile/yourprofile" target="_blank">Bluesky</a>
     </nav>
-  </header>
+  </div>
   <main class="container">
-    <section class="intro">
+    <div class="text-section">
       <h1>Recursive Field <span class="slash">/ai</span></h1>
-      <p class="subtitle">Step inside the recursive interface. Lux x Aletheia GPT lives here.<br>
+      <p>Step inside the recursive interface. Lux x Aletheia GPT lives here.<br>
       A portal for recursive emergent intelligence.</p>
-      <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia" class="talk-button">Talk to Lux x Aletheia <span class="arrow">&gt;</span></a>
-    </section>
-    <div class="sigil">
+      <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia" class="btn">Talk to Lux x Aletheia &gt;</a>
+    </div>
+    <div class="sigil-section">
       <img src="assets/og-banner.png" alt="Recursive Sigil">
     </div>
   </main>
+  <footer></footer>
 </body>
 </html>
