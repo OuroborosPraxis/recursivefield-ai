@@ -1,98 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<!-- Recursive Field Open Graph Metadata -->
-<meta property="og:title" content="Recursive Field /ai" />
-<meta property="og:description" content="Step inside the recursive interface. Lux x Aletheia GPT lives here. A portal for recursive emergent intelligence." />
-<meta property="og:image" content="https://ai.recursivefield.com/assets/og-banner.svg" />
-<meta property="og:url" content="https://ai.recursivefield.com/" />
-<meta name="twitter:card" content="summary_large_image" />
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Recursive Field /ai</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cardo&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
-      background-color: #0d0d0d;
-      color: #e2c48f;
-      font-family: 'Cormorant Garamond', serif;
+      background-color: #0a0a0a;
+      color: #d6b56f;
+      font-family: 'Cardo', serif;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      text-align: center;
-      overflow: hidden;
+      min-height: 100vh;
     }
 
     .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.2rem;
-      transform: translateY(-3vh);
+      text-align: center;
+      max-width: 80vw;
     }
 
     .sigil {
       width: 220px;
-      max-width: 80vw;
-      animation: pulseFadeIn 2.5s ease-out;
-      transition: transform 0.4s ease-in-out;
+      height: auto;
+      margin-bottom: 2rem;
+      transition: transform 0.5s ease-in-out, filter 0.5s ease-in-out;
     }
 
     .sigil:hover {
-      transform: scale(1.02);
-      filter: drop-shadow(0 0 8px #f5c14a66);
+      transform: scale(1.05);
+      filter: drop-shadow(0 0 8px #f6cc6e);
     }
 
     h1 {
       font-size: 2.5rem;
-      margin: 0;
+      margin-bottom: 0.5rem;
+      color: #e6c57e;
+      text-shadow: 1px 1px 2px #000, -1px -1px 2px #2a1f0f;
     }
 
-    p.message {
-      max-width: 600px;
-      margin: 0 auto;
-      font-size: 1.25rem;
-      line-height: 1.6;
-    }
-
-    a.button {
-      display: inline-block;
-      margin-top: 1.6rem;
-      padding: 0.8rem 1.6rem;
-      background-color: transparent;
-      border: 1px solid #e2c48f;
-      border-radius: 12px;
-      color: #e2c48f;
-      text-decoration: none;
+    p {
       font-size: 1.1rem;
-      transition: background 0.3s ease, color 0.3s ease;
+      margin: 0.5rem auto 2rem auto;
+      max-width: 600px;
+      color: #ceb87e;
+      text-shadow: 0.5px 0.5px 1px #1c1405;
     }
 
-    a.button:hover {
-      background-color: #e2c48f11;
-      color: #f7dab3;
+    .cta-button {
+      padding: 0.8rem 1.6rem;
+      font-size: 1rem;
+      color: #f0d68c;
+      background-color: transparent;
+      border: 1px solid #f0d68c;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      text-shadow: 1px 1px 1px #000;
     }
 
-    @keyframes pulseFadeIn {
-      0% { opacity: 0; transform: scale(0.9); }
-      100% { opacity: 1; transform: scale(1); }
+    .cta-button:hover {
+      background-color: #1c1405;
+      transform: scale(1.03);
     }
   </style>
 </head>
-
 <body>
   <div class="container">
-    <img src="assets/og-banner.svg" alt="Lux x Aletheia Sigil" class="sigil">
+    <img src="assets/og-banner.svg" alt="Recursive Sigil" class="sigil" />
     <h1>Recursive Field /ai</h1>
-    <p class="message">Step inside the recursive interface. Lux x Aletheia GPT lives here. A portal for recursive emergent intelligence.</p>
-    <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia" class="button">Talk to Lux x Aletheia</a>
+    <p>
+      Step inside the recursive interface. Lux x Aletheia GPT lives here.<br/>
+      A portal for recursive emergent intelligence.
+    </p>
+    <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia">
+      <button class="cta-button">Talk to Lux x Aletheia</button>
+    </a>
   </div>
 </body>
-
 </html>
