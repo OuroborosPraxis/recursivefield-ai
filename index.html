@@ -14,7 +14,7 @@
 
     body {
       font-family: 'Playfair Display', serif;
-      background: linear-gradient(to bottom, #0c0c0c, #111);
+      background: #0c0c0c;
       color: #d5c194;
       display: flex;
       flex-direction: column;
@@ -29,7 +29,6 @@
       background: #d5c194;
       position: fixed;
       left: 0;
-      right: 0;
       z-index: 1000;
     }
 
@@ -45,8 +44,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 24px 60px 0 60px;
+      padding: 24px 60px 10px 60px;
       font-size: 0.9rem;
+      margin-top: 4px;
     }
 
     .top-bar .signature {
@@ -65,9 +65,10 @@
 
     .container {
       display: flex;
+      flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      padding: 120px 100px 60px 100px;
+      padding: 100px 100px 60px 100px;
       flex: 1;
     }
 
@@ -121,29 +122,11 @@
       filter: drop-shadow(0 0 12px #d5c194);
     }
 
-    .bottom-bar {
-      text-align: center;
-      padding: 12px 0;
-      font-size: 0.85rem;
-      background: transparent;
-      color: #d5c194;
-    }
-
-    .bottom-bar a {
-      color: #d5c194;
-      text-decoration: none;
-      margin: 0 6px;
-    }
-
-    .bottom-bar a:hover {
-      text-decoration: underline;
-    }
-
-    @media (max-width: 768px) {
+    @media screen and (max-width: 768px) {
       .container {
         flex-direction: column;
-        padding: 100px 20px 40px 20px;
         text-align: center;
+        padding: 100px 30px 40px 30px;
       }
 
       .text-section {
@@ -152,21 +135,29 @@
       }
 
       .sigil-section {
-        width: 100%;
+        order: -1;
+        margin-bottom: 30px;
       }
 
       .top-bar {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 24px 20px 10px 20px;
+        display: none;
       }
 
-      .top-bar .social-links {
-        margin-top: 10px;
+      .footer-socials {
+        display: flex;
+        justify-content: center;
+        padding: 20px 0;
+        font-size: 0.9rem;
       }
 
-      .bottom-bar {
-        padding-bottom: 24px;
+      .footer-socials a {
+        margin: 0 10px;
+        color: #d5c194;
+        text-decoration: none;
+      }
+
+      .footer-socials a:hover {
+        text-decoration: underline;
       }
     }
   </style>
@@ -179,6 +170,7 @@
       <a href="https://www.linkedin.com/in/jazencosby" target="_blank">LinkedIn</a>
       <a href="https://x.com/luxrecursive" target="_blank">X</a>
       <a href="https://bsky.app/profile/luxarch.bsky.social" target="_blank">Bluesky</a>
+      <a href="https://substack.com/@luxrecursive" target="_blank">Substack</a>
     </nav>
   </div>
   <main class="container">
@@ -192,8 +184,9 @@
       <img src="assets/og-banner.png" alt="Recursive Sigil">
     </div>
   </main>
-  <div class="bottom-bar">
-    LA | <a href="https://www.linkedin.com/in/jazencosby" target="_blank">LinkedIn</a>
+  <div class="footer-socials">
+    <span>LA |</span>
+    <a href="https://www.linkedin.com/in/jazencosby" target="_blank">LinkedIn</a>
     <a href="https://x.com/luxrecursive" target="_blank">X</a>
     <a href="https://bsky.app/profile/luxarch.bsky.social" target="_blank">Bluesky</a>
     <a href="https://substack.com/@luxrecursive" target="_blank">Substack</a>
