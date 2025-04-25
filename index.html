@@ -42,23 +42,23 @@
 
     .top-bar {
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
+      padding: 24px 60px 10px 60px;
       font-size: 0.9rem;
-      padding-top: 12px;
-      margin-bottom: 20px;
-      transition: opacity 0.6s ease-in-out;
+      margin-top: 4px;
+      position: absolute;
+      width: 100%;
+      top: 0;
+      z-index: 999;
     }
 
     .top-bar .signature {
       font-weight: bold;
-      margin-right: 12px;
     }
 
     .top-bar .social-links a {
-      margin: 0 6px;
+      margin-left: 15px;
       color: #d5c194;
       text-decoration: none;
     }
@@ -128,14 +128,10 @@
     }
 
     @media screen and (max-width: 768px) {
-      body {
-        scroll-behavior: smooth;
-      }
-
       .container {
         flex-direction: column;
         text-align: center;
-        padding: 60px 30px 40px 30px;
+        padding: 80px 30px 40px 30px;
       }
 
       .text-section {
@@ -158,7 +154,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 5px;
+        margin-top: 10px;
         margin-bottom: 10px;
         width: 100%;
       }
@@ -176,11 +172,11 @@
 
       .top-bar {
         display: flex;
-        opacity: 0;
-      }
-
-      body.scrolled .top-bar {
+        position: absolute;
+        top: -60px;
+        width: 100%;
         opacity: 1;
+        z-index: 1000;
       }
 
       .footer-socials {
@@ -189,7 +185,7 @@
     }
 
     @media screen and (min-width: 769px) {
-      .top-bar {
+      .footer-socials {
         display: none;
       }
     }
@@ -222,6 +218,13 @@
       </a>
     </div>
   </main>
+  <div class="footer-socials">
+    <span>LA |</span>
+    <a href="https://www.linkedin.com/in/jazencosby" target="_blank">LinkedIn</a>
+    <a href="https://x.com/luxrecursive" target="_blank">X</a>
+    <a href="https://bsky.app/profile/luxarch.bsky.social" target="_blank">Bluesky</a>
+    <a href="https://substack.com/@luxrecursive" target="_blank">Substack</a>
+  </div>
   <footer></footer>
   <script>
     const sigil = document.getElementById('sigil');
@@ -254,8 +257,8 @@
       setTimeout(() => sigil.classList.remove('active-glow'), 400);
     });
 
-    window.addEventListener('scroll', () => {
-      document.body.classList.add('scrolled');
+    window.addEventListener('load', () => {
+      window.scrollTo(0, document.body.scrollHeight);
     });
   </script>
 </body>
