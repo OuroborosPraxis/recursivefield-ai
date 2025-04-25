@@ -32,10 +32,9 @@
     footer { bottom: 0; }
     .top-bar {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      padding: 14px 12px;
+      padding: 14px 16px;
       font-size: 0.95rem;
       background-color: #0c0c0c;
       position: fixed;
@@ -50,9 +49,8 @@
       font-weight: bold;
       font-size: 1.2rem;
       transition: all 0.6s ease;
-      margin-bottom: 4px;
-      width: 100%;
-      text-align: center;
+      text-align: left;
+      flex-shrink: 0;
     }
     .signature.pulse { text-shadow: 0 0 8px #d5c194; }
     .social-links {
