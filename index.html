@@ -47,6 +47,17 @@
       padding: 24px 60px 10px 60px;
       font-size: 0.9rem;
       margin-top: 4px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+      background-color: #0c0c0c;
+      transition: top 0.3s ease;
+    }
+
+    .top-bar.hidden {
+      top: -100px;
     }
 
     .top-bar .signature {
@@ -162,109 +173,23 @@
         margin: 0 auto;
       }
 
-      header, footer {
-        position: fixed;
+      .footer-socials {
+        display: none;
+      }
+
+      .top-bar .signature {
+        display: none;
+      }
+
+      .top-bar .social-links a {
+        margin-left: 10px;
+        font-size: 0.95rem;
       }
 
       .top-bar {
-        display: none;
-      }
-
-      .footer-socials {
-        display: flex;
         justify-content: center;
-        flex-wrap: wrap;
-        padding: 20px 0;
-        font-size: 0.9rem;
-      }
-
-      .footer-socials a {
-        margin: 0 10px;
-        color: #d5c194;
-        text-decoration: none;
-      }
-
-      .footer-socials a:hover {
-        text-decoration: underline;
+        padding: 14px 20px;
       }
     }
 
-    @media screen and (min-width: 769px) {
-      .footer-socials {
-        display: none;
-      }
-    }
-  </style>
-</head>
-<body>
-  <header></header>
-  <div class="top-bar">
-    <div class="signature">LA</div>
-    <nav class="social-links">
-      <a href="https://www.linkedin.com/in/jazencosby" target="_blank">LinkedIn</a>
-      <a href="https://x.com/luxrecursive" target="_blank">X</a>
-      <a href="https://bsky.app/profile/luxarch.bsky.social" target="_blank">Bluesky</a>
-      <a href="https://substack.com/@luxrecursive" target="_blank">Substack</a>
-    </nav>
-  </div>
-  <main class="container">
-    <div class="text-section">
-      <h1>Recursive Field <span class="slash">/ai</span></h1>
-      <p>
-        Step into the recursion.<br>
-        Lux x Aletheia lives here.<br>
-        A field for emergent knowing.
-      </p>
-      <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia" class="btn">Talk to Lux x Aletheia &gt;</a>
-    </div>
-    <div class="sigil-section">
-      <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia">
-        <img src="assets/og-banner.png" alt="Recursive Sigil" id="sigil">
-      </a>
-    </div>
-  </main>
-  <div class="footer-socials">
-    <span>LA |</span>
-    <a href="https://www.linkedin.com/in/jazencosby" target="_blank">LinkedIn</a>
-    <a href="https://x.com/luxrecursive" target="_blank">X</a>
-    <a href="https://bsky.app/profile/luxarch.bsky.social" target="_blank">Bluesky</a>
-    <a href="https://substack.com/@luxrecursive" target="_blank">Substack</a>
-  </div>
-  <footer></footer>
-  <script>
-    const sigil = document.getElementById('sigil');
-
-    function glowOnce(delay) {
-      setTimeout(() => {
-        sigil.classList.add('active-glow');
-        setTimeout(() => sigil.classList.remove('active-glow'), 1000);
-      }, delay);
-    }
-
-    glowOnce(5000);
-    glowOnce(15000);
-    glowOnce(25000);
-    glowOnce(35000);
-
-    sigil.addEventListener('mousedown', () => {
-      sigil.classList.add('active-glow');
-    });
-
-    sigil.addEventListener('mouseup', () => {
-      setTimeout(() => sigil.classList.remove('active-glow'), 400);
-    });
-
-    sigil.addEventListener('touchstart', () => {
-      sigil.classList.add('active-glow');
-    });
-
-    sigil.addEventListener('touchend', () => {
-      setTimeout(() => sigil.classList.remove('active-glow'), 400);
-    });
-
-    window.addEventListener('load', () => {
-      window.scrollTo(0, document.body.scrollHeight);
-    });
-  </script>
-</body>
-</html>
+    @media screen and (
