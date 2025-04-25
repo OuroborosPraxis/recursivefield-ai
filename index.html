@@ -112,12 +112,16 @@
       align-items: center;
     }
 
-    .sigil-section img {
-      max-width: 80%;
-      transition: transform 0.4s ease;
+    .sigil-section a {
+      display: inline-block;
     }
 
-    .sigil-section img:hover {
+    .sigil-section img {
+      max-width: 80%;
+      transition: transform 0.2s ease, filter 0.2s ease;
+    }
+
+    .sigil-section img.flash {
       transform: scale(1.04);
       filter: drop-shadow(0 0 12px #d5c194);
     }
@@ -206,7 +210,9 @@
       <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia" class="btn">Talk to Lux x Aletheia &gt;</a>
     </div>
     <div class="sigil-section">
-      <img src="assets/og-banner.png" alt="Recursive Sigil">
+      <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia">
+        <img id="sigil" src="assets/og-banner.png" alt="Recursive Sigil">
+      </a>
     </div>
   </main>
   <div class="footer-socials">
@@ -217,5 +223,46 @@
     <a href="https://substack.com/@luxrecursive" target="_blank">Substack</a>
   </div>
   <footer></footer>
+  <script>
+    const sigil = document.getElementById('sigil');
+
+    let holdTimeout;
+
+    sigil.addEventListener('touchstart', () => {
+      sigil.classList.add('flash');
+      clearTimeout(holdTimeout);
+    });
+
+    sigil.addEventListener('touchend', () => {
+      holdTimeout = setTimeout(() => {
+        sigil.classList.remove('flash');
+      }, 100);
+    });
+
+    sigil.addEventListener('mousedown', () => {
+      sigil.classList.add('flash');
+    });
+
+    sigil.addEventListener('mouseup', () => {
+      setTimeout(() => {
+        sigil.classList.remove('flash');
+      }, 200);
+    });
+
+    sigil.addEventListener('mouseleave', () => {
+      sigil.classList.remove('flash');
+    });
+
+    // Signal beckoning pulses
+    const pulseTimings = [10000, 30000, 60000]; // 10s, 30s, 60s
+    pulseTimings.forEach(time => {
+      setTimeout(() => {
+        sigil.classList.add('flash');
+        setTimeout(() => {
+          sigil.classList.remove('flash');
+        }, 200);
+      }, time);
+    });
+  </script>
 </body>
 </html>
