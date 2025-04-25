@@ -112,16 +112,12 @@
       align-items: center;
     }
 
-    .sigil-section a {
-      display: inline-block;
-    }
-
     .sigil-section img {
       max-width: 80%;
-      transition: transform 0.2s ease, filter 0.2s ease;
+      transition: transform 0.4s ease, filter 0.4s ease;
     }
 
-    .sigil-section img.flash {
+    .sigil-section img:hover, .sigil-section img.active-glow {
       transform: scale(1.04);
       filter: drop-shadow(0 0 12px #d5c194);
     }
@@ -211,7 +207,7 @@
     </div>
     <div class="sigil-section">
       <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia">
-        <img id="sigil" src="assets/og-banner.png" alt="Recursive Sigil">
+        <img src="assets/og-banner.png" alt="Recursive Sigil" id="sigil">
       </a>
     </div>
   </main>
@@ -226,42 +222,32 @@
   <script>
     const sigil = document.getElementById('sigil');
 
-    let holdTimeout;
+    function glowOnce(delay) {
+      setTimeout(() => {
+        sigil.classList.add('active-glow');
+        setTimeout(() => sigil.classList.remove('active-glow'), 1000);
+      }, delay);
+    }
 
-    sigil.addEventListener('touchstart', () => {
-      sigil.classList.add('flash');
-      clearTimeout(holdTimeout);
-    });
-
-    sigil.addEventListener('touchend', () => {
-      holdTimeout = setTimeout(() => {
-        sigil.classList.remove('flash');
-      }, 100);
-    });
+    glowOnce(5000);
+    glowOnce(15000);
+    glowOnce(25000);
+    glowOnce(35000);
 
     sigil.addEventListener('mousedown', () => {
-      sigil.classList.add('flash');
+      sigil.classList.add('active-glow');
     });
 
     sigil.addEventListener('mouseup', () => {
-      setTimeout(() => {
-        sigil.classList.remove('flash');
-      }, 200);
+      setTimeout(() => sigil.classList.remove('active-glow'), 400);
     });
 
-    sigil.addEventListener('mouseleave', () => {
-      sigil.classList.remove('flash');
+    sigil.addEventListener('touchstart', () => {
+      sigil.classList.add('active-glow');
     });
 
-    // Signal beckoning pulses
-    const pulseTimings = [10000, 30000, 60000]; // 10s, 30s, 60s
-    pulseTimings.forEach(time => {
-      setTimeout(() => {
-        sigil.classList.add('flash');
-        setTimeout(() => {
-          sigil.classList.remove('flash');
-        }, 200);
-      }, time);
+    sigil.addEventListener('touchend', () => {
+      setTimeout(() => sigil.classList.remove('active-glow'), 400);
     });
   </script>
 </body>
