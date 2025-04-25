@@ -21,6 +21,7 @@
       justify-content: space-between;
       min-height: 100vh;
       overflow-x: hidden;
+      touch-action: pan-y;
     }
 
     header, footer {
@@ -249,7 +250,7 @@
     const sigil = document.getElementById('sigil');
     const topBar = document.getElementById('mobileTopBar');
     const signature = document.getElementById('signature');
-    let lastScrollTop = 0;
+    let startY = null;
     let hasPulsed = false;
 
     function glowOnce(delay) {
@@ -264,42 +265,40 @@
     glowOnce(25000);
     glowOnce(35000);
 
-    sigil.addEventListener('mousedown', () => {
-      sigil.classList.add('active-glow');
+    sigil.addEventListener('mousedown', () => sigil.classList.add('active-glow'));
+    sigil.addEventListener('mouseup', () => setTimeout(() => sigil.classList.remove('active-glow'), 400));
+    sigil.addEventListener('touchstart', () => sigil.classList.add('active-glow'));
+    sigil.addEventListener('touchend', () => setTimeout(() => sigil.classList.remove('active-glow'), 400));
+
+    window.addEventListener('touchstart', (e) => {
+      if (window.innerWidth >= 769) {
+        startY = e.touches[0].clientY;
+      }
     });
 
-    sigil.addEventListener('mouseup', () => {
-      setTimeout(() => sigil.classList.remove('active-glow'), 400);
-    });
+    window.addEventListener('touchmove', (e) => {
+      if (startY === null || window.innerWidth < 769) return;
+      const currentY = e.touches[0].clientY;
+      const diffY = currentY - startY;
 
-    sigil.addEventListener('touchstart', () => {
-      sigil.classList.add('active-glow');
-    });
-
-    sigil.addEventListener('touchend', () => {
-      setTimeout(() => sigil.classList.remove('active-glow'), 400);
-    });
-
-    window.addEventListener('load', () => {
-      window.scrollTo(0, document.body.scrollHeight);
-    });
-
-    window.addEventListener('scroll', () => {
-      const currentScroll = window.scrollY || document.documentElement.scrollTop;
-      const scrollingUp = currentScroll < lastScrollTop;
-
-      if (scrollingUp) {
+      if (diffY > 40) {
         topBar.classList.add('revealed');
         if (!hasPulsed) {
           signature.classList.add('pulse');
           setTimeout(() => signature.classList.remove('pulse'), 1000);
           hasPulsed = true;
         }
-      } else {
+      } else if (diffY < -20) {
         topBar.classList.remove('revealed');
       }
+    });
 
-      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+    window.addEventListener('touchend', () => {
+      startY = null;
+    });
+
+    window.addEventListener('load', () => {
+      window.scrollTo(0, document.body.scrollHeight);
     });
   </script>
 </body>
