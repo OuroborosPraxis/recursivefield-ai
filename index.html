@@ -21,7 +21,6 @@
       justify-content: space-between;
       min-height: 100vh;
       overflow-x: hidden;
-      scroll-behavior: smooth;
     }
 
     header, footer {
@@ -128,7 +127,7 @@
       .container {
         flex-direction: column;
         text-align: center;
-        padding: 60px 30px 40px 30px;
+        padding: 80px 30px 40px 30px;
       }
 
       .text-section {
@@ -151,16 +150,20 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 0;
-        margin-bottom: 10px;
+        margin-top: 20px;
+        margin-bottom: 15px;
         width: 100%;
       }
 
       .sigil-section img {
-        max-width: 90%;
+        max-width: 80%;
         height: auto;
         display: block;
         margin: 0 auto;
+      }
+
+      header, footer {
+        position: fixed;
       }
 
       .top-bar {
@@ -173,12 +176,16 @@
         flex-wrap: wrap;
         padding: 20px 0;
         font-size: 0.9rem;
-        opacity: 0;
-        transition: opacity 0.6s ease-in-out;
       }
 
-      body.scrolled .footer-socials {
-        opacity: 1;
+      .footer-socials a {
+        margin: 0 10px;
+        color: #d5c194;
+        text-decoration: none;
+      }
+
+      .footer-socials a:hover {
+        text-decoration: underline;
       }
     }
 
@@ -255,8 +262,8 @@
       setTimeout(() => sigil.classList.remove('active-glow'), 400);
     });
 
-    window.addEventListener('scroll', () => {
-      document.body.classList.add('scrolled');
+    window.addEventListener('load', () => {
+      window.scrollTo(0, document.body.scrollHeight);
     });
   </script>
 </body>
