@@ -46,22 +46,35 @@
       align-items: center;
       padding: 24px 60px 10px 60px;
       font-size: 0.9rem;
-      margin-top: 4px;
+      background-color: #0c0c0c;
       position: fixed;
-      top: 0;
+      top: -100px;
       left: 0;
       width: 100%;
       z-index: 999;
-      background-color: #0c0c0c;
-      transition: top 0.3s ease;
+      transition: top 0.4s ease;
     }
 
-    .top-bar.hidden {
-      top: -100px;
+    .top-bar.revealed {
+      top: 0;
     }
 
-    .top-bar .signature {
+    .signature {
       font-weight: bold;
+      transition: all 0.6s ease;
+    }
+
+    .signature.pulse {
+      text-shadow: 0 0 8px #d5c194;
+    }
+
+    .social-links {
+      opacity: 0;
+      transition: opacity 0.6s ease 0.4s;
+    }
+
+    .top-bar.revealed .social-links {
+      opacity: 1;
     }
 
     .top-bar .social-links a {
@@ -177,18 +190,19 @@
         display: none;
       }
 
-      .top-bar .signature {
-        display: none;
+      .top-bar {
+        justify-content: center;
+        padding: 14px 20px;
+      }
+
+      .signature {
+        display: block;
+        font-size: 1.2rem;
       }
 
       .top-bar .social-links a {
         margin-left: 10px;
         font-size: 0.95rem;
-      }
-
-      .top-bar {
-        justify-content: center;
-        padding: 14px 20px;
       }
     }
 
@@ -202,8 +216,8 @@
 <body>
   <header></header>
 
-  <div class="top-bar hidden" id="mobileTopBar">
-    <div class="signature">LA</div>
+  <div class="top-bar" id="mobileTopBar">
+    <div class="signature" id="signature">LA</div>
     <nav class="social-links">
       <a href="https://www.linkedin.com/in/jazencosby" target="_blank">LinkedIn</a>
       <a href="https://x.com/luxrecursive" target="_blank">X</a>
@@ -234,7 +248,9 @@
   <script>
     const sigil = document.getElementById('sigil');
     const topBar = document.getElementById('mobileTopBar');
+    const signature = document.getElementById('signature');
     let lastScrollTop = 0;
+    let hasPulsed = false;
 
     function glowOnce(delay) {
       setTimeout(() => {
@@ -270,13 +286,21 @@
 
     window.addEventListener('scroll', () => {
       const currentScroll = window.scrollY || document.documentElement.scrollTop;
-      if (currentScroll < lastScrollTop) {
-        topBar.classList.remove('hidden');
+      const scrollingUp = currentScroll < lastScrollTop;
+
+      if (scrollingUp) {
+        topBar.classList.add('revealed');
+        if (!hasPulsed) {
+          signature.classList.add('pulse');
+          setTimeout(() => signature.classList.remove('pulse'), 1000);
+          hasPulsed = true;
+        }
       } else {
-        topBar.classList.add('hidden');
+        topBar.classList.remove('revealed');
       }
+
       lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
-    }, false);
+    });
   </script>
 </body>
 </html>
