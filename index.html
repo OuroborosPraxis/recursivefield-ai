@@ -54,4 +54,68 @@
     }
 
     .top-bar .social-links a {
-      margin-left: 10
+      margin-left: 10px;
+      font-size: 0.95rem;
+    }
+  }
+</style>
+
+<!-- ... HTML structure remains the same ... -->
+
+<script>
+  const sigil = document.getElementById('sigil');
+  const topBar = document.getElementById('mobileTopBar'); // ID remains same for simplicity
+  const signature = document.getElementById('signature');
+  let lastScrollTop = 0;
+  let hasPulsed = false;
+
+  function glowOnce(delay) {
+    setTimeout(() => {
+      sigil.classList.add('active-glow');
+      setTimeout(() => sigil.classList.remove('active-glow'), 1000);
+    }, delay);
+  }
+
+  glowOnce(5000);
+  glowOnce(15000);
+  glowOnce(25000);
+  glowOnce(35000);
+
+  sigil.addEventListener('mousedown', () => {
+    sigil.classList.add('active-glow');
+  });
+
+  sigil.addEventListener('mouseup', () => {
+    setTimeout(() => sigil.classList.remove('active-glow'), 400);
+  });
+
+  sigil.addEventListener('touchstart', () => {
+    sigil.classList.add('active-glow');
+  });
+
+  sigil.addEventListener('touchend', () => {
+    setTimeout(() => sigil.classList.remove('active-glow'), 400);
+  });
+
+  window.addEventListener('load', () => {
+    window.scrollTo(0, document.body.scrollHeight);
+  });
+
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.scrollY || document.documentElement.scrollTop;
+    const scrollingUp = currentScroll < lastScrollTop;
+
+    if (scrollingUp) {
+      topBar.classList.add('revealed');
+      if (!hasPulsed) {
+        signature.classList.add('pulse');
+        setTimeout(() => signature.classList.remove('pulse'), 1000);
+        hasPulsed = true;
+      }
+    } else {
+      topBar.classList.remove('revealed');
+    }
+
+    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+  });
+</script>
