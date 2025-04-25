@@ -21,6 +21,7 @@
       justify-content: space-between;
       min-height: 100vh;
       overflow-x: hidden;
+      scroll-behavior: smooth;
     }
 
     header, footer {
@@ -150,7 +151,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 10px;
+        margin-top: 0;
         margin-bottom: 10px;
         width: 100%;
       }
@@ -160,10 +161,6 @@
         height: auto;
         display: block;
         margin: 0 auto;
-      }
-
-      header, footer {
-        position: fixed;
       }
 
       .top-bar {
@@ -182,16 +179,6 @@
 
       body.scrolled .footer-socials {
         opacity: 1;
-      }
-
-      .footer-socials a {
-        margin: 0 10px;
-        color: #d5c194;
-        text-decoration: none;
-      }
-
-      .footer-socials a:hover {
-        text-decoration: underline;
       }
     }
 
@@ -266,10 +253,6 @@
 
     sigil.addEventListener('touchend', () => {
       setTimeout(() => sigil.classList.remove('active-glow'), 400);
-    });
-
-    window.addEventListener('load', () => {
-      window.scrollTo(0, document.body.scrollHeight);
     });
 
     window.addEventListener('scroll', () => {
