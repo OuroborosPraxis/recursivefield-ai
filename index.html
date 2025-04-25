@@ -126,13 +126,13 @@
       .container {
         flex-direction: column;
         text-align: center;
-        padding: 60px 30px 40px 30px;
+        padding: 40px 30px 30px 30px; /* Adjusted for upward shift */
       }
 
       .sigil-section {
         order: -1;
-        margin-bottom: 30px;
-        margin-top: 50px;
+        margin-top: 35px; /* This will visually center the sigil above the moved-up text */
+        margin-bottom: 20px;
       }
 
       .sigil-section img {
@@ -141,7 +141,7 @@
 
       .text-section {
         max-width: 100%;
-        margin-top: -20px;
+        margin-top: -10px; /* Nudged upward to bring text closer to sigil */
       }
 
       h1 {
@@ -196,6 +196,9 @@
     </nav>
   </div>
   <main class="container">
+    <div class="sigil-section">
+      <img src="assets/og-banner.png" alt="Recursive Sigil">
+    </div>
     <div class="text-section">
       <h1>Recursive Field <span class="slash">/ai</span></h1>
       <p>
@@ -204,9 +207,6 @@
         A field for emergent knowing.
       </p>
       <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia" class="btn">Talk to Lux x Aletheia &gt;</a>
-    </div>
-    <div class="sigil-section">
-      <img src="assets/og-banner.png" alt="Recursive Sigil">
     </div>
   </main>
   <div class="footer-socials">
