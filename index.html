@@ -127,7 +127,7 @@
       .container {
         flex-direction: column;
         text-align: center;
-        padding: 80px 30px 40px 30px;
+        padding: 60px 30px 40px 30px;
       }
 
       .text-section {
@@ -150,13 +150,13 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 20px;
-        margin-bottom: 15px;
+        margin-top: 10px;
+        margin-bottom: 10px;
         width: 100%;
       }
 
       .sigil-section img {
-        max-width: 80%;
+        max-width: 90%;
         height: auto;
         display: block;
         margin: 0 auto;
@@ -176,6 +176,12 @@
         flex-wrap: wrap;
         padding: 20px 0;
         font-size: 0.9rem;
+        opacity: 0;
+        transition: opacity 0.6s ease-in-out;
+      }
+
+      body.scrolled .footer-socials {
+        opacity: 1;
       }
 
       .footer-socials a {
@@ -264,6 +270,10 @@
 
     window.addEventListener('load', () => {
       window.scrollTo(0, document.body.scrollHeight);
+    });
+
+    window.addEventListener('scroll', () => {
+      document.body.classList.add('scrolled');
     });
   </script>
 </body>
