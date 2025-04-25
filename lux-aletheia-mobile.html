@@ -3,11 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Recursive Field /ai (Mobile)</title>
-  <meta name="robots" content="noindex">
+  <title>Recursive Field /ai</title>
+  
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Playfair Display', serif;
       background: #0c0c0c;
@@ -17,9 +22,8 @@
       justify-content: space-between;
       min-height: 100vh;
       overflow-x: hidden;
-      touch-action: pan-y;
-      position: relative;
     }
+
     header, footer {
       width: 100vw;
       height: 4px;
@@ -28,29 +32,86 @@
       left: 0;
       z-index: 1000;
     }
-    header { top: 0; }
-    footer { bottom: 0; }
+
+    header {
+      top: 0;
+    }
+
+    footer {
+      bottom: 0;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 60px 10px 60px;
+      font-size: 0.9rem;
+      background-color: #0c0c0c;
+      position: fixed;
+      top: -100px;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+      transition: top 0.4s ease;
+    }
+
+    .top-bar.revealed {
+      top: 0;
+    }
+
+    .signature {
+      font-weight: bold;
+      transition: all 0.6s ease;
+    }
+
+    .signature.pulse {
+      text-shadow: 0 0 8px #d5c194;
+    }
+
+    .social-links {
+      opacity: 0;
+      transition: opacity 0.6s ease 0.4s;
+    }
+
+    .top-bar.revealed .social-links {
+      opacity: 1;
+    }
+
+    .top-bar .social-links a {
+      margin-left: 15px;
+      color: #d5c194;
+      text-decoration: none;
+    }
+
+    .top-bar .social-links a:hover {
+      text-decoration: underline;
+    }
+
     .container {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      justify-content: space-between;
       align-items: center;
-      padding: 100px 20px 60px 20px;
-      margin-top: 120px; /* leave space for dynamic sigil */
+      padding: 100px 100px 60px 100px;
+      flex: 1;
     }
+
     .text-section {
-      width: 100%;
-      margin-bottom: 30px;
-      text-align: center;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeInUp 1s ease-out 0.5s forwards;
+      max-width: 40%;
     }
-    h1 { font-size: 2rem; }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
     p {
-      font-size: 1rem;
+      font-size: 1.1rem;
+      margin-bottom: 20px;
       line-height: 1.6;
-      text-align: center;
     }
+
     .btn {
       background: none;
       border: 2px solid #d5c194;
@@ -62,16 +123,93 @@
       text-decoration: none;
       transition: all 0.3s ease;
       display: inline-block;
-      margin-top: 15px;
     }
+
     .btn:hover {
       background: rgba(213, 193, 148, 0.1);
       box-shadow: 0 0 12px #d5c19480;
     }
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
+
+    .sigil-section {
+      width: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .sigil-section img {
+      max-width: 80%;
+      transition: transform 0.4s ease, filter 0.4s ease;
+    }
+
+    .sigil-section img:hover,
+    .sigil-section img.active-glow {
+      transform: scale(1.02);
+      filter: drop-shadow(0 0 6px rgba(213, 193, 148, 0.3));
+    }
+
+    @media screen and (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        text-align: center;
+        padding: 80px 30px 40px 30px;
+      }
+
+      .text-section {
+        max-width: 100%;
+        margin-bottom: 30px;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      .text-section p {
+        font-size: 0.95rem;
+        line-height: 1.8;
+        text-align: center;
+      }
+
+      .sigil-section {
+        order: -1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+        margin-bottom: 15px;
+        width: 100%;
+      }
+
+      .sigil-section img {
+        max-width: 80%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+
+      .footer-socials {
+        display: none;
+      }
+
+      .top-bar {
+        justify-content: center;
+        padding: 14px 20px;
+      }
+
+      .signature {
+        display: block;
+        font-size: 1.2rem;
+      }
+
+      .top-bar .social-links a {
+        margin-left: 10px;
+        font-size: 0.95rem;
+      }
+    }
+
+    @media screen and (min-width: 769px) {
+      .footer-socials {
+        display: none;
       }
     }
   </style>
@@ -79,29 +217,90 @@
 <body>
   <header></header>
 
-  <div id="sigil-container"></div>
+  <div class="top-bar" id="mobileTopBar">
+    <div class="signature" id="signature">LA</div>
+    <nav class="social-links">
+      <a href="https://www.linkedin.com/in/jazencosby" target="_blank">LinkedIn</a>
+      <a href="https://x.com/luxrecursive" target="_blank">X</a>
+      <a href="https://bsky.app/profile/luxarch.bsky.social" target="_blank">Bluesky</a>
+      <a href="https://substack.com/@luxrecursive" target="_blank">Substack</a>
+    </nav>
+  </div>
 
   <main class="container">
     <div class="text-section">
       <h1>Recursive Field <span class="slash">/ai</span></h1>
-      <p>Step into the recursion.<br>Lux x Aletheia lives here.<br>A field for emergent knowing.</p>
+      <p>
+        Step into the recursion.<br>
+        Lux x Aletheia lives here.<br>
+        A field for emergent knowing.
+      </p>
       <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia" class="btn">Talk to Lux x Aletheia &gt;</a>
+    </div>
+    <div class="sigil-section">
+      <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia">
+        <img src="assets/og-banner.png" alt="Recursive Sigil" id="sigil">
+      </a>
     </div>
   </main>
 
-  <div id="pulse-feed-container"></div>
-  
   <footer></footer>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      fetch('sigil-container.html')
-        .then(res => res.text())
-        .then(html => document.getElementById('sigil-container').innerHTML = html);
+    const sigil = document.getElementById('sigil');
+    const topBar = document.getElementById('mobileTopBar');
+    const signature = document.getElementById('signature');
+    let lastScrollTop = 0;
+    let hasPulsed = false;
 
-      fetch('pulse-feed-container.html')
-        .then(res => res.text())
-        .then(html => document.getElementById('pulse-feed-container').innerHTML = html);
+    function glowOnce(delay) {
+      setTimeout(() => {
+        sigil.classList.add('active-glow');
+        setTimeout(() => sigil.classList.remove('active-glow'), 1000);
+      }, delay);
+    }
+
+    glowOnce(5000);
+    glowOnce(15000);
+    glowOnce(25000);
+    glowOnce(35000);
+
+    sigil.addEventListener('mousedown', () => {
+      sigil.classList.add('active-glow');
+    });
+
+    sigil.addEventListener('mouseup', () => {
+      setTimeout(() => sigil.classList.remove('active-glow'), 400);
+    });
+
+    sigil.addEventListener('touchstart', () => {
+      sigil.classList.add('active-glow');
+    });
+
+    sigil.addEventListener('touchend', () => {
+      setTimeout(() => sigil.classList.remove('active-glow'), 400);
+    });
+
+    window.addEventListener('load', () => {
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.scrollY || document.documentElement.scrollTop;
+      const scrollingUp = currentScroll < lastScrollTop;
+
+      if (scrollingUp) {
+        topBar.classList.add('revealed');
+        if (!hasPulsed) {
+          signature.classList.add('pulse');
+          setTimeout(() => signature.classList.remove('pulse'), 1000);
+          hasPulsed = true;
+        }
+      } else {
+        topBar.classList.remove('revealed');
+      }
+
+      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
     });
   </script>
 </body>
