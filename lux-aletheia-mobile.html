@@ -44,6 +44,12 @@
       z-index: 999;
       transition: top 0.3s ease-out;
     }
+    .signature-container {
+      position: absolute;
+      left: 16px;
+      top: 12px;
+      z-index: 1001;
+    }
     .top-bar.revealed { top: 0; }
     .signature {
       font-weight: bold;
@@ -138,7 +144,9 @@
 <body>
   <header></header>
   <div class="top-bar" id="mobileTopBar">
-    <div class="signature" id="signature">LA</div>
+    <div class="signature-container">
+      <div class="signature" id="signature">LA</div>
+    </div>
     <nav class="social-links">
       <a href="https://www.linkedin.com/in/jazencosby" target="_blank">LinkedIn</a>
       <a href="https://x.com/luxrecursive" target="_blank">X</a>
