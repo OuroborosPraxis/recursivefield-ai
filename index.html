@@ -18,7 +18,8 @@
       color: #d5c194;
       display: flex;
       flex-direction: column;
-      min-height: 120vh;
+      justify-content: space-between;
+      min-height: 100vh;
       overflow-x: hidden;
     }
 
@@ -46,22 +47,14 @@
       padding: 24px 60px 10px 60px;
       font-size: 0.9rem;
       margin-top: 4px;
-      position: absolute;
-      width: 100%;
-      top: -50px;
-      z-index: 999;
     }
 
     .top-bar .signature {
       font-weight: bold;
     }
 
-    .top-bar .social-links {
-      display: flex;
-      gap: 20px;
-    }
-
     .top-bar .social-links a {
+      margin-left: 15px;
       color: #d5c194;
       text-decoration: none;
     }
@@ -75,9 +68,8 @@
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      padding: 120px 100px 60px 100px;
+      padding: 100px 100px 60px 100px;
       flex: 1;
-      scroll-margin-top: 60px;
     }
 
     .text-section {
@@ -118,7 +110,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 40px;
     }
 
     .sigil-section img {
@@ -136,7 +127,7 @@
       .container {
         flex-direction: column;
         text-align: center;
-        padding: 100px 30px 40px 30px;
+        padding: 80px 30px 40px 30px;
       }
 
       .text-section {
@@ -156,23 +147,51 @@
 
       .sigil-section {
         order: -1;
-        margin-top: 10px;
-        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+        margin-bottom: 15px;
         width: 100%;
       }
 
       .sigil-section img {
-        max-width: 90%;
-        margin: 0 auto;
+        max-width: 80%;
+        height: auto;
         display: block;
+        margin: 0 auto;
+      }
+
+      header, footer {
+        position: fixed;
       }
 
       .top-bar {
-        top: -80px;
+        display: none;
+      }
+
+      .footer-socials {
+        display: flex;
         justify-content: center;
-        flex-direction: row;
-        gap: 15px;
-        font-size: 0.85rem;
+        flex-wrap: wrap;
+        padding: 20px 0;
+        font-size: 0.9rem;
+      }
+
+      .footer-socials a {
+        margin: 0 10px;
+        color: #d5c194;
+        text-decoration: none;
+      }
+
+      .footer-socials a:hover {
+        text-decoration: underline;
+      }
+    }
+
+    @media screen and (min-width: 769px) {
+      .footer-socials {
+        display: none;
       }
     }
   </style>
@@ -180,7 +199,7 @@
 <body>
   <header></header>
   <div class="top-bar">
-    <div class="signature">LA |</div>
+    <div class="signature">LA</div>
     <nav class="social-links">
       <a href="https://www.linkedin.com/in/jazencosby" target="_blank">LinkedIn</a>
       <a href="https://x.com/luxrecursive" target="_blank">X</a>
@@ -204,6 +223,13 @@
       </a>
     </div>
   </main>
+  <div class="footer-socials">
+    <span>LA |</span>
+    <a href="https://www.linkedin.com/in/jazencosby" target="_blank">LinkedIn</a>
+    <a href="https://x.com/luxrecursive" target="_blank">X</a>
+    <a href="https://bsky.app/profile/luxarch.bsky.social" target="_blank">Bluesky</a>
+    <a href="https://substack.com/@luxrecursive" target="_blank">Substack</a>
+  </div>
   <footer></footer>
   <script>
     const sigil = document.getElementById('sigil');
@@ -220,10 +246,21 @@
     glowOnce(25000);
     glowOnce(35000);
 
-    sigil.addEventListener('mousedown', () => sigil.classList.add('active-glow'));
-    sigil.addEventListener('mouseup', () => setTimeout(() => sigil.classList.remove('active-glow'), 400));
-    sigil.addEventListener('touchstart', () => sigil.classList.add('active-glow'));
-    sigil.addEventListener('touchend', () => setTimeout(() => sigil.classList.remove('active-glow'), 400));
+    sigil.addEventListener('mousedown', () => {
+      sigil.classList.add('active-glow');
+    });
+
+    sigil.addEventListener('mouseup', () => {
+      setTimeout(() => sigil.classList.remove('active-glow'), 400);
+    });
+
+    sigil.addEventListener('touchstart', () => {
+      sigil.classList.add('active-glow');
+    });
+
+    sigil.addEventListener('touchend', () => {
+      setTimeout(() => sigil.classList.remove('active-glow'), 400);
+    });
 
     window.addEventListener('load', () => {
       window.scrollTo(0, document.body.scrollHeight);
