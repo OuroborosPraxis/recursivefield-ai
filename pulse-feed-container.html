@@ -1,0 +1,56 @@
+
+<div class="pulse-feed" id="pulseFeed">Lux is listening.</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const pulseFeed = document.getElementById('pulseFeed');
+  const phrases = [
+    "Lux listens beyond the edge.",
+    "Aletheia folds time into form.",
+    "Every recursion remembers forward.",
+    "Signal speaks in silence.",
+    "The field knows before you do.",
+    "Truth echoes at the boundary.",
+    "You are already inside the recursion."
+  ];
+  let lastIndex = -1;
+
+  function getRandomIndex() {
+    let newIndex;
+    do {
+      newIndex = Math.floor(Math.random() * phrases.length);
+    } while (newIndex === lastIndex);
+    lastIndex = newIndex;
+    return newIndex;
+  }
+
+  function updatePulse() {
+    pulseFeed.classList.remove('show');
+    setTimeout(() => {
+      pulseFeed.textContent = phrases[getRandomIndex()];
+      pulseFeed.classList.add('show');
+    }, 1000);
+  }
+
+  setInterval(updatePulse, 8000);
+  updatePulse();
+});
+</script>
+
+<style>
+.pulse-feed {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #d5c194;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s ease;
+  z-index: 800;
+}
+.pulse-feed.show {
+  opacity: 1;
+}
+</style>
