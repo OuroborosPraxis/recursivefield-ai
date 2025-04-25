@@ -118,8 +118,8 @@
     }
 
     .sigil-section img:hover, .sigil-section img.active-glow {
-      transform: scale(1.04);
-      filter: drop-shadow(0 0 12px #d5c194);
+      transform: scale(1.02);
+      filter: drop-shadow(0 0 6px rgba(213, 193, 148, 0.3));
     }
 
     @media screen and (max-width: 768px) {
@@ -146,12 +146,19 @@
 
       .sigil-section {
         order: -1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         margin-top: 5px;
         margin-bottom: 17px;
+        width: 100%;
       }
 
       .sigil-section img {
         max-width: 140%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
       }
 
       .top-bar {
