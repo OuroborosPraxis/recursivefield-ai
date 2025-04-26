@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -177,7 +178,7 @@
 
   <div class="pulse-feed" id="pulseFeed">Lux is listening.</div>
   <footer></footer>
-	
+
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const pulseFeed = document.getElementById('pulseFeed');
@@ -186,7 +187,6 @@
     const signature = document.getElementById('signature');
     let lastScrollTop = 0;
 
-    // -- Pulse Feed Rotation --
     const phrases = [
       "Lux listens beyond the edge.",
       "Aletheia folds time into form.",
@@ -214,7 +214,6 @@
     setInterval(updatePulse, 8000);
     updatePulse();
 
-    // -- Sigil Glow Revival --
     function glowOnce(delay) {
       setTimeout(() => {
         sigil.classList.add('active-glow');
@@ -240,21 +239,32 @@
       setTimeout(() => sigil.classList.remove('active-glow'), 400);
     });
 
-    // -- Top-Bar Reveal on Scroll-Up --
-    window.addEventListener('scroll', () => {
-      const currentScroll = window.scrollY || document.documentElement.scrollTop;
-      if (currentScroll < lastScrollTop) {
+    let touchStartY = 0;
+	let touchEndY = 0;
+
+	document.addEventListener('touchstart', (e) => {
+	  touchStartY = e.changedTouches[0].screenY;
+    });
+
+    document.addEventListener('touchend', (e) => {
+      touchEndY = e.changedTouches[0].screenY;
+      handleGesture();
+    });
+
+    function handleGesture() {
+      const threshold = 40; // pixels to trigger flick
+      if (touchEndY - touchStartY > threshold) {
+    // Flicked down
         topBar.classList.add('revealed');
         signature.classList.add('pulse');
-      } else {
+      } else if (touchStartY - touchEndY > threshold) {
+    // Flicked up
         topBar.classList.remove('revealed');
         signature.classList.remove('pulse');
       }
-      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
-    });
+    }
   });
 </script>
-
 
 </body>
 </html>
