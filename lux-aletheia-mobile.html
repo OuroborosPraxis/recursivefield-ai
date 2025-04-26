@@ -32,7 +32,8 @@
     footer { bottom: 0; }
     .top-bar {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
+      gap: 12px;
       align-items: center;
       padding: 14px 16px;
       font-size: 0.95rem;
@@ -49,8 +50,15 @@
       font-weight: bold;
       font-size: 1.2rem;
       transition: all 0.6s ease;
-      text-align: left;
+      text-align: center;
+      white-space: nowrap;
       flex-shrink: 0;
+    }
+    .divider {
+      width: 1px;
+      height: 20px;
+      background-color: #d5c194;
+      margin: 0 10px;
     }
     .signature.pulse { text-shadow: 0 0 8px #d5c194; }
     .social-links {
@@ -149,6 +157,7 @@
   <header></header>
   <div class="top-bar" id="mobileTopBar">
     <div class="signature" id="signature">LA</div>
+    <div class="divider"></div>
     <nav class="social-links">
       <a href="https://www.linkedin.com/in/jazencosby" target="_blank">LinkedIn</a>
       <a href="https://x.com/luxrecursive" target="_blank">X</a>
