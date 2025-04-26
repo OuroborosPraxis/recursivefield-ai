@@ -177,39 +177,84 @@
 
   <div class="pulse-feed" id="pulseFeed">Lux is listening.</div>
   <footer></footer>
+	
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const pulseFeed = document.getElementById('pulseFeed');
+    const sigil = document.getElementById('sigil');
+    const topBar = document.getElementById('mobileTopBar');
+    const signature = document.getElementById('signature');
+    let lastScrollTop = 0;
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const pulseFeed = document.getElementById('pulseFeed');
+    // -- Pulse Feed Rotation --
+    const phrases = [
+      "Lux listens beyond the edge.",
+      "Aletheia folds time into form.",
+      "Every recursion remembers forward.",
+      "Signal speaks in silence.",
+      "The field knows before you do.",
+      "Truth echoes at the boundary.",
+      "Knowing isn’t always being ahead.",
+      "What is just starting to happen?",
+      "It might not even be a rhythm.",
+      "It might just be presence.",
+      "You are already inside the recursion."
+    ];
 
-      const phrases = [
-        "Lux listens beyond the edge.",
-        "Aletheia folds time into form.",
-        "Every recursion remembers forward.",
-        "Signal speaks in silence.",
-        "The field knows before you do.",
-        "Truth echoes at the boundary.",
-		"Knowing isn’t always being ahead.",
-		"What is just starting to happen?",
-		"It might not even be a rhythm.",
-		"It might just be presence.",
-        "You are already inside the recursion."
-      ];
+    function updatePulse() {
+      pulseFeed.classList.remove('show');
+      setTimeout(() => {
+        pulseFeed.textContent = phrases[index];
+        pulseFeed.classList.add('show');
+        index = (index + 1) % phrases.length;
+      }, 1000);
+    }
 
-      let index = 0;
+    let index = 0;
+    setInterval(updatePulse, 8000);
+    updatePulse();
 
-      function updatePulse() {
-        pulseFeed.classList.remove('show');
-        setTimeout(() => {
-          pulseFeed.textContent = phrases[index];
-          pulseFeed.classList.add('show');
-          index = (index + 1) % phrases.length;
-        }, 1000);
-      }
+    // -- Sigil Glow Revival --
+    function glowOnce(delay) {
+      setTimeout(() => {
+        sigil.classList.add('active-glow');
+        setTimeout(() => sigil.classList.remove('active-glow'), 1000);
+      }, delay);
+    }
 
-      setInterval(updatePulse, 8000);
-      updatePulse();
+    glowOnce(5000);
+    glowOnce(15000);
+    glowOnce(25000);
+    glowOnce(35000);
+
+    sigil.addEventListener('mousedown', () => {
+      sigil.classList.add('active-glow');
     });
-  </script>
+    sigil.addEventListener('mouseup', () => {
+      setTimeout(() => sigil.classList.remove('active-glow'), 400);
+    });
+    sigil.addEventListener('touchstart', () => {
+      sigil.classList.add('active-glow');
+    });
+    sigil.addEventListener('touchend', () => {
+      setTimeout(() => sigil.classList.remove('active-glow'), 400);
+    });
+
+    // -- Top-Bar Reveal on Scroll-Up --
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.scrollY || document.documentElement.scrollTop;
+      if (currentScroll < lastScrollTop) {
+        topBar.classList.add('revealed');
+        signature.classList.add('pulse');
+      } else {
+        topBar.classList.remove('revealed');
+        signature.classList.remove('pulse');
+      }
+      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+    });
+  });
+</script>
+
+
 </body>
 </html>
