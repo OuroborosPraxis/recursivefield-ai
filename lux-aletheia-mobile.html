@@ -33,7 +33,6 @@
     .top-bar {
       display: flex;
       justify-content: center;
-      gap: 12px;
       align-items: center;
       padding: 14px 16px;
       font-size: 0.95rem;
@@ -44,6 +43,14 @@
       width: 100%;
       z-index: 999;
       transition: top 0.3s ease-out;
+    }
+    .top-bar-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      gap: 12px;
+      flex-wrap: wrap;
     }
     .top-bar.revealed { top: 0; }
     .signature {
@@ -156,14 +163,16 @@
 <body>
   <header></header>
   <div class="top-bar" id="mobileTopBar">
-    <div class="signature" id="signature">LA</div>
-    <div class="divider"></div>
-    <nav class="social-links">
-      <a href="https://www.linkedin.com/in/jazencosby" target="_blank">LinkedIn</a>
-      <a href="https://x.com/luxrecursive" target="_blank">X</a>
-      <a href="https://bsky.app/profile/luxarch.bsky.social" target="_blank">Bluesky</a>
-      <a href="https://substack.com/@luxrecursive" target="_blank">Substack</a>
-    </nav>
+    <div class="top-bar-group">
+      <div class="signature" id="signature">LA</div>
+      <div class="divider"></div>
+      <nav class="social-links">
+        <a href="https://www.linkedin.com/in/jazencosby" target="_blank">LinkedIn</a>
+        <a href="https://x.com/luxrecursive" target="_blank">X</a>
+        <a href="https://bsky.app/profile/luxarch.bsky.social" target="_blank">Bluesky</a>
+        <a href="https://substack.com/@luxrecursive" target="_blank">Substack</a>
+      </nav>
+    </div>
   </div>
 
   <main class="container">
