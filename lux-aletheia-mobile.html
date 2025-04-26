@@ -252,7 +252,7 @@
     });
 
     function handleGesture() {
-      const threshold = 40; // pixels to trigger flick
+      const threshold = 15; // pixels to trigger flick
       if (touchEndY - touchStartY > threshold) {
     // Flicked down
         topBar.classList.add('revealed');
