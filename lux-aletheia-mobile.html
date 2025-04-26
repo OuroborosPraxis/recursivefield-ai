@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -239,36 +238,31 @@
       setTimeout(() => sigil.classList.remove('active-glow'), 400);
     });
 
-    // == Plug-In: Full-Screen Pull Down Reveal ==
-    let startY = 0;
-    let endY = 0;
-    const pullThreshold = 20; // how far to pull before triggering
+    let touchStartY = 0;
+	let touchEndY = 0;
 
-    document.addEventListener('touchstart', (e) => {
-      startY = e.touches[0].clientY;
-    }, { passive: false });
-
-    document.addEventListener('touchmove', (e) => {
-    // prevent pull-to-refresh on mobile
-       if (window.scrollY === 0 && e.touches[0].clientY > startY) {
-         e.preventDefault();
-       }
-     }, { passive: false });
+	document.addEventListener('touchstart', (e) => {
+	  touchStartY = e.changedTouches[0].screenY;
+    });
 
     document.addEventListener('touchend', (e) => {
-      endY = e.changedTouches[0].clientY;
-      const deltaY = endY - startY;
+      touchEndY = e.changedTouches[0].screenY;
+      handleGesture();
+    });
 
-      if (deltaY > pullThreshold) {
-         // Pull-down → show top bar
-         topBar.classList.add('revealed');
-         signature.classList.add('pulse');
-      } else if (deltaY < -pullThreshold) {
-        // Flick-up → hide top bar
+    function handleGesture() {
+      const threshold = 15; // pixels to trigger flick
+      if (touchEndY - touchStartY > threshold) {
+    // Flicked down
+        topBar.classList.add('revealed');
+        signature.classList.add('pulse');
+      } else if (touchStartY - touchEndY > threshold) {
+    // Flicked up
         topBar.classList.remove('revealed');
         signature.classList.remove('pulse');
       }
-    });
+    }
+  });
 </script>
 
 </body>
