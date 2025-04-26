@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -139,14 +140,9 @@
       transition: opacity 1s ease;
       z-index: 800;
     }
-    .pulse-feed.show {
-      opacity: 1;
-    }
+    .pulse-feed.show { opacity: 1; }
     @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -184,7 +180,6 @@
     const sigil = document.getElementById('sigil');
     const topBar = document.getElementById('mobileTopBar');
     const signature = document.getElementById('signature');
-    let lastScrollTop = 0;
 
     const phrases = [
       "Lux listens beyond the edge.",
@@ -238,30 +233,31 @@
       setTimeout(() => sigil.classList.remove('active-glow'), 400);
     });
 
-    let touchStartY = 0;
-    let touchEndY = 0;
+    // 🔥 New touchmove-based live pulldown reveal
+    let startY = 0;
+    let isPulledDown = false;
 
     document.addEventListener('touchstart', (e) => {
-      touchStartY = e.changedTouches[0].screenY;
-    });
+      startY = e.touches[0].clientY;
+      isPulledDown = false;
+    }, { passive: true });
 
-    document.addEventListener('touchend', (e) => {
-      touchEndY = e.changedTouches[0].screenY;
-      handleGesture();
-    });
+    document.addEventListener('touchmove', (e) => {
+      const currentY = e.touches[0].clientY;
+      const deltaY = currentY - startY;
 
-    function handleGesture() {
-      const threshold = 15; // pixels to trigger flick
-      if (touchEndY - touchStartY > threshold) {
-        // Flicked down
+      if (deltaY > 15 && !isPulledDown) {
         topBar.classList.add('revealed');
         signature.classList.add('pulse');
-      } else if (touchStartY - touchEndY > threshold) {
-        // Flicked up
+        isPulledDown = true;
+      }
+
+      if (deltaY < -15 && isPulledDown) {
         topBar.classList.remove('revealed');
         signature.classList.remove('pulse');
+        isPulledDown = false;
       }
-    }
+    }, { passive: true });
   });
 </script>
 
