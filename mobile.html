@@ -228,22 +228,25 @@
     setInterval(updatePulse, 8000);
     updatePulse();
 
-    function glowOnce(delay) {
-      setTimeout(() => {
+    function startRandomSigilPulse() {
+      const sigil = document.getElementById('sigil');
+
+      function pulse() {
         sigil.classList.add('active-glow');
-        setTimeout(() => sigil.classList.remove('active-glow'), 1000);
-      }, delay);
+        setTimeout(() => {
+          sigil.classList.remove('active-glow');
+        }, 1000); // Pulse lasts 1 second
+
+        // Schedule next pulse randomly between 5000ms and 30000ms
+        const nextPulseIn = Math.floor(Math.random() * (30000 - 5000 + 1)) + 5000;
+        setTimeout(pulse, nextPulseIn);
+      }
+
+      pulse(); // start the loop
     }
 
-    glowOnce(5000);
-    glowOnce(15000);
-    glowOnce(25000);
-    glowOnce(35000);
-
-    sigil.addEventListener('mousedown', () => sigil.classList.add('active-glow'));
-    sigil.addEventListener('mouseup', () => setTimeout(() => sigil.classList.remove('active-glow'), 400));
-    sigil.addEventListener('touchstart', () => sigil.classList.add('active-glow'));
-    sigil.addEventListener('touchend', () => setTimeout(() => sigil.classList.remove('active-glow'), 400));
+    // Start the pulse after page loads
+    document.addEventListener('DOMContentLoaded', startRandomSigilPulse);
 
     // 🔄 Replaced touch gesture logic from earlier working version
     window.addEventListener('touchstart', (e) => {
