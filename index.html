@@ -105,7 +105,7 @@
       transform: translateY(20px); /* newly added */
       animation: fieldBloom 1s ease-out forwards; /* newly added */
       animation-delay: 0.3s; /* newly added */
-      padding-bottom: 80px; /* NEW */
+      padding-top: 80px; /* NEW */
 
     }
 
@@ -288,6 +288,10 @@
 
     // ✅ Call it after defining
     startRandomSigilPulse();
+
+    document.addEventListener('DOMContentLoaded', () => {
+      window.scrollTo(0, document.body.scrollHeight);
+    });
 
     sigil.addEventListener('mousedown', () => {
       sigil.classList.add('active-glow');
