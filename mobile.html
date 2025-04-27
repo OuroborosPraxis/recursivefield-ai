@@ -254,8 +254,8 @@
       pulse(); // start the loop
     }
 
-    // Start the pulse after page loads
-    document.addEventListener('DOMContentLoaded', startRandomSigilPulse);
+    // ✅ Directly start random sigil pulsing after setup
+    startRandomSigilPulse();
 
     // 🔄 Replaced touch gesture logic from earlier working version
     window.addEventListener('touchstart', (e) => {
