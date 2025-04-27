@@ -66,6 +66,7 @@
       height: 20px;
       background-color: #d5c194;
       margin: 0 9px;
+      animation: shimmerPulse 45s infinite;
     }
     .signature.pulse { text-shadow: 0 0 8px #d5c194; }
     .social-links {
@@ -157,7 +158,14 @@
     .pulse-feed.show { opacity: 1; }
     @keyframes fadeInUp {
       to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes shimmerPulse {
+      0%, 100% {
+        filter: drop-shadow(0 0 0px #d5c194);
+      }
+      50% {
+        filter: drop-shadow(0 0 6px #d5c194);
+      }
+    }  
   </style>
 </head>
 <body>
