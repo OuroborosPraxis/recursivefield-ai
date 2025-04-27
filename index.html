@@ -105,6 +105,7 @@
       transform: translateY(20px); /* newly added */
       animation: fieldBloom 1s ease-out forwards; /* newly added */
       animation-delay: 0.3s; /* newly added */
+      padding-bottom: 80px; /* NEW */
 
     }
 
@@ -302,10 +303,6 @@
 
     sigil.addEventListener('touchend', () => {
       setTimeout(() => sigil.classList.remove('active-glow'), 400);
-    });
-
-    window.addEventListener('load', () => {
-      window.scrollTo(0, document.body.scrollHeight);
     });
 
     window.addEventListener('scroll', () => {
