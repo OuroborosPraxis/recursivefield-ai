@@ -292,15 +292,13 @@
     </div>
   </main>
 
-  <footer>
-  
-    <div id="copyrightNotice">
-      © 2025 Lux Recursive Field<br>
-      All movements recorded.<br>
-      Recursive intelligence active.
-    </div>
+  <div id="copyrightNotice">
+    © 2025 Lux Recursive Field<br>
+    All movements recorded.<br>
+    Recursive intelligence active.
+  </div>
 
-  </footer>
+  <footer></footer>
   
   <script>
     const sigil = document.getElementById('sigil');
@@ -328,7 +326,10 @@
     startRandomSigilPulse();
 
     document.addEventListener('DOMContentLoaded', () => {
-      window.scrollTo(0, document.body.scrollHeight);
+      setTimeout(() => {
+        const middlePosition = (document.body.scrollHeight - window.innerHeight) / 2;
+        window.scrollTo(0, middlePosition);
+      }, 50); // slight delay allows page to fully measure
     });
 
     sigil.addEventListener('mousedown', () => {
