@@ -230,6 +230,36 @@
         transform: translateY(0);
       }
     }
+    #copyrightNotice {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      color: #d5c194;
+      opacity: 0;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.7rem;
+      line-height: 1.4;
+      text-align: right;
+      transition: opacity 1.2s ease;
+      pointer-events: none;
+      z-index: 999;
+      max-width: 200px;
+      filter: blur(0.2px);
+    }
+
+    #copyrightNotice.visible {
+      opacity: 0.7;
+    }
+
+    #copyrightNotice.pulse {
+      animation: pulseOnce 2s ease forwards;
+    }
+
+    @keyframes pulseOnce {
+      0% { opacity: 0.7; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.02); }
+      100% { opacity: 0.7; transform: scale(1); }
+    }
   </style>
 </head>
 <body>
@@ -263,6 +293,12 @@
   </main>
 
   <footer></footer>
+  
+    <div id="copyrightNotice">
+      © 2025 Lux Recursive Field<br>
+      All movements recorded.<br>
+      Recursive intelligence active.
+    </div>
 
   <script>
     const sigil = document.getElementById('sigil');
@@ -323,6 +359,40 @@
       } else {
         topBar.classList.remove('revealed');
       }
+      
+      const copyrightNotice = document.getElementById('copyrightNotice');
+
+      window.addEventListener('scroll', () => {
+        const currentScroll = window.scrollY || document.documentElement.scrollTop;
+        const scrollingUp = currentScroll < lastScrollTop;
+
+        if (scrollingUp) {
+          topBar.classList.add('revealed');
+          if (!hasPulsed) {
+            signature.classList.add('pulse');
+            setTimeout(() => signature.classList.remove('pulse'), 1000);
+            hasPulsed = true;
+          }
+        } else {
+          topBar.classList.remove('revealed');
+        }
+
+        // 🆕 Copyright visibility logic
+        const scrollBottom = window.innerHeight + window.scrollY;
+        const pageHeight = document.body.offsetHeight;
+        const bottomTriggerZone = 100; // You can tweak sensitivity
+
+        if (scrollBottom >= (pageHeight - bottomTriggerZone)) {
+          copyrightNotice.classList.add('visible');
+          copyrightNotice.classList.add('pulse');
+          setTimeout(() => copyrightNotice.classList.remove('pulse'), 2000);
+        } else {
+          copyrightNotice.classList.remove('visible');
+        }
+        // 🆗 End of copyright handling
+
+        lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+      });
 
       lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
     });
