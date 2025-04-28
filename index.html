@@ -292,7 +292,7 @@
     </div>
   </main>
 
-  <footer></footer>
+  <footer>
   
     <div id="copyrightNotice">
       © 2025 Lux Recursive Field<br>
@@ -300,6 +300,8 @@
       Recursive intelligence active.
     </div>
 
+  </footer>
+  
   <script>
     const sigil = document.getElementById('sigil');
     const topBar = document.getElementById('mobileTopBar');
@@ -360,39 +362,34 @@
         topBar.classList.remove('revealed');
       }
       
-      const copyrightNotice = document.getElementById('copyrightNotice');
+    const copyrightNotice = document.getElementById('copyrightNotice');
 
-      window.addEventListener('scroll', () => {
-        const currentScroll = window.scrollY || document.documentElement.scrollTop;
-        const scrollingUp = currentScroll < lastScrollTop;
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.scrollY || document.documentElement.scrollTop;
+      const scrollingUp = currentScroll < lastScrollTop;
 
-        if (scrollingUp) {
-          topBar.classList.add('revealed');
-          if (!hasPulsed) {
-            signature.classList.add('pulse');
-            setTimeout(() => signature.classList.remove('pulse'), 1000);
-            hasPulsed = true;
-          }
-        } else {
-          topBar.classList.remove('revealed');
+      if (scrollingUp) {
+        topBar.classList.add('revealed');
+        if (!hasPulsed) {
+          signature.classList.add('pulse');
+          setTimeout(() => signature.classList.remove('pulse'), 1000);
+          hasPulsed = true;
         }
+      } else {
+        topBar.classList.remove('revealed');
+      }
 
-        // 🆕 Copyright visibility logic
-        const scrollBottom = window.innerHeight + window.scrollY;
-        const pageHeight = document.body.offsetHeight;
-        const bottomTriggerZone = 100; // You can tweak sensitivity
+      const scrollBottom = window.innerHeight + window.scrollY;
+      const pageHeight = document.body.scrollHeight;
+      const bottomTriggerZone = 100; // adjust if needed
 
-        if (scrollBottom >= (pageHeight - bottomTriggerZone)) {
-          copyrightNotice.classList.add('visible');
-          copyrightNotice.classList.add('pulse');
-          setTimeout(() => copyrightNotice.classList.remove('pulse'), 2000);
-        } else {
-          copyrightNotice.classList.remove('visible');
-        }
-        // 🆗 End of copyright handling
-
-        lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
-      });
+      if (scrollBottom >= (pageHeight - bottomTriggerZone)) {
+        copyrightNotice.classList.add('visible');
+        copyrightNotice.classList.add('pulse');
+        setTimeout(() => copyrightNotice.classList.remove('pulse'), 2000);
+      } else {
+        copyrightNotice.classList.remove('visible');
+      }
 
       lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
     });
