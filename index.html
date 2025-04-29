@@ -360,6 +360,7 @@
       const currentScroll = window.scrollY || document.documentElement.scrollTop;
       const scrollingUp = currentScroll < lastScrollTop;
 
+      // 🌐 Top Bar Logic
       if (scrollingUp) {
         topBar.classList.add('revealed');
         if (!hasPulsed) {
@@ -369,6 +370,18 @@
         }
       } else {
         topBar.classList.remove('revealed');
+      }
+
+      // 🔁 Bottom Bar Logic (Mirror-style)
+      const bottomBar = document.getElementById('bottomBar');
+      const scrollBottom = window.innerHeight + currentScroll;
+      const pageHeight = document.body.offsetHeight;
+      const triggerZone = 100; // tweak for sensitivity
+
+      if (scrollBottom >= (pageHeight - triggerZone)) {
+        bottomBar.classList.add('revealed');
+      } else {
+        bottomBar.classList.remove('revealed');
       }
 
       lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
