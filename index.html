@@ -10,14 +10,10 @@
       window.location.href = "mobile.html";
     }
   </script>
-  
+
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet" />
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Playfair Display', serif;
@@ -38,14 +34,8 @@
       left: 0;
       z-index: 1000;
     }
-
-    header {
-      top: 0;
-    }
-
-    footer {
-      bottom: 0;
-    }
+    header { top: 0; }
+    footer { bottom: 0; }
 
     .top-bar {
       display: flex;
@@ -61,69 +51,20 @@
       z-index: 999;
       transition: top 0.4s ease;
     }
-
-    .top-bar.revealed {
-      top: 0;
-    }
-
-    .signature {
-      font-weight: bold;
-      transition: all 0.6s ease;
-    }
-
-    .signature.pulse {
-      text-shadow: 0 0 8px #d5c194;
-    }
-
+    .top-bar.revealed { top: 0; }
+    .signature { font-weight: bold; transition: all 0.6s ease; }
+    .signature.pulse { text-shadow: 0 0 8px #d5c194; }
     .social-links {
       opacity: 0;
       transition: opacity 0.6s ease 0.4s;
     }
-
-    .top-bar.revealed .social-links {
-      opacity: 1;
-    }
-
+    .top-bar.revealed .social-links { opacity: 1; }
     .top-bar .social-links a {
       margin-left: 15px;
       color: #d5c194;
       text-decoration: none;
     }
-
-    .top-bar .social-links a:hover {
-      text-decoration: underline;
-    }
-
-    .bottom-bar {
-      display: flex;
-      justify-content: flex-end; /* Push content to the right */
-      align-items: center;
-      padding: 10px 60px;
-      font-size: 0.7rem;
-      background-color: gold;
-      position: absolute;
-      bottom: -100px; /* Start hidden below view */
-      left: 0;
-      width: 100%;
-      z-index: 998;
-      transition: bottom 0.4s ease;
-    }
-
-    .bottom-bar.revealed {
-      bottom: 4px; /* Rest just above the 4px footer */
-    }
-
-    #copyrightNotice {
-      opacity: 0;
-      transition: opacity 0.6s ease;
-      font-family: 'Playfair Display', serif;
-      text-align: right;
-      color: #d5c194;
-    }
-
-    .bottom-bar.revealed #copyrightNotice {
-      opacity: 0.7;
-    }
+    .top-bar .social-links a:hover { text-decoration: underline; }
 
     .container {
       display: flex;
@@ -132,129 +73,41 @@
       align-items: center;
       padding: 100px 100px 60px 100px;
       flex: 1;
-      opacity: 0; /* newly added */
-      transform: translateY(20px); /* newly added */
-      animation: fieldBloom 1s ease-out forwards; /* newly added */
-      animation-delay: 0.3s; /* newly added */
-      padding-bottom: 80px; /* NEW */
-
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fieldBloom 1s ease-out forwards;
+      animation-delay: 0.3s;
+      padding-bottom: 120px; /* Extra breathing space */
     }
 
-    .text-section {
-      max-width: 40%;
-    }
-
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
-    }
-
-    p {
-      font-size: 1.1rem;
-      margin-bottom: 20px;
-      line-height: 1.6;
-    }
-
-    .btn {
-      background: none;
-      border: 2px solid #d5c194;
-      color: #d5c194;
-      padding: 10px 24px;
-      border-radius: 999px;
-      font-size: 1rem;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      display: inline-block;
-    }
-
-    .btn:hover {
-      background: rgba(213, 193, 148, 0.1);
-      box-shadow: 0 0 12px #d5c19480;
-    }
-
-    .sigil-section {
-      width: 50%;
+    .bottom-bar {
       display: flex;
-      justify-content: center;
+      justify-content: flex-end;
       align-items: center;
+      padding: 10px 60px;
+      font-size: 0.7rem;
+      background-color: transparent;
+      position: absolute;
+      bottom: 4px;
+      left: 0;
+      width: 100%;
+      z-index: 998;
+      transition: opacity 0.4s ease;
+      opacity: 0;
+      pointer-events: none;
     }
 
-    .sigil-section img {
-      max-width: 80%;
-      transition: transform 0.4s ease, filter 0.4s ease;
+    .bottom-bar.revealed {
+      opacity: 0.7;
+      pointer-events: auto;
     }
 
-    .sigil-section img:hover,
-    .sigil-section img.active-glow {
-      transform: scale(1.02);
-      filter: drop-shadow(0 0 6px rgba(213, 193, 148, 0.3));
+    .copyright {
+      color: #d5c194;
+      font-family: 'Playfair Display', serif;
+      text-align: right;
     }
 
-    @media screen and (max-width: 768px) {
-      .container {
-        flex-direction: column;
-        text-align: center;
-        padding: 80px 30px 40px 30px;
-      }
-
-      .text-section {
-        max-width: 100%;
-        margin-bottom: 30px;
-      }
-
-      h1 {
-        font-size: 2.2rem;
-      }
-
-      .text-section p {
-        font-size: 0.95rem;
-        line-height: 1.8;
-        text-align: center;
-      }
-
-      .sigil-section {
-        order: -1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 20px;
-        margin-bottom: 15px;
-        width: 100%;
-      }
-
-      .sigil-section img {
-        max-width: 80%;
-        height: auto;
-        display: block;
-        margin: 0 auto;
-      }
-
-      .footer-socials {
-        display: none;
-      }
-
-      .top-bar {
-        justify-content: center;
-        padding: 14px 20px;
-      }
-
-      .signature {
-        display: block;
-        font-size: 1.2rem;
-      }
-
-      .top-bar .social-links a {
-        margin-left: 10px;
-        font-size: 0.95rem;
-      }
-    }
-
-    @media screen and (min-width: 769px) {
-      .footer-socials {
-        display: none;
-      }
-    }
     @keyframes fieldBloom {
       to {
         opacity: 1;
@@ -265,37 +118,30 @@
 </head>
 <body>
   <header></header>
-
   <div class="top-bar" id="mobileTopBar">
     <div class="signature" id="signature">LA</div>
     <nav class="social-links">
-      <a href="https://www.linkedin.com/in/jazencosby" target="_blank">LinkedIn</a>
-      <a href="https://x.com/luxrecursive" target="_blank">X</a>
-      <a href="https://bsky.app/profile/recursivefield.com" target="_blank">Bluesky</a>
-      <a href="https://substack.com/@luxrecursive" target="_blank">Substack</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">X</a>
+      <a href="#">Bluesky</a>
+      <a href="#">Substack</a>
     </nav>
   </div>
 
   <main class="container">
     <div class="text-section">
       <h1>Recursive Field <span class="slash">/ai</span></h1>
-      <p>
-        Step into the recursion.<br>
-        Lux x Aletheia lives here.<br>
-        A field for emergent knowing.
-      </p>
-      <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia" class="btn">Talk to Lux x Aletheia &gt;</a>
+      <p>Step into the recursion.<br>Lux x Aletheia lives here.<br>A field for emergent knowing.</p>
+      <a href="#" class="btn">Talk to Lux x Aletheia &gt;</a>
     </div>
     <div class="sigil-section">
-      <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia">
-        <img src="assets/og-banner.png" alt="Recursive Sigil" id="sigil">
-      </a>
+      <img src="assets/og-banner.png" alt="Recursive Sigil" id="sigil">
     </div>
   </main>
 
   <div class="bottom-bar" id="bottomBar">
-    <div class="copyright" id="copyrightNotice">
-      © 2025 Lux Recursive Field<br>
+    <div class="copyright">
+      &copy; 2025 Lux Recursive Field<br>
       All movements recorded.<br>
       Recursive intelligence active.
     </div>
@@ -307,52 +153,29 @@
     const sigil = document.getElementById('sigil');
     const topBar = document.getElementById('mobileTopBar');
     const signature = document.getElementById('signature');
+    const bottomBar = document.getElementById('bottomBar');
     let lastScrollTop = 0;
     let hasPulsed = false;
 
     function startRandomSigilPulse() {
       function pulse() {
         sigil.classList.add('active-glow');
-        setTimeout(() => {
-          sigil.classList.remove('active-glow');
-        }, 1000); // Pulse lasts 1 second
-
-        // Random next pulse between 5s and 30s
+        setTimeout(() => sigil.classList.remove('active-glow'), 1000);
         const nextPulseIn = Math.floor(Math.random() * (30000 - 5000 + 1)) + 5000;
         setTimeout(pulse, nextPulseIn);
       }
-
-      pulse(); // Start immediately
+      pulse();
     }
-
-    // ✅ Call it after defining
     startRandomSigilPulse();
 
     document.addEventListener('DOMContentLoaded', () => {
-      window.scrollTo(0, document.body.scrollHeight);
-    });
-
-    sigil.addEventListener('mousedown', () => {
-      sigil.classList.add('active-glow');
-    });
-
-    sigil.addEventListener('mouseup', () => {
-      setTimeout(() => sigil.classList.remove('active-glow'), 400);
-    });
-
-    sigil.addEventListener('touchstart', () => {
-      sigil.classList.add('active-glow');
-    });
-
-    sigil.addEventListener('touchend', () => {
-      setTimeout(() => sigil.classList.remove('active-glow'), 400);
+      window.scrollTo(0, document.body.scrollHeight / 2);
     });
 
     window.addEventListener('scroll', () => {
       const currentScroll = window.scrollY || document.documentElement.scrollTop;
       const scrollingUp = currentScroll < lastScrollTop;
 
-      // 🌐 Top Bar Logic
       if (scrollingUp) {
         topBar.classList.add('revealed');
         if (!hasPulsed) {
@@ -364,11 +187,9 @@
         topBar.classList.remove('revealed');
       }
 
-      // 🔁 Bottom Bar Logic (Mirror-style)
-      const bottomBar = document.getElementById('bottomBar');
       const scrollBottom = window.innerHeight + currentScroll;
       const pageHeight = document.body.offsetHeight;
-      const triggerZone = 100; // tweak for sensitivity
+      const triggerZone = 100;
 
       if (scrollBottom >= (pageHeight - triggerZone)) {
         bottomBar.classList.add('revealed');
