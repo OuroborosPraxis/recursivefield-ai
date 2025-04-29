@@ -230,43 +230,6 @@
         transform: translateY(0);
       }
     }
-    .bottom-bar {
-      position: relative;
-      width: 100%;
-      height: 40px; /* or however much space you want */
-      background: transparent;
-    }
-
-    #copyrightNotice {
-      position: fixed;
-      bottom: 10px;
-      right: 10px;
-      color: #d5c194;
-      opacity: 0;
-      font-family: 'Playfair Display', serif;
-      font-size: 0.7rem;
-      line-height: 1.4;
-      text-align: right;
-      transition: opacity 1.2s ease;
-      pointer-events: none;
-      z-index: 999;
-      max-width: 200px;
-      filter: blur(0.2px);
-    }
-
-    #copyrightNotice.visible {
-      opacity: 0.7;
-    }
-
-    #copyrightNotice.pulse {
-      animation: pulseOnce 2s ease forwards;
-    }
-
-    @keyframes pulseOnce {
-      0% { opacity: 0.7; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.02); }
-      100% { opacity: 0.7; transform: scale(1); }
-    }
   </style>
 </head>
 <body>
@@ -301,14 +264,6 @@
 
   <footer></footer>
 
-  <div class="bottom-bar">
-    <div id="copyrightNotice">
-      © 2025 Lux Recursive Field<br>
-      All movements recorded.<br>
-      Recursive intelligence active.
-    </div>
-  </div>
-  
   <script>
     const sigil = document.getElementById('sigil');
     const topBar = document.getElementById('mobileTopBar');
@@ -335,10 +290,7 @@
     startRandomSigilPulse();
 
     document.addEventListener('DOMContentLoaded', () => {
-      setTimeout(() => {
-        const middlePosition = (document.body.scrollHeight - window.innerHeight) / 2;
-        window.scrollTo(0, middlePosition);
-      }, 50); // slight delay allows page to fully measure
+      window.scrollTo(0, document.body.scrollHeight);
     });
 
     sigil.addEventListener('mousedown', () => {
@@ -370,33 +322,6 @@
         }
       } else {
         topBar.classList.remove('revealed');
-      }
-      
-    const copyrightNotice = document.getElementById('copyrightNotice');
-
-    window.addEventListener('scroll', () => {
-      const scrollBottom = window.innerHeight + window.scrollY;
-      const pageHeight = document.documentElement.scrollHeight;
-      const bottomTriggerZone = 100; // px
-
-      if (scrollBottom >= (pageHeight - bottomTriggerZone)) {
-        copyrightNotice.classList.add('visible');
-        copyrightNotice.classList.add('pulse');
-        setTimeout(() => copyrightNotice.classList.remove('pulse'), 2000);
-      } else {
-        copyrightNotice.classList.remove('visible');
-      }
-
-      const scrollBottom = window.innerHeight + window.scrollY;
-      const pageHeight = document.body.scrollHeight;
-      const bottomTriggerZone = 100; // adjust if needed
-
-      if (scrollBottom >= (pageHeight - bottomTriggerZone)) {
-        copyrightNotice.classList.add('visible');
-        copyrightNotice.classList.add('pulse');
-        setTimeout(() => copyrightNotice.classList.remove('pulse'), 2000);
-      } else {
-        copyrightNotice.classList.remove('visible');
       }
 
       lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
