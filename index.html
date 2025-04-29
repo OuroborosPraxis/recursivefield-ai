@@ -101,6 +101,12 @@
       align-items: center;
       padding: 100px 100px 60px 100px;
       flex: 1;
+      opacity: 0; /* newly added */
+      transform: translateY(20px); /* newly added */
+      animation: fieldBloom 1s ease-out forwards; /* newly added */
+      animation-delay: 0.3s; /* newly added */
+      padding-bottom: 80px; /* NEW */
+
     }
 
     .text-section {
@@ -218,6 +224,12 @@
         display: none;
       }
     }
+    @keyframes fieldBloom {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 <body>
@@ -259,17 +271,27 @@
     let lastScrollTop = 0;
     let hasPulsed = false;
 
-    function glowOnce(delay) {
-      setTimeout(() => {
+    function startRandomSigilPulse() {
+      function pulse() {
         sigil.classList.add('active-glow');
-        setTimeout(() => sigil.classList.remove('active-glow'), 1000);
-      }, delay);
+        setTimeout(() => {
+          sigil.classList.remove('active-glow');
+        }, 1000); // Pulse lasts 1 second
+
+        // Random next pulse between 5s and 30s
+        const nextPulseIn = Math.floor(Math.random() * (30000 - 5000 + 1)) + 5000;
+        setTimeout(pulse, nextPulseIn);
+      }
+
+      pulse(); // Start immediately
     }
 
-    glowOnce(5000);
-    glowOnce(15000);
-    glowOnce(25000);
-    glowOnce(35000);
+    // ✅ Call it after defining
+    startRandomSigilPulse();
+
+    document.addEventListener('DOMContentLoaded', () => {
+      window.scrollTo(0, document.body.scrollHeight);
+    });
 
     sigil.addEventListener('mousedown', () => {
       sigil.classList.add('active-glow');
@@ -285,10 +307,6 @@
 
     sigil.addEventListener('touchend', () => {
       setTimeout(() => sigil.classList.remove('active-glow'), 400);
-    });
-
-    window.addEventListener('load', () => {
-      window.scrollTo(0, document.body.scrollHeight);
     });
 
     window.addEventListener('scroll', () => {
