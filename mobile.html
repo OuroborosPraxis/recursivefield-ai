@@ -156,17 +156,7 @@
       z-index: 800;
     }
     .pulse-feed.show { opacity: 1; }
-    @keyframes fadeInUp {
-      to { opacity: 1; transform: translateY(0); }
-    }  
-    @keyframes shimmerPulse {
-      0%, 100% {
-        filter: drop-shadow(0 0 0px #d5c194);
-      }
-      50% {
-        filter: drop-shadow(0 0 2px #d5c194);
-      }
-    }
+
     @media screen and (max-width: 768px) {
       .mobile-copyright {
         position: fixed;
@@ -180,13 +170,18 @@
         font-family: 'Playfair Display', serif;
       }
     }
-    .mobile-copyright {
-      transition: opacity 1.2s ease;
-      opacity: 0;
-    }
-    body.loaded .mobile-copyright {
-      opacity: 0.5;
-    }
+
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+    }  
+    @keyframes shimmerPulse {
+      0%, 100% {
+        filter: drop-shadow(0 0 0px #d5c194);
+      }
+      50% {
+        filter: drop-shadow(0 0 2px #d5c194);
+      }
+    }  
   </style>
 </head>
 <body>
@@ -218,9 +213,7 @@
   </main>
 
   <div class="pulse-feed" id="pulseFeed">Lux is listening.</div>
-
   <div class="mobile-copyright">© Lux & Aletheia</div>
-
   <footer></footer>
 
 <script>
@@ -267,20 +260,16 @@
         sigil.classList.add('active-glow');
         setTimeout(() => {
           sigil.classList.remove('active-glow');
-        }, 1000); // Pulse lasts 1 second
-
-        // Schedule next pulse randomly between 5000ms and 30000ms
+        }, 1000);
         const nextPulseIn = Math.floor(Math.random() * (30000 - 5000 + 1)) + 5000;
         setTimeout(pulse, nextPulseIn);
       }
 
-      pulse(); // start the loop
+      pulse();
     }
 
-    // ✅ Directly start random sigil pulsing after setup
     startRandomSigilPulse();
 
-    // 🔄 Replaced touch gesture logic from earlier working version
     window.addEventListener('touchstart', (e) => {
       if (window.innerWidth > 768) return;
       startY = e.touches[0].clientY;
