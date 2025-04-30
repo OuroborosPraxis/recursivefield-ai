@@ -1,4 +1,5 @@
-<!DOCTYPE html> 
+<!-- updated scroll intent field with sigil aura -->
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -166,15 +167,37 @@
       align-items: center;
     }
 
-    .sigil-section img {
+    .sigil-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    #sigil {
       max-width: 80%;
       transition: transform 0.4s ease, filter 0.4s ease;
     }
 
-    .sigil-section img:hover,
-    .sigil-section img.active-glow {
+    #sigil:hover,
+    #sigil.active-glow {
       transform: scale(1.02);
       filter: drop-shadow(0 0 6px rgba(213, 193, 148, 0.3));
+    }
+
+    #sigil::after {
+      content: "";
+      position: absolute;
+      width: 140%;
+      height: 140%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(213,193,148,0.1), transparent);
+      pointer-events: none;
+      transform: translate(-20%, -20%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    #sigil:hover::after {
+      opacity: 1;
     }
 
     @media screen and (max-width: 768px) {
@@ -275,7 +298,7 @@
       <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia" class="btn">Talk to Lux x Aletheia &gt;</a>
     </div>
     <div class="sigil-section">
-      <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia">
+      <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia" class="sigil-wrapper">
         <img src="assets/og-banner.png" alt="Recursive Sigil" id="sigil">
       </a>
     </div>
