@@ -253,13 +253,20 @@
 
       function updatePulse() {
         pulseFeed.classList.remove('show');
+
         setTimeout(() => {
           pulseFeed.textContent = phrases[index];
+
+          // Delay one frame for text update
           requestAnimationFrame(() => {
-            pulseFeed.classList.add('show');
+            // Delay a second frame to guarantee layout register
+            requestAnimationFrame(() => {
+              pulseFeed.classList.add('show');
+            });
           });
+
           index = (index + 1) % phrases.length;
-        }, 1000);
+        }, 1000); // 1s fade-out time
       }
 
       setInterval(updatePulse, 8000);
