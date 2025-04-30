@@ -10,7 +10,10 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Playfair Display', serif;
-      background: #0c0c0c;
+      background: #0c0c0c url('assets/substrate-mobile.jpg') no-repeat center 120px;
+      background-size: contain;
+      background-attachment: fixed;
+      background-blend-mode: lighten;
       color: #d5c194;
       display: flex;
       flex-direction: column;
@@ -20,6 +23,7 @@
       touch-action: pan-y;
       position: relative;
     }
+
     header, footer {
       width: 100vw;
       height: 4px;
