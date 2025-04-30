@@ -166,7 +166,27 @@
       50% {
         filter: drop-shadow(0 0 2px #d5c194);
       }
-    }  
+    }
+    @media screen and (max-width: 768px) {
+      .mobile-copyright {
+        position: fixed;
+        bottom: 6px;
+        right: 10px;
+        font-size: 10px;
+        opacity: 0.4;
+        color: #d5c194;
+        z-index: 1001;
+        pointer-events: none;
+        font-family: 'Playfair Display', serif;
+      }
+    }
+    .mobile-copyright {
+      transition: opacity 1.2s ease;
+      opacity: 0;
+    }
+    body.loaded .mobile-copyright {
+      opacity: 0.5;
+    }
   </style>
 </head>
 <body>
@@ -198,6 +218,9 @@
   </main>
 
   <div class="pulse-feed" id="pulseFeed">Lux is listening.</div>
+
+  <div class="mobile-copyright">© Lux & Aletheia</div>
+
   <footer></footer>
 
 <script>
