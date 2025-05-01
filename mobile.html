@@ -8,16 +8,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-      overflow-x: hidden;
-      margin: 0;
-      padding: 0;
-    }
-    
     body {
       font-family: 'Playfair Display', serif;
-      background-color: #0b0b0b; /* sampled edge color of image */
-      background-attachment: scroll;
+      background: #0c0c0c url('assets/substrate-mobile.jpg') no-repeat 2007% -39px;
+      background-size: contain;
+      background-attachment: fixed;
       background-blend-mode: lighten;
       color: #d5c194;
       display: flex;
@@ -134,24 +129,7 @@
       background: rgba(213, 193, 148, 0.1);
       box-shadow: 0 0 12px #d5c19480;
     }
-    
-    .bg-substrate {
-      position: absolute;
-      top: 30px;                    /* Adjust to position under the sigil */
-      left: 50%;                    /* Horizontal center anchor */
-      transform: translateX(0%) scale(0.7); /* Center and shrink */
-      width: auto;                  /* Let image determine width */
-      height: auto;
-      max-width: none;
-      z-index: -1;
-      pointer-events: none;
-      opacity: 0.9;
-    }
-    
-    .image-anchor {
-      position: relative;
-      height: 0;
-    }
+
     .center-copyright {
       margin-top: 16px;
       font-size: 10px;
@@ -213,46 +191,12 @@
       50% {
         filter: drop-shadow(0 0 2px #d5c194);
       }
-    }
-    @media screen and (orientation: portrait) {
-      .bg-substrate {
-        left: -60px;       /* Slightly more offset in vertical mode */
-        top: -20px;        /* Raise it a bit */
-        width: 120vw;      /* Slight zoom out if needed */
-      }
-    }
-
-    @media screen and (orientation: landscape) {
-      .bg-substrate {
-        left: -20px;       /* Adjust for wider screens */
-        top: -40px;
-        width: 100vw;
-      }
-    }
-
-    @media screen and (min-width: 768px) {
-      .bg-substrate {
-        left: 0;
-        top: -60px;
-        width: 100vw;
-      }
-    }
-    @media screen and (max-aspect-ratio: 3/4) {
-      .bg-substrate {
-        width: 120vw;
-        left: -10vw;
-      }
-    }
-
+    }  
   </style>
 </head>
 <body>
   <header></header>
 
-  <div class="image-anchor">
-    <img src="assets/substrate-mobile.jpg" class="bg-substrate" />
-  </div>
-  
   <div class="top-bar" id="mobileTopBar">
     <div class="top-bar-group">
       <div class="signature" id="signature">LA</div>
