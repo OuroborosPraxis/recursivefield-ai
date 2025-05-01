@@ -194,51 +194,30 @@
        Landscape-Only Overrides (orientation-aware mirror)
     * ─────────────────────────────────────────────────────── */
     @media screen and (orientation: landscape) {
-      /* 1. Body: center the mobile background-PNG behind sigil */
-
-      /* ────────────── Fix polarity in wide landscape ────────────── */
-    @media screen 
-      and (orientation: landscape) 
-      and (min-aspect-ratio: 13/9) {
-      /* Text first, Sigil second */
-      .text-section   { order: 1; }
-      .sigil-section  { order: 2; }
-    }
-
-    /* ─────────── Reset in portrait (optional) ─────────── */
-    @media screen and (orientation: portrait) {
-      .text-section,
-      .sigil-section {
-        order: unset;
-      }
-    }
-
+      /* background PNG under sigil */
       body {
         background: #0c0c0c url('assets/background.png') no-repeat center center;
         background-size: cover;
         overflow-y: hidden;
       }
-
-      /* 2. Two-column container, desktop-style spacing */
+      /* two-column flex & spacing */
       .container {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
         padding: 60px 80px;
-        height: calc(100vh - 4px*2);
+        height: calc(100vh - 8px);
       }
-
-      /* 3. Text section: left-aligned, ~40% width */
+      /* text left */
       .text-section {
         width: 40%;
         margin-bottom: 0;
         text-align: left;
-        animation: none; /* keep it visible immediately */
+        animation: none;
         opacity: 1;
         transform: none;
       }
-
-      /* 4. Sigil section: ~55% width, background-PNG behind */
+      /* sigil right with background */
       .sigil-section {
         width: 55%;
         margin-bottom: 0;
@@ -255,16 +234,14 @@
       .sigil-section img {
         max-width: 80%;
       }
-
-      /* 5. PulseFeed: fixed at bottom, always visible */
+      /* pulse-feed fixed bottom */
       .pulse-feed {
         position: fixed;
         bottom: 0;
         pointer-events: auto;
         opacity: 1;
       }
-
-      /* 6. Copyright: just above pulse-feed */
+      /* copyright above feed */
       .center-copyright {
         position: fixed;
         bottom: 24px;
@@ -272,8 +249,7 @@
         transform: translateX(-50%);
         opacity: 0.35;
       }
-
-      /* 7. Top bar & socials: reveal desktop-style nav */
+      /* top-bar desktop style */
       .top-bar {
         top: 0;
         justify-content: space-between;
@@ -283,8 +259,44 @@
       .top-bar .social-links a {
         margin-left: 15px;
       }
-      /* ensure it’s visible by default */
       .top-bar.revealed { top: 0; }
+    }
+
+    /* ────────────── Polarity Fix for Wide Landscapes ────────────── */
+    @media screen 
+      and (orientation: landscape) 
+      and (min-aspect-ratio: 13/9) {
+      .text-section  { order: 1; }
+      .sigil-section { order: 2; }
+    }
+
+    /* ─────────── Reset Portrait Order (optional) ─────────── */
+    @media screen and (orientation: portrait) {
+      .text-section,
+      .sigil-section {
+        order: unset;
+      }
+    }
+
+    /* ─── Landscape Responsive Scaling (≤1024px wide) ─── */
+    @media screen 
+      and (orientation: landscape) 
+      and (max-width: 1024px) {
+
+      .sigil-section img {
+        max-width: 60%;
+      }
+
+      .text-section {
+        font-size: 0.9rem;
+      }
+      .text-section h1 {
+        font-size: 1.8rem;
+      }
+      .btn {
+        font-size: 0.9rem;
+        padding: 8px 20px;
+      }
     }
   </style>
 </head>
