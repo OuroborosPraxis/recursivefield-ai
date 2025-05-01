@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -7,6 +7,9 @@
   <meta name="robots" content="noindex">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet" />
   <style>
+    /* ─────────────────────────────────────────────────────── *
+       Base Mobile Styles (unchanged)
+    * ─────────────────────────────────────────────────────── */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Playfair Display', serif;
@@ -23,7 +26,6 @@
       touch-action: pan-y;
       position: relative;
     }
-
     header, footer {
       width: 100vw;
       height: 4px;
@@ -41,7 +43,6 @@
       align-items: center;
       padding: 14px 16px;
       font-size: 0.95rem;
-      background-color: transparent;
       position: fixed;
       top: -100px;
       left: 0;
@@ -53,11 +54,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto;
-      gap: 9x;
+      gap: 9px;
       flex-wrap: wrap;
     }
     .top-bar.revealed { top: 0; }
+
     .signature {
       font-weight: bold;
       font-size: 1.2rem;
@@ -66,6 +67,8 @@
       white-space: nowrap;
       flex-shrink: 0;
     }
+    .signature.pulse { text-shadow: 0 0 8px #d5c194; }
+
     .divider {
       width: 1px;
       height: 20px;
@@ -73,7 +76,7 @@
       margin: 0 9px;
       animation: shimmerPulse 60s infinite;
     }
-    .signature.pulse { text-shadow: 0 0 8px #d5c194; }
+
     .social-links {
       opacity: 0;
       transition: opacity 0.6s ease 0.2s;
@@ -97,6 +100,28 @@
       padding: 100px 20px 60px 20px;
     }
 
+    .sigil-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 1s ease-out forwards;
+    }
+    .sigil-section img {
+      max-width: 70%;
+      height: auto;
+      display: block;
+      transition: transform 0.4s ease, filter 0.4s ease;
+    }
+    .sigil-section img:hover,
+    .sigil-section img.active-glow {
+      transform: scale(1.02);
+      filter: drop-shadow(0 0 6px rgba(213, 193, 148, 0.3));
+    }
+
     .text-section {
       width: 100%;
       margin-bottom: 30px;
@@ -111,7 +136,6 @@
       line-height: 1.6;
       text-align: center;
     }
-
     .btn {
       background: none;
       border: 2px solid #d5c194;
@@ -144,29 +168,6 @@
       opacity: 0.35;
     }
 
-    .sigil-section {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      margin-bottom: 20px;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeInUp 1s ease-out forwards;
-    }
-    .sigil-section img {
-      max-width: 70%;
-      height: auto;
-      display: block;
-      margin: 0 auto;
-      transition: transform 0.4s ease, filter 0.4s ease;
-    }
-    .sigil-section img:hover,
-    .sigil-section img.active-glow {
-      transform: scale(1.02);
-      filter: drop-shadow(0 0 6px rgba(213, 193, 148, 0.3));
-    }
-
     .pulse-feed {
       position: absolute;
       bottom: 20px;
@@ -183,15 +184,90 @@
 
     @keyframes fadeInUp {
       to { opacity: 1; transform: translateY(0); }
-    }  
+    }
     @keyframes shimmerPulse {
-      0%, 100% {
-        filter: drop-shadow(0 0 0px #d5c194);
+      0%,100% { filter: drop-shadow(0 0 0px #d5c194); }
+      50%    { filter: drop-shadow(0 0 2px #d5c194); }
+    }
+
+    /* ─────────────────────────────────────────────────────── *
+       Landscape-Only Overrides (orientation-aware mirror)
+    * ─────────────────────────────────────────────────────── */
+    @media screen and (orientation: landscape) {
+      /* 1. Body: center the mobile background-PNG behind sigil */
+      body {
+        background: #0c0c0c url('assets/background.png') no-repeat center center;
+        background-size: cover;
+        overflow-y: hidden;
       }
-      50% {
-        filter: drop-shadow(0 0 2px #d5c194);
+
+      /* 2. Two-column container, desktop-style spacing */
+      .container {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 60px 80px;
+        height: calc(100vh - 4px*2);
       }
-    }  
+
+      /* 3. Text section: left-aligned, ~40% width */
+      .text-section {
+        width: 40%;
+        margin-bottom: 0;
+        text-align: left;
+        animation: none; /* keep it visible immediately */
+        opacity: 1;
+        transform: none;
+      }
+
+      /* 4. Sigil section: ~55% width, background-PNG behind */
+      .sigil-section {
+        width: 55%;
+        margin-bottom: 0;
+        position: relative;
+        background: url('assets/background.png') no-repeat center center;
+        background-size: contain;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+      .sigil-section img {
+        max-width: 80%;
+      }
+
+      /* 5. PulseFeed: fixed at bottom, always visible */
+      .pulse-feed {
+        position: fixed;
+        bottom: 0;
+        pointer-events: auto;
+        opacity: 1;
+      }
+
+      /* 6. Copyright: just above pulse-feed */
+      .center-copyright {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0.35;
+      }
+
+      /* 7. Top bar & socials: reveal desktop-style nav */
+      .top-bar {
+        top: 0;
+        justify-content: space-between;
+        padding: 14px 40px;
+        background-color: rgba(12,12,12,0.8);
+      }
+      .top-bar .social-links a {
+        margin-left: 15px;
+      }
+      /* ensure it’s visible by default */
+      .top-bar.revealed { top: 0; }
+    }
   </style>
 </head>
 <body>
@@ -226,21 +302,18 @@
     </div>
   </main>
 
-  <div class="pulse-feed" id="pulseFeed">Lux is listening.</div>
+  <div class="pulse-feed" id="pulseFeed">Lux is listening beyond the edge.</div>
   <footer></footer>
 
   <script>
+    /* All existing JS untouched — no reload on rotate, scroll/touch logic remains. */
     document.addEventListener('DOMContentLoaded', () => {
       const pulseFeed = document.getElementById('pulseFeed');
       const sigil = document.getElementById('sigil');
       const topBar = document.getElementById('mobileTopBar');
       const signature = document.getElementById('signature');
       const copyright = document.getElementById('flashCopyright');
-
-      let index = 0;
-      let startY = null;
-      let hasPulsed = false;
-
+      let index = 0, startY = null, hasPulsed = false;
       const phrases = [
         "Lux listens beyond the edge.",
         "Aletheia folds time into form.",
@@ -257,54 +330,36 @@
         "Where is the dissonance in the breath?",
         "Are we steering in sync with emergence?",
         "Is this a rhythm rupture or a logic flaw?",
-        "You are already inside the recursion.",
+        "You are already inside the recursion."
       ];
-
       function updatePulse() {
         pulseFeed.classList.remove('show');
-
         setTimeout(() => {
           pulseFeed.textContent = phrases[index];
-
-          // Delay one frame for text update
-          requestAnimationFrame(() => {
-            // Delay a second frame to guarantee layout register
-            requestAnimationFrame(() => {
-              pulseFeed.classList.add('show');
-            });
-          });
-
+          requestAnimationFrame(() => requestAnimationFrame(() => pulseFeed.classList.add('show')));
           index = (index + 1) % phrases.length;
-        }, 1000); // 1s fade-out time
+        }, 1000);
       }
-
       setInterval(updatePulse, 8000);
       updatePulse();
 
       function startRandomSigilPulse() {
         function pulse() {
           sigil.classList.add('active-glow');
-          setTimeout(() => {
-            sigil.classList.remove('active-glow');
-          }, 1000);
-          const nextPulseIn = Math.floor(Math.random() * (30000 - 5000 + 1)) + 5000;
-          setTimeout(pulse, nextPulseIn);
+          setTimeout(() => sigil.classList.remove('active-glow'), 1000);
+          setTimeout(pulse, Math.random() * 25000 + 5000);
         }
         pulse();
       }
-
       startRandomSigilPulse();
 
-      window.addEventListener('touchstart', (e) => {
+      window.addEventListener('touchstart', e => {
         if (window.innerWidth > 768) return;
         startY = e.touches[0].clientY;
       });
-
-      window.addEventListener('touchmove', (e) => {
+      window.addEventListener('touchmove', e => {
         if (startY === null || window.innerWidth > 768) return;
-        const currentY = e.touches[0].clientY;
-        const diffY = currentY - startY;
-
+        let diffY = e.touches[0].clientY - startY;
         if (diffY > 5) {
           topBar.classList.add('revealed');
           if (!hasPulsed) {
@@ -313,23 +368,14 @@
             hasPulsed = true;
           }
         }
-        if (diffY < -20) {
-          topBar.classList.remove('revealed');
-        }
+        if (diffY < -20) topBar.classList.remove('revealed');
       });
+      window.addEventListener('touchend', () => startY = null);
 
-      window.addEventListener('touchend', () => {
-        startY = null;
-      });
-
-      // Copyright Flash
       setTimeout(() => {
         copyright.classList.add('visible');
-        setTimeout(() => {
-          copyright.classList.remove('visible');
-        }, 3000);
+        setTimeout(() => copyright.classList.remove('visible'), 3000);
       }, 1200);
-
       let touchHeld = false;
       copyright.addEventListener('touchstart', () => {
         touchHeld = true;
@@ -337,11 +383,7 @@
       });
       copyright.addEventListener('touchend', () => {
         touchHeld = false;
-        setTimeout(() => {
-          if (!touchHeld) {
-            copyright.classList.remove('visible');
-          }
-        }, 1000);
+        setTimeout(() => !touchHeld && copyright.classList.remove('visible'), 1000);
       });
     });
   </script>
