@@ -138,7 +138,7 @@
     .bg-substrate {
       position: absolute;
       top: 30px;                    /* Adjust to position under the sigil */
-      left: 42%;                    /* Horizontal center anchor */
+      left: 50%;                    /* Horizontal center anchor */
       transform: translateX(0%) scale(0.7); /* Center and shrink */
       width: auto;                  /* Let image determine width */
       height: auto;
@@ -147,7 +147,11 @@
       pointer-events: none;
       opacity: 0.9;
     }
-
+    
+    .image-anchor {
+      position: relative;
+      height: 0;
+    }
     .center-copyright {
       margin-top: 16px;
       font-size: 10px;
@@ -245,7 +249,9 @@
 <body>
   <header></header>
 
-  <img src="assets/substrate-mobile.jpg" alt="Substrate Field" class="bg-substrate" />
+  <div class="image-anchor">
+    <img src="assets/substrate-mobile.jpg" class="bg-substrate" />
+  </div>
   
   <div class="top-bar" id="mobileTopBar">
     <div class="top-bar-group">
