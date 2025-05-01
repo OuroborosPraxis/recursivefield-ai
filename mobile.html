@@ -8,6 +8,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+    }
+    
     body {
       font-family: 'Playfair Display', serif;
       background: #0c0c0c url('assets/substrate-mobile.jpg') no-repeat 10% -37px;
@@ -134,8 +140,8 @@
       position: absolute;
       top: -37px;           /* Same vertical offset as before */
       left: -40px;          /* Pixel-perfect control: shift left */
-      width: 100vw;         /* Responsive width */
-      height: auto;         /* Maintain natural aspect ratio */
+      width: 110vw;         /* slightly overflowing for bleed space */
+      max-height: 100vh;       /* clamps vertical overflow */
       z-index: -1;          /* Behind everything */
       object-fit: cover;    /* If using fixed height later */
       pointer-events: none; /* Don’t interfere with clicks or scroll */
