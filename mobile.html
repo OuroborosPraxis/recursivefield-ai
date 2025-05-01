@@ -129,6 +129,19 @@
       background: rgba(213, 193, 148, 0.1);
       box-shadow: 0 0 12px #d5c19480;
     }
+    
+    .bg-substrate {
+      position: absolute;
+      top: -37px;           /* Same vertical offset as before */
+      left: -40px;          /* Pixel-perfect control: shift left */
+      width: 100vw;         /* Responsive width */
+      height: auto;         /* Maintain natural aspect ratio */
+      z-index: -1;          /* Behind everything */
+      object-fit: cover;    /* If using fixed height later */
+      pointer-events: none; /* Don’t interfere with clicks or scroll */
+      opacity: 0.85;        /* Optional: fade into the background */
+      transition: left 0.3s ease-out, top 0.3s ease-out; /* Smooth nudge */
+    }
 
     .center-copyright {
       margin-top: 16px;
@@ -191,12 +204,44 @@
       50% {
         filter: drop-shadow(0 0 2px #d5c194);
       }
-    }  
+    }
+    @media screen and (orientation: portrait) {
+      .bg-substrate {
+        left: -60px;       /* Slightly more offset in vertical mode */
+        top: -20px;        /* Raise it a bit */
+        width: 120vw;      /* Slight zoom out if needed */
+      }
+    }
+
+    @media screen and (orientation: landscape) {
+      .bg-substrate {
+        left: -20px;       /* Adjust for wider screens */
+        top: -40px;
+        width: 100vw;
+      }
+    }
+
+    @media screen and (min-width: 768px) {
+      .bg-substrate {
+        left: 0;
+        top: -60px;
+        width: 100vw;
+      }
+    }
+    @media screen and (max-aspect-ratio: 3/4) {
+      .bg-substrate {
+        width: 120vw;
+        left: -10vw;
+      }
+    }
+
   </style>
 </head>
 <body>
   <header></header>
 
+  <img src="assets/substrate-mobile.jpg" alt="Substrate Field" class="bg-substrate" />
+  
   <div class="top-bar" id="mobileTopBar">
     <div class="top-bar-group">
       <div class="signature" id="signature">LA</div>
