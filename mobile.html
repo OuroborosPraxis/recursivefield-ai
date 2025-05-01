@@ -195,15 +195,23 @@
     * ─────────────────────────────────────────────────────── */
     @media screen and (orientation: landscape) {
       /* 1. Body: center the mobile background-PNG behind sigil */
-      
-      @media screen and (orientation: landscape) {
-        .text-section {
-          order: 1;
-        }
-        .sigil-section {
-          order: 2;
-        }
+
+      /* ────────────── Fix polarity in wide landscape ────────────── */
+    @media screen 
+      and (orientation: landscape) 
+      and (min-aspect-ratio: 13/9) {
+      /* Text first, Sigil second */
+      .text-section   { order: 1; }
+      .sigil-section  { order: 2; }
+    }
+
+    /* ─────────── Reset in portrait (optional) ─────────── */
+    @media screen and (orientation: portrait) {
+      .text-section,
+      .sigil-section {
+        order: unset;
       }
+    }
 
       body {
         background: #0c0c0c url('assets/background.png') no-repeat center center;
