@@ -16,8 +16,7 @@
     
     body {
       font-family: 'Playfair Display', serif;
-      background: #0c0c0c url('assets/substrate-mobile.jpg') no-repeat 10% -37px;
-      background-size: contain;
+      background-color: #0b0b0b; /* sampled edge color of image */
       background-attachment: scroll;
       background-blend-mode: lighten;
       color: #d5c194;
@@ -138,15 +137,15 @@
     
     .bg-substrate {
       position: absolute;
-      top: -37px;           /* Same vertical offset as before */
-      left: -40px;          /* Pixel-perfect control: shift left */
-      width: 110vw;         /* slightly overflowing for bleed space */
-      max-height: 100vh;       /* clamps vertical overflow */
-      z-index: -1;          /* Behind everything */
-      object-fit: cover;    /* If using fixed height later */
-      pointer-events: none; /* Don’t interfere with clicks or scroll */
-      opacity: 0.85;        /* Optional: fade into the background */
-      transition: left 0.3s ease-out, top 0.3s ease-out; /* Smooth nudge */
+      top: 60px;                    /* Adjust to position under the sigil */
+      left: 50%;                    /* Horizontal center anchor */
+      transform: translateX(-50%) scale(0.45); /* Center and shrink */
+      width: auto;                  /* Let image determine width */
+      height: auto;
+      max-width: none;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.9;
     }
 
     .center-copyright {
