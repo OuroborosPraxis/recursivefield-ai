@@ -208,22 +208,25 @@
         padding: 60px 80px;
         height: calc(100vh - 8px);
       }
-      /* text left */
+
+      /* 2a. Reduce text block size */
       .text-section {
-        width: 40%;
+        width: 38%;
+        max-width: 38%;
         margin-bottom: 0;
         text-align: left;
         animation: none;
         opacity: 1;
         transform: none;
-        /* force left-aligned children */
         align-items: flex-start;
+        padding-right: 20px;
+        font-size: 0.9rem;
       }
-      /* paragraphs flush left */
-      .text-section p {
-        text-align: left;
+      .text-section h1 {
+        font-size: 1.7rem;
       }
-      /* sigil right with background */
+
+      /* 1a. Shift the sigil to the right */
       .sigil-section {
         width: 55%;
         margin-bottom: 0;
@@ -231,8 +234,10 @@
         background: url('assets/background.png') no-repeat center center;
         background-size: contain;
         display: flex;
-        justify-content: center;
+        /* push image to right edge */
+        justify-content: flex-end;
         align-items: center;
+        padding-left: 40px;
         animation: none;
         opacity: 1;
         transform: none;
@@ -240,6 +245,13 @@
       .sigil-section img {
         max-width: 80%;
       }
+
+      /* button scaling with text */
+      .btn {
+        font-size: 0.9rem;
+        padding: 8px 18px;
+      }
+
       /* pulse-feed fixed bottom */
       .pulse-feed {
         position: fixed;
@@ -294,12 +306,15 @@
       }
 
       .text-section {
+        /* font-size already 0.9rem above, this reaffirms on small */
         font-size: 0.9rem;
       }
       .text-section h1 {
+        /* 1.8rem for extra small devices */
         font-size: 1.8rem;
       }
       .btn {
+        /* reapply small button padding */
         font-size: 0.9rem;
         padding: 8px 20px;
       }
