@@ -17,10 +17,7 @@
 
     body {
       font-family: 'Playfair Display', serif;
-      background: #0c0c0c url('assets/substrate-mobile.jpg') no-repeat 80% 35%;
-      background-size: contain;
-      background-attachment: fixed;
-      background-blend-mode: lighten;
+      background: #0c0c0c
       color: #d5c194;
       display: flex;
       flex-direction: column;
@@ -30,6 +27,19 @@
       overflow-y: hidden;
     }
 
+    .substrate-layer {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url('assets/substrate-mobile.jpg') no-repeat center center;
+      background-size: cover;
+      z-index: -2; /* sits behind everything */
+      opacity: 0.9; /* optional */
+      pointer-events: none; /* lets clicks pass through */
+    }
+
+    
     header, footer {
       width: 100vw; height: 4px;
       background: #d5c194;
@@ -37,7 +47,7 @@
     }
     header { top: 0 }
     footer { bottom: 0 }
-
+    
     .top-bar {
       display: flex; justify-content: space-between; align-items: center;
       padding: 24px 60px 10px;
@@ -131,6 +141,8 @@
   </style>
 </head>
 <body>
+  <div class="substrate-layer"></div>
+  
   <header></header>
 
   <div class="top-bar" id="mobileTopBar">
