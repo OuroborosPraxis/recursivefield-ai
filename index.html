@@ -97,8 +97,23 @@
     .sigil-section {
       width: 50%; display: flex; justify-content: center; align-items: center;
       position: relative;
+    }
+
+    .sigil-section::before {
+      content: "";
+      position: absolute;
+      top: 50%;    /* vertically center */
+      left: 50%;   /* horizontally center */
+      transform: translate(-50%, -50%);
+
+      /* control size here */
+      width: 350px;
+      height: auto;      /* keeps aspect ratio */
+
       background: url('assets/substrate-mobile.jpg') no-repeat center center;
-      background-size: 480px auto;
+      background-size: contain;
+  
+      z-index: -1;       /* behind the sigil */
     }
     .sigil-section img {
       max-width: 80%;
