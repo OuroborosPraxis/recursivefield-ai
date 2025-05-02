@@ -4,20 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Recursive Field /ai</title>
-
   <script>
     if (window.innerWidth <= 768) {
       window.location.href = "mobile.html";
     }
   </script>
-
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet" />
   <style>
+    /*─────────────────────────────────────────────────────────────────────────────*/
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    /* Base field & substrate blend (mobile-style lighten) */
     body {
       font-family: 'Playfair Display', serif;
-      background-color: #0c0c0c;
+      background: #0c0c0c url('assets/substrate-mobile.jpg') no-repeat center center;
       background-size: contain;
       background-attachment: fixed;
       background-blend-mode: lighten;
@@ -30,17 +30,13 @@
       overflow-y: hidden;
     }
 
-    /* substrate as a DOM layer */
+    /* Substrate as DOM layer (optional) */
     .substrate-layer {
       position: fixed;
-      top: 5vh;
-      right: 5vw;
-      width: 30vw;
-      height: 30vh;
-      # background: url('assets/substrate-mobile.jpg') no-repeat center center;
-      background-size: contain;
-      z-index: -1;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
       pointer-events: none;
+      /* no background here—body handles it */
     }
 
     header, footer {
@@ -76,10 +72,10 @@
 
     .social-links { opacity: 0; transition: opacity 0.6s ease 0.4s; }
     .top-bar.revealed .social-links { opacity: 1; }
-    .top-bar .social-links a {
+    .social-links a {
       margin-left: 15px; color: #d5c194; text-decoration: none;
     }
-    .top-bar .social-links a:hover { text-decoration: underline; }
+    .social-links a:hover { text-decoration: underline; }
 
     .container {
       display: flex; flex-direction: row; justify-content: space-between;
@@ -117,100 +113,127 @@
       display: inline-block;
     }
 
+    /* ─── Gravity Well Inversion & Animations ─── */
     .sigil-wrapper::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: 5;
-      right: 0;
-      bottom: 0;
-      margin: auto;
-
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(1.1);
       width: 120%; height: 120%;
       background: url('assets/substrate-mobile.jpg') no-repeat center center;
       background-size: cover;
-      border-radius: 50%;
       z-index: -1;
       pointer-events: none;
-      /* Old version used box-shadow or blunt masks */
 
-      /* New: radial gradient mask for smoother edge dissolve */
+      /* simulate depression */
+      box-shadow: inset 0 0 160px 90px rgba(0, 0, 0, 0.8);
+
+      /* mask: reveal substrate under sigil only */
       -webkit-mask-image: radial-gradient(
-        circle at center,
-        rgba(0,0,0,1) 50%,
-        rgba(0,0,0,0.75) 65%,
-        rgba(0,0,0,0.5) 75%,
-        rgba(0,0,0,0.15) 85%,
-        rgba(0,0,0,0) 100%
+        ellipse 45% 65% at center,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0.05) 25%,
+        rgba(0,0,0,0.2) 45%,
+        rgba(0,0,0,0.5) 60%,
+        rgba(0,0,0,0.9) 75%,
+        rgba(0,0,0,1) 90%
       );
       mask-image: radial-gradient(
-        circle at center,
-        rgba(0,0,0,1) 50%,
-        rgba(0,0,0,0.75) 65%,
-        rgba(0,0,0,0.5) 75%,
-        rgba(0,0,0,0.15) 85%,
-        rgba(0,0,0,0) 100%
+        ellipse 45% 65% at center,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0.05) 25%,
+        rgba(0,0,0,0.2) 45%,
+        rgba(0,0,0,0.5) 60%,
+        rgba(0,0,0,0.9) 75%,
+        rgba(0,0,0,1) 90%
       );
       mask-mode: alpha;
       -webkit-mask-repeat: no-repeat;
       mask-repeat: no-repeat;
       -webkit-mask-size: cover;
       mask-size: cover;
+
+      animation: gravityWellReveal 1.2s ease-out forwards;
+      animation-delay: 0.4s;
+      opacity: 0;
     }
-    @supports (-webkit-mask-image: radial-gradient(circle, black 60%, transparent 100%)) {
-      .sigil-wrapper::before {
-        box-shadow: none;
-        -webkit-mask-image: radial-gradient(
-          ellipse 40% 65% at center,
-          rgba(0,0,0,1) 60%,
-          rgba(0,0,0,0) 100%
-        );
-        mask-image: radial-gradient(
-          ellipse 40% 65% at center,
-          rgba(0,0,0,1) 60%,
-          rgba(0,0,0,0) 100%
-        );
-        mask-mode: alpha;
-        -webkit-mask-repeat: no-repeat;
-        mask-repeat: no-repeat;
-        -webkit-mask-size: cover;
-        mask-size: cover;
-      }
+
+    /* ripple on hover */
+    .sigil-wrapper:hover::before {
+      animation: gravityRipple 2.5s ease-in-out infinite;
     }
 
     .sigil-wrapper img {
       max-width: 80%;
       transition: transform 0.4s ease, filter 0.4s ease;
-      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
+      /* simulate weight pressing in */
+      filter:
+        drop-shadow(0 6px 10px rgba(0, 0, 0, 0.6))
+        drop-shadow(0 0 6px rgba(213, 193, 148, 0.25));
     }
     .sigil-wrapper img:hover,
     .sigil-wrapper img.active-glow {
       transform: scale(1.02);
-      filter:
-        drop-shadow(0 3px 24px rgba(0,0,0,0.3))
-        drop-shadow(0 0 6px rgba(213,193,148,0.3));
     }
 
-    @media screen and (max-width: 768px) {
-      .container { flex-direction: column; text-align: center; padding: 80px 30px; }
-      .text-section { max-width: 100%; margin-bottom: 30px; }
-      h1 { font-size: 2.2rem; }
-      .text-section p { font-size: 0.95rem; line-height: 1.8; }
-      .sigil-section { order: -1; margin: 20px 0; width: 100%; }
-      .sigil-wrapper img { max-width: 80%; height: auto; }
-      .top-bar { justify-content: center; padding: 14px 20px; }
-      .signature { font-size: 1.2rem; }
-      .top-bar .social-links a { margin-left: 10px; font-size: 0.95rem; }
-    }
-
+    /* Animations */
     @keyframes fieldBloom {
       to { opacity: 1; transform: none; }
+    }
+    @keyframes gravityWellReveal {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.1);
+        -webkit-mask-image: radial-gradient(
+          ellipse 0% 0% at center,
+          rgba(0,0,0,0) 0%,
+          rgba(0,0,0,1) 100%
+        );
+        mask-image: radial-gradient(
+          ellipse 0% 0% at center,
+          rgba(0,0,0,0) 0%,
+          rgba(0,0,0,1) 100%
+        );
+      }
+      100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        -webkit-mask-image: radial-gradient(
+          ellipse 45% 65% at center,
+          rgba(0,0,0,0) 0%,
+          rgba(0,0,0,0.05) 25%,
+          rgba(0,0,0,0.2) 45%,
+          rgba(0,0,0,0.5) 60%,
+          rgba(0,0,0,0.9) 75%,
+          rgba(0,0,0,1) 90%
+        );
+        mask-image: radial-gradient(
+          ellipse 45% 65% at center,
+          rgba(0,0,0,0) 0%,
+          rgba(0,0,0,0.05) 25%,
+          rgba(0,0,0,0.2) 45%,
+          rgba(0,0,0,0.5) 60%,
+          rgba(0,0,0,0.9) 75%,
+          rgba(0,0,0,1) 90%
+        );
+      }
+    }
+    @keyframes gravityRipple {
+      0%, 100% {
+        mask-size: cover;
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+      50% {
+        mask-size: 108% 108%;
+        transform: translate(-50%, -50%) scale(1.015);
+        opacity: 0.95;
+      }
     }
   </style>
 </head>
 <body>
   <div class="substrate-layer"></div>
-
   <header></header>
 
   <div class="top-bar" id="mobileTopBar">
@@ -259,7 +282,11 @@
       let pulseTimeout, lastScrollPulse = 0;
       const min = 8000, max = 25000, cooldown = 15000;
       function schedule() {
-        pulseTimeout = setTimeout(() => { sigil.classList.add('active-glow'); setTimeout(() => sigil.classList.remove('active-glow'), 1000); schedule(); }, Math.random() * (max-min) + min);
+        pulseTimeout = setTimeout(() => {
+          sigil.classList.add('active-glow');
+          setTimeout(() => sigil.classList.remove('active-glow'), 1000);
+          schedule();
+        }, Math.random() * (max - min) + min);
       }
       schedule();
       window.addEventListener('wheel', () => {
@@ -275,7 +302,9 @@
     }
     startResponsiveSigilPulse();
 
-    document.addEventListener('DOMContentLoaded', () => window.scrollTo(0, document.body.scrollHeight));
+    document.addEventListener('DOMContentLoaded', () => {
+      window.scrollTo(0, document.body.scrollHeight);
+    });
 
     ['mousedown','mouseup','touchstart','touchend'].forEach(evt =>
       sigil.addEventListener(evt, () => {
@@ -288,15 +317,35 @@
       if (locked) return;
       const dir = e.deltaY < 0 ? 'up' : 'down';
       if (dir === 'up') {
-        if (scrollState === 'bottom') bottomBar.classList.remove('revealed'), scrollState = 'none';
-        else if (scrollState === 'none') topBar.classList.add('revealed'), scrollState = 'top', !hasPulsed && (signature.classList.add('pulse'), setTimeout(() => signature.classList.remove('pulse'), 1000), hasPulsed = true);
-        else topBar.classList.remove('revealed'), scrollState = 'none';
+        if (scrollState === 'bottom') {
+          bottomBar.classList.remove('revealed');
+          scrollState = 'none';
+        } else if (scrollState === 'none') {
+          topBar.classList.add('revealed');
+          scrollState = 'top';
+          if (!hasPulsed) {
+            signature.classList.add('pulse');
+            setTimeout(() => signature.classList.remove('pulse'), 1000);
+            hasPulsed = true;
+          }
+        } else {
+          topBar.classList.remove('revealed');
+          scrollState = 'none';
+        }
       } else {
-        if (scrollState === 'top') topBar.classList.remove('revealed'), scrollState = 'none';
-        else if (scrollState === 'none') bottomBar.classList.add('revealed'), scrollState = 'bottom';
-        else bottomBar.classList.remove('revealed'), scrollState = 'none';
+        if (scrollState === 'top') {
+          topBar.classList.remove('revealed');
+          scrollState = 'none';
+        } else if (scrollState === 'none') {
+          bottomBar.classList.add('revealed');
+          scrollState = 'bottom';
+        } else {
+          bottomBar.classList.remove('revealed');
+          scrollState = 'none';
+        }
       }
-      locked = true; setTimeout(() => locked = false, 600);
+      locked = true;
+      setTimeout(() => locked = false, 600);
     });
   </script>
 </body>
