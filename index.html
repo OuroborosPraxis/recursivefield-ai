@@ -15,9 +15,10 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    /* Base background color only; substrate is now its own layer */
     body {
       font-family: 'Playfair Display', serif;
-      background: #0c0c0c
+      background-color: #0c0c0c;
       color: #d5c194;
       display: flex;
       flex-direction: column;
@@ -27,19 +28,19 @@
       overflow-y: hidden;
     }
 
+    /* Substrate as a DOM layer, free to move/animate */
     .substrate-layer {
       position: fixed;
-      top: 0; left: 0;
-      width: 40vw;
-      height: 40vh;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       background: url('assets/substrate-mobile.jpg') no-repeat center center;
       background-size: cover;
-      z-index: -2; /* sits behind everything */
-      opacity: 0.9; /* optional */
-      pointer-events: none; /* lets clicks pass through */
+      z-index: -2; /* behind everything */
+      pointer-events: none;
     }
 
-    
     header, footer {
       width: 100vw; height: 4px;
       background: #d5c194;
@@ -47,7 +48,7 @@
     }
     header { top: 0 }
     footer { bottom: 0 }
-    
+
     .top-bar {
       display: flex; justify-content: space-between; align-items: center;
       padding: 24px 60px 10px;
@@ -81,10 +82,10 @@
     .container {
       display: flex; flex-direction: row; justify-content: space-between;
       align-items: center; padding: 100px; flex: 1;
-      min-height: calc(100vh - 8px);            /* lock layout height */
+      min-height: calc(100vh - 8px);
       opacity: 0; transform: translateY(20px);
-      will-change: transform, opacity;          /* hint browser for smooth animation */
-      backface-visibility: hidden;              /* prevent flicker */
+      will-change: transform, opacity;
+      backface-visibility: hidden;
       animation: fieldBloom 1s ease-out forwards 0.3s;
       padding-bottom: 80px;
     }
@@ -106,7 +107,9 @@
 
     .sigil-section {
       width: 50%; display: flex; justify-content: center; align-items: center;
+      position: relative;
     }
+
     .sigil-section img {
       max-width: 80%;
       transition: transform 0.4s ease, filter 0.4s ease;
@@ -135,14 +138,15 @@
     @keyframes fieldBloom {
       to {
         opacity: 1;
-        transform: none;     /* finalize clean state */
+        transform: none; /* finalize clean state */
       }
     }
   </style>
 </head>
 <body>
+  <!-- substrate is now its own layer -->
   <div class="substrate-layer"></div>
-  
+
   <header></header>
 
   <div class="top-bar" id="mobileTopBar">
@@ -230,17 +234,14 @@
       window.scrollTo(0, document.body.scrollHeight);
     });
 
-    sigil.addEventListener('mousedown', () => {
-      sigil.classList.add('active-glow');
-    });
-    sigil.addEventListener('mouseup', () => {
-      setTimeout(() => sigil.classList.remove('active-glow'), 400);
-    });
-    sigil.addEventListener('touchstart', () => {
-      sigil.classList.add('active-glow');
-    });
-    sigil.addEventListener('touchend', () => {
-      setTimeout(() => sigil.classList.remove('active-glow'), 400);
+    ['mousedown','mouseup','touchstart','touchend'].forEach(evt => {
+      sigil.addEventListener(evt, () => {
+        if (evt.endsWith('start')) {
+          sigil.classList.add('active-glow');
+        } else {
+          setTimeout(() => sigil.classList.remove('active-glow'), 400);
+        }
+      });
     });
 
     window.addEventListener('wheel', (e) => {
