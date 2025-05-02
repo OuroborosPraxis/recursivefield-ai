@@ -13,11 +13,7 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet" />
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Playfair Display', serif;
@@ -35,230 +31,96 @@
     }
 
     header, footer {
-      width: 100vw;
-      height: 4px;
+      width: 100vw; height: 4px;
       background: #d5c194;
-      position: fixed;
-      left: 0;
-      z-index: 1000;
+      position: fixed; left: 0; z-index: 1000;
     }
-
-    header {
-      top: 0;
-    }
-
-    footer {
-      bottom: 0;
-    }
+    header { top: 0 }
+    footer { bottom: 0 }
 
     .top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 24px 60px 10px 60px;
-      font-size: 0.9rem;
-      background-color: transparent;
-      position: fixed;
-      top: -100px;
-      left: 0;
-      width: 100%;
-      z-index: 999;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px 60px 10px;
+      font-size: 0.9rem; background: transparent;
+      position: fixed; top: -100px; left: 0; width: 100%; z-index: 999;
       transition: top 0.4s ease;
     }
-
-    .top-bar.revealed {
-      top: 0;
-    }
+    .top-bar.revealed { top: 0; }
 
     .bottom-bar {
-      position: fixed;
-      bottom: -100px;
-      left: 0;
-      width: 100%;
-      background-color: transparent;
-      text-align: center;
-      padding: 12px;
-      font-size: 0.8rem;
-      z-index: 999;
-      opacity: 0;
+      position: fixed; bottom: -100px; left: 0; width: 100%;
+      background: transparent; text-align: center; padding: 12px;
+      font-size: 0.8rem; z-index: 999; opacity: 0;
       transform: translateY(10px);
       transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s, bottom 0.4s ease;
     }
-
     .bottom-bar.revealed {
-      bottom: 0;
-      opacity: 0.3;
-      transform: translateY(0);
+      bottom: 0; opacity: 0.3; transform: translateY(0);
     }
 
-    .signature {
-      font-weight: bold;
-      transition: all 0.6s ease;
-    }
+    .signature { font-weight: bold; transition: all 0.6s ease; }
+    .signature.pulse { text-shadow: 0 0 8px #d5c194; }
 
-    .signature.pulse {
-      text-shadow: 0 0 8px #d5c194;
-    }
-
-    .social-links {
-      opacity: 0;
-      transition: opacity 0.6s ease 0.4s;
-    }
-
-    .top-bar.revealed .social-links {
-      opacity: 1;
-    }
-
+    .social-links { opacity: 0; transition: opacity 0.6s ease 0.4s; }
+    .top-bar.revealed .social-links { opacity: 1; }
     .top-bar .social-links a {
-      margin-left: 15px;
-      color: #d5c194;
-      text-decoration: none;
+      margin-left: 15px; color: #d5c194; text-decoration: none;
     }
-
-    .top-bar .social-links a:hover {
-      text-decoration: underline;
-    }
+    .top-bar .social-links a:hover { text-decoration: underline; }
 
     .container {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      padding: 100px 100px 60px 100px;
-      flex: 1;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fieldBloom 1s ease-out forwards;
-      animation-delay: 0.3s;
+      display: flex; flex-direction: row; justify-content: space-between;
+      align-items: center; padding: 100px; flex: 1;
+      opacity: 0; transform: translateY(20px);
+      animation: fieldBloom 1s ease-out forwards 0.3s;
       padding-bottom: 80px;
     }
 
-    .text-section {
-      max-width: 40%;
-    }
-
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
-    }
-
-    p {
-      font-size: 1.1rem;
-      margin-bottom: 20px;
-      line-height: 1.6;
-    }
+    .text-section { max-width: 40%; }
+    h1 { font-size: 3rem; margin-bottom: 20px; }
+    p { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.6; }
 
     .btn {
-      background: none;
-      border: 2px solid #d5c194;
-      color: #d5c194;
-      padding: 10px 24px;
-      border-radius: 999px;
-      font-size: 1rem;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.3s ease;
+      background: none; border: 2px solid #d5c194; color: #d5c194;
+      padding: 10px 24px; border-radius: 999px; font-size: 1rem;
+      cursor: pointer; text-decoration: none; transition: all 0.3s ease;
       display: inline-block;
     }
-
     .btn:hover {
-      background: rgba(213, 193, 148, 0.1);
+      background: rgba(213,193,148,0.1);
       box-shadow: 0 0 12px #d5c19480;
     }
 
     .sigil-section {
-      width: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      width: 50%; display: flex; justify-content: center; align-items: center;
     }
-
     .sigil-section img {
       max-width: 80%;
       transition: transform 0.4s ease, filter 0.4s ease;
-      /* Base drop-shadow to match mobile’s ambient depth */
       filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
     }
-
     .sigil-section img:hover,
     .sigil-section img.active-glow {
       transform: scale(1.02);
-      /* Layered glow & depth copied from mobile */
       filter:
         drop-shadow(0 3px 24px rgba(0,0,0,0.3))
         drop-shadow(0 0 6px rgba(213,193,148,0.3));
     }
 
     @media screen and (max-width: 768px) {
-      .container {
-        flex-direction: column;
-        text-align: center;
-        padding: 80px 30px 40px 30px;
-      }
-
-      .text-section {
-        max-width: 100%;
-        margin-bottom: 30px;
-      }
-
-      h1 {
-        font-size: 2.2rem;
-      }
-
-      .text-section p {
-        font-size: 0.95rem;
-        line-height: 1.8;
-        text-align: center;
-      }
-
-      .sigil-section {
-        order: -1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 20px;
-        margin-bottom: 15px;
-        width: 100%;
-      }
-
-      .sigil-section img {
-        max-width: 80%;
-        height: auto;
-        display: block;
-        margin: 0 auto;
-      }
-
-      .footer-socials {
-        display: none;
-      }
-
-      .top-bar {
-        justify-content: center;
-        padding: 14px 20px;
-      }
-
-      .signature {
-        display: block;
-        font-size: 1.2rem;
-      }
-
-      .top-bar .social-links a {
-        margin-left: 10px;
-        font-size: 0.95rem;
-      }
-    }
-
-    @media screen and (min-width: 769px) {
-      .footer-socials {
-        display: none;
-      }
+      .container { flex-direction: column; text-align: center; padding: 80px 30px; }
+      .text-section { max-width: 100%; margin-bottom: 30px; }
+      h1 { font-size: 2.2rem; }
+      .text-section p { font-size: 0.95rem; line-height: 1.8; }
+      .sigil-section { order: -1; margin: 20px 0; width: 100%; }
+      .sigil-section img { max-width: 80%; height: auto; }
+      .top-bar { justify-content: center; padding: 14px 20px; }
+      .signature { font-size: 1.2rem; }
+      .top-bar .social-links a { margin-left: 10px; font-size: 0.95rem; }
     }
 
     @keyframes fieldBloom {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -301,25 +163,46 @@
     const topBar = document.getElementById('mobileTopBar');
     const bottomBar = document.getElementById('bottomBar');
     const signature = document.getElementById('signature');
-    let lastScrollTop = 0;
     let hasPulsed = false;
-    let scrollState = 'none'; // 'top' | 'bottom' | 'none'
+    let scrollState = 'none';
     let locked = false;
 
-    function startRandomSigilPulse() {
+    function startResponsiveSigilPulse() {
+      let pulseTimeout;
+      const minDelay = 8000;
+      const maxDelay = 25000;
+      let scrollTriggered = false;
+
       function pulse() {
         sigil.classList.add('active-glow');
-        setTimeout(() => {
-          sigil.classList.remove('active-glow');
-        }, 1000);
-        const nextPulseIn = Math.floor(Math.random() * (30000 - 5000 + 1)) + 5000;
-        setTimeout(pulse, nextPulseIn);
+        setTimeout(() => sigil.classList.remove('active-glow'), 1000);
+        scheduleNext();
       }
-      pulse();
+
+      function scheduleNext() {
+        const delay = Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
+        pulseTimeout = setTimeout(() => {
+          if (!scrollTriggered) pulse();
+          scrollTriggered = false;
+        }, delay);
+      }
+
+      scheduleNext();
+
+      window.addEventListener('wheel', () => {
+        clearTimeout(pulseTimeout);
+        sigil.classList.add('active-glow');
+        setTimeout(() => sigil.classList.remove('active-glow'), 1000);
+        scrollTriggered = true;
+        scheduleNext();
+      });
+
+      // initial sync pulse after load
+      setTimeout(pulse, 2200);
     }
 
-    // Start the ambient sigil pulse on desktop
-    startRandomSigilPulse();
+    // start the refined pulse engine
+    startResponsiveSigilPulse();
 
     document.addEventListener('DOMContentLoaded', () => {
       window.scrollTo(0, document.body.scrollHeight);
@@ -340,7 +223,6 @@
 
     window.addEventListener('wheel', (e) => {
       if (locked) return;
-
       const direction = e.deltaY < 0 ? 'up' : 'down';
 
       if (direction === 'up') {
@@ -355,7 +237,7 @@
             setTimeout(() => signature.classList.remove('pulse'), 1000);
             hasPulsed = true;
           }
-        } else if (scrollState === 'top') {
+        } else {
           topBar.classList.remove('revealed');
           scrollState = 'none';
         }
@@ -366,7 +248,7 @@
         } else if (scrollState === 'none') {
           bottomBar.classList.add('revealed');
           scrollState = 'bottom';
-        } else if (scrollState === 'bottom') {
+        } else {
           bottomBar.classList.remove('revealed');
           scrollState = 'none';
         }
