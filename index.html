@@ -190,10 +190,16 @@
       scheduleNext();
 
       window.addEventListener('wheel', () => {
-        clearTimeout(pulseTimeout);
-        sigil.classList.add('active-glow');
-        setTimeout(() => sigil.classList.remove('active-glow'), 1000);
-        scrollTriggered = true;
+        learTimeout(pulseTimeout);
+
+        const now = Date.now();
+        if (now - lastScrollPulse > scrollPulseCooldown) {
+          sigil.classList.add('active-glow');
+          setTimeout(() => sigil.classList.remove('active-glow'), 1000);
+          lastScrollPulse = now;
+          scrollTriggered = true;
+        }
+        
         scheduleNext();
       });
 
