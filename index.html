@@ -71,7 +71,10 @@
     .container {
       display: flex; flex-direction: row; justify-content: space-between;
       align-items: center; padding: 100px; flex: 1;
+      min-height: calc(100vh - 8px);            /* lock layout height */
       opacity: 0; transform: translateY(20px);
+      will-change: transform, opacity;          /* hint browser for smooth animation */
+      backface-visibility: hidden;              /* prevent flicker */
       animation: fieldBloom 1s ease-out forwards 0.3s;
       padding-bottom: 80px;
     }
@@ -120,7 +123,10 @@
     }
 
     @keyframes fieldBloom {
-      to { opacity: 1; transform: translateY(0); }
+      to {
+        opacity: 1;
+        transform: none;     /* finalize clean state */
+      }
     }
   </style>
 </head>
@@ -172,6 +178,8 @@
       const minDelay = 8000;
       const maxDelay = 25000;
       let scrollTriggered = false;
+      let lastScrollPulse = 0;
+      const scrollPulseCooldown = 15000;
 
       function pulse() {
         sigil.classList.add('active-glow');
@@ -190,24 +198,20 @@
       scheduleNext();
 
       window.addEventListener('wheel', () => {
-        learTimeout(pulseTimeout);
-
         const now = Date.now();
         if (now - lastScrollPulse > scrollPulseCooldown) {
+          clearTimeout(pulseTimeout);
           sigil.classList.add('active-glow');
           setTimeout(() => sigil.classList.remove('active-glow'), 1000);
           lastScrollPulse = now;
           scrollTriggered = true;
+          scheduleNext();
         }
-        
-        scheduleNext();
       });
 
-      // initial sync pulse after load
       setTimeout(pulse, 2200);
     }
 
-    // start the refined pulse engine
     startResponsiveSigilPulse();
 
     document.addEventListener('DOMContentLoaded', () => {
