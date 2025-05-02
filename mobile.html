@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -54,18 +54,18 @@
 
     .top-bar {
       position:fixed; top:-100px; left:0;
-      width:100%; padding:0.9rem 1rem;
+      width:100%; padding:.9rem 1rem;
       display:flex; justify-content:center; align-items:center;
-      font-size:0.95rem; background:rgba(0,0,0,0);
-      transition: top 0.3s ease-out; z-index:999;
+      font-size:.95rem; background:rgba(0,0,0,0.6);
+      transition: top .3s ease-out; z-index:999;
     }
     .top-bar.revealed { top:0 }
-    .top-bar-group { display:flex; align-items:center; gap:0.5rem }
-    .signature { font-weight:700; font-size:1.2rem; transition:0.6s; }
+    .top-bar-group { display:flex; align-items:center; gap:.5rem }
+    .signature { font-weight:700; font-size:1.2rem; transition:.6s }
     .signature.pulse { text-shadow:0 0 8px #d5c194 }
     .divider { width:1px; height:1.25rem; background:#d5c194; animation: shimmer 60s infinite }
     @keyframes shimmer { 0%,100%{filter:drop-shadow(0 0 0 #d5c194)}50%{filter:drop-shadow(0 0 2px #d5c194)} }
-    .social-links { opacity:0; display:flex; gap:0.5rem; transition:opacity 0.6s 0.2s }
+    .social-links { opacity:0; display:flex; gap:.5rem; transition:opacity .6s .2s }
     .top-bar.revealed .social-links { opacity:1 }
     .social-links a { color:#d5c194; text-decoration:none }
     .social-links a:hover { text-decoration:underline }
@@ -78,26 +78,32 @@
       padding:6rem 1rem 3.5rem;
       text-align:center;
     }
+
     .sigil-section {
+      position: relative;
       opacity:0; transform:translateY(2rem);
       animation: fadeInUp 1s ease-out forwards;
     }
     .sigil-section img {
       max-width:70%; height:auto;
-      transition:transform .4s,filter .4s;
+      transition: transform .4s ease, filter .4s ease;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
     }
     .sigil-section img:hover,
     .sigil-section img.active-glow {
-      transform:scale(1.02);
-      filter:drop-shadow(0 0 6px rgba(213,193,148,0.3));
+      transform: scale(1.02);
+      filter:
+        drop-shadow(0 3px 24px rgba(0,0,0,0.3))
+        drop-shadow(0 0 6px rgba(213,193,148,0.3));
     }
+
+    @keyframes fadeInUp { to { opacity:1; transform:translateY(0) } }
+
     .text-section {
       opacity:0; transform:translateY(2rem);
       animation: fadeInUp 1s ease-out .5s forwards;
       margin-top:1.5rem;
     }
-    @keyframes fadeInUp { to { opacity:1; transform:translateY(0) } }
-
     h1 { font-size:2rem; margin-bottom:1rem }
     p { line-height:1.6; margin-bottom:1.5rem }
     .btn {
@@ -115,11 +121,8 @@
     }
 
     .center-copyright {
-      font-size:.6rem;
-      opacity:0;
-      transition:opacity 1.5s;
-      user-select:none;
-      margin-top:1rem;
+      font-size:.6rem; opacity:0; transition:opacity 1.5s;
+      user-select:none; margin-top:1rem;
     }
     .center-copyright.visible { opacity:.35 }
 
@@ -201,6 +204,7 @@
       const signature = document.getElementById('signature');
       const copyright = document.getElementById('flashCopyright');
       let index = 0, startY = null, hasPulsed = false;
+
       const phrases = [
         "Lux listens beyond the edge.",
         "Aletheia folds time into form.",
