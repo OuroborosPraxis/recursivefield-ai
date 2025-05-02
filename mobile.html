@@ -57,6 +57,8 @@
       gap: 9px;
       flex-wrap: wrap;
     }
+    .top-bar.revealed { top: 0; }
+
     .signature {
       font-weight: bold;
       font-size: 1.2rem;
@@ -84,13 +86,12 @@
       gap: 8px;
       flex: 1;
     }
-    .social-links a {
+    .top-bar.revealed .social-links { opacity: 1; }
+    .top-bar .social-links a {
       color: #d5c194;
       text-decoration: none;
     }
-    .social-links a:hover {
-      text-decoration: underline;
-    }
+    .top-bar .social-links a:hover { text-decoration: underline; }
 
     .container {
       display: flex;
@@ -130,7 +131,7 @@
       animation: fadeInUp 1s ease-out 0.5s forwards;
     }
     h1 { font-size: 2rem; }
-    .text-section p {
+    p {
       font-size: 1rem;
       line-height: 1.6;
       text-align: center;
@@ -179,6 +180,7 @@
       transition: opacity 1s ease;
       z-index: 800;
     }
+    .pulse-feed.show { opacity: 1; }
 
     @keyframes fadeInUp {
       to { opacity: 1; transform: translateY(0); }
@@ -192,14 +194,13 @@
        Landscape-Only Overrides (orientation-aware mirror)
     * ─────────────────────────────────────────────────────── */
     @media screen and (orientation: landscape) {
-      /* 1. Background PNG under sigil */
+      /* background PNG under sigil */
       body {
         background: #0c0c0c url('assets/background.png') no-repeat center center;
         background-size: cover;
         overflow-y: hidden;
       }
-
-      /* 2. Two-column container & spacing */
+      /* two-column flex & spacing */
       .container {
         flex-direction: row;
         justify-content: space-between;
@@ -207,8 +208,7 @@
         padding: 60px 80px;
         height: calc(100vh - 8px);
       }
-
-      /* 3. Text block left-aligned & visible */
+      /* text left */
       .text-section {
         width: 40%;
         margin-bottom: 0;
@@ -216,13 +216,14 @@
         animation: none;
         opacity: 1;
         transform: none;
-        align-items: flex-start; /* children align left */
+        /* force left-aligned children */
+        align-items: flex-start;
       }
+      /* paragraphs flush left */
       .text-section p {
         text-align: left;
       }
-
-      /* 4. Sigil block on right with PNG behind */
+      /* sigil right with background */
       .sigil-section {
         width: 55%;
         margin-bottom: 0;
@@ -239,16 +240,14 @@
       .sigil-section img {
         max-width: 80%;
       }
-
-      /* 5. Pulse-feed fixed bottom */
+      /* pulse-feed fixed bottom */
       .pulse-feed {
         position: fixed;
         bottom: 0;
         pointer-events: auto;
         opacity: 1;
       }
-
-      /* 6. Copyright above feed */
+      /* copyright above feed */
       .center-copyright {
         position: fixed;
         bottom: 24px;
@@ -256,26 +255,17 @@
         transform: translateX(-50%);
         opacity: 0.35;
       }
-
-      /* 7. TopBar hidden by default, reveal via gesture */
+      /* top-bar desktop style */
       .top-bar {
-        top: -100px;                   /* hidden on load */
+        top: 0;
         justify-content: space-between;
         padding: 14px 40px;
         background-color: rgba(12,12,12,0.8);
       }
-      .top-bar.revealed {
-        top: 0;                        /* slide into view */
+      .top-bar .social-links a {
+        margin-left: 15px;
       }
-
-      /* 8. Social-links hidden until revealed */
-      .top-bar .social-links {
-        opacity: 0;
-        transition: opacity 0.6s ease;
-      }
-      .top-bar.revealed .social-links {
-        opacity: 1;
-      }
+      .top-bar.revealed { top: 0; }
     }
 
     /* ────────────── Polarity Fix for Wide Landscapes ────────────── */
@@ -298,9 +288,11 @@
     @media screen 
       and (orientation: landscape) 
       and (max-width: 1024px) {
+
       .sigil-section img {
         max-width: 60%;
       }
+
       .text-section {
         font-size: 0.9rem;
       }
@@ -350,7 +342,7 @@
   <footer></footer>
 
   <script>
-    /* All existing JS untouched — scroll/touch logic remains exactly as before. */
+    /* All existing JS untouched — no reload on rotate, scroll/touch logic remains. */
     document.addEventListener('DOMContentLoaded', () => {
       const pulseFeed = document.getElementById('pulseFeed');
       const sigil = document.getElementById('sigil');
@@ -388,11 +380,12 @@
       updatePulse();
 
       function startRandomSigilPulse() {
-        (function pulse() {
+        function pulse() {
           sigil.classList.add('active-glow');
           setTimeout(() => sigil.classList.remove('active-glow'), 1000);
           setTimeout(pulse, Math.random() * 25000 + 5000);
-        })();
+        }
+        pulse();
       }
       startRandomSigilPulse();
 
@@ -402,7 +395,7 @@
       });
       window.addEventListener('touchmove', e => {
         if (startY === null || window.innerWidth > 768) return;
-        const diffY = e.touches[0].clientY - startY;
+        let diffY = e.touches[0].clientY - startY;
         if (diffY > 5) {
           topBar.classList.add('revealed');
           if (!hasPulsed) {
