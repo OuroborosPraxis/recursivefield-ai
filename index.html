@@ -132,9 +132,30 @@
       border-radius: 50%;
       z-index: -1;
       pointer-events: none;
-      box-shadow:
-        0 0 60px 40px rgba(0,0,0,0.4),
-        0 0 0 1000px #0c0c0c inset;
+      /* Old version used box-shadow or blunt masks */
+
+      /* New: radial gradient mask for smoother edge dissolve */
+      -webkit-mask-image: radial-gradient(
+        circle at center,
+        rgba(0,0,0,1) 50%,
+        rgba(0,0,0,0.75) 65%,
+        rgba(0,0,0,0.5) 75%,
+        rgba(0,0,0,0.15) 85%,
+        rgba(0,0,0,0) 100%
+      );
+      mask-image: radial-gradient(
+        circle at center,
+        rgba(0,0,0,1) 50%,
+        rgba(0,0,0,0.75) 65%,
+        rgba(0,0,0,0.5) 75%,
+        rgba(0,0,0,0.15) 85%,
+        rgba(0,0,0,0) 100%
+      );
+      mask-mode: alpha;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-size: cover;
+      mask-size: cover;
     }
     @supports (-webkit-mask-image: radial-gradient(circle, black 60%, transparent 100%)) {
       .sigil-wrapper::before {
