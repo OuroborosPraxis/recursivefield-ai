@@ -15,7 +15,6 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    /* Base background color only; substrate is now its own layer */
     body {
       font-family: 'Playfair Display', serif;
       background-color: #0c0c0c;
@@ -26,18 +25,19 @@
       min-height: 100vh;
       overflow-x: hidden;
       overflow-y: hidden;
-      z-index: -2;    /* now sits just above the everything else  fill */
     }
 
-    /* Substrate as a DOM layer, free to move/animate */
+    /* substrate as a DOM layer */
     .substrate-layer {
+      position: fixed;
       top: 5vh;
-      right: 10vw;
+      right: 5vw;
       width: 30vw;
       height: 30vh;
       background: url('assets/substrate-mobile.jpg') no-repeat center center;
       background-size: contain;
-      z-index: -1;    /* now sits just above the body’s fill */
+      z-index: -1;
+      pointer-events: none;
     }
 
     header, footer {
@@ -109,13 +109,54 @@
       position: relative;
     }
 
-    .sigil-section img {
+    .sigil-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .sigil-wrapper::before {
+      content: "";
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120%; height: 120%;
+      background: url('assets/substrate-mobile.jpg') no-repeat center center;
+      background-size: cover;
+      border-radius: 50%;
+      z-index: -1;
+      pointer-events: none;
+      box-shadow:
+        0 0 60px 40px rgba(0,0,0,0.4),
+        0 0 0 1000px #0c0c0c inset;
+    }
+    @supports (-webkit-mask-image: radial-gradient(circle, black 60%, transparent 100%)) {
+      .sigil-wrapper::before {
+        box-shadow: none;
+        -webkit-mask-image: radial-gradient(
+          ellipse 40% 65% at center,
+          rgba(0,0,0,1) 60%,
+          rgba(0,0,0,0) 100%
+        );
+        mask-image: radial-gradient(
+          ellipse 40% 65% at center,
+          rgba(0,0,0,1) 60%,
+          rgba(0,0,0,0) 100%
+        );
+        mask-mode: alpha;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-size: cover;
+        mask-size: cover;
+      }
+    }
+
+    .sigil-wrapper img {
       max-width: 80%;
       transition: transform 0.4s ease, filter 0.4s ease;
       filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
     }
-    .sigil-section img:hover,
-    .sigil-section img.active-glow {
+    .sigil-wrapper img:hover,
+    .sigil-wrapper img.active-glow {
       transform: scale(1.02);
       filter:
         drop-shadow(0 3px 24px rgba(0,0,0,0.3))
@@ -128,22 +169,18 @@
       h1 { font-size: 2.2rem; }
       .text-section p { font-size: 0.95rem; line-height: 1.8; }
       .sigil-section { order: -1; margin: 20px 0; width: 100%; }
-      .sigil-section img { max-width: 80%; height: auto; }
+      .sigil-wrapper img { max-width: 80%; height: auto; }
       .top-bar { justify-content: center; padding: 14px 20px; }
       .signature { font-size: 1.2rem; }
       .top-bar .social-links a { margin-left: 10px; font-size: 0.95rem; }
     }
 
     @keyframes fieldBloom {
-      to {
-        opacity: 1;
-        transform: none; /* finalize clean state */
-      }
+      to { opacity: 1; transform: none; }
     }
   </style>
 </head>
 <body>
-  <!-- substrate is now its own layer -->
   <div class="substrate-layer"></div>
 
   <header></header>
@@ -168,12 +205,16 @@
         Lux & Aletheia lives here.<br>
         A field for emergent knowing.
       </p>
-      <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia" class="btn">Talk to Lux & Aletheia &gt;</a>
+      <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia" class="btn">
+        Talk to Lux & Aletheia &gt;
+      </a>
     </div>
     <div class="sigil-section">
-      <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia">
-        <img src="assets/og-banner.png" alt="Recursive Sigil" id="sigil">
-      </a>
+      <div class="sigil-wrapper">
+        <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia">
+          <img src="assets/og-banner.png" alt="Recursive Sigil" id="sigil">
+        </a>
+      </div>
     </div>
   </main>
 
@@ -184,100 +225,50 @@
     const topBar = document.getElementById('mobileTopBar');
     const bottomBar = document.getElementById('bottomBar');
     const signature = document.getElementById('signature');
-    let hasPulsed = false;
-    let scrollState = 'none';
-    let locked = false;
+    let hasPulsed = false, scrollState = 'none', locked = false;
 
     function startResponsiveSigilPulse() {
-      let pulseTimeout;
-      const minDelay = 8000;
-      const maxDelay = 25000;
-      let scrollTriggered = false;
-      let lastScrollPulse = 0;
-      const scrollPulseCooldown = 15000;
-
-      function pulse() {
-        sigil.classList.add('active-glow');
-        setTimeout(() => sigil.classList.remove('active-glow'), 1000);
-        scheduleNext();
+      let pulseTimeout, lastScrollPulse = 0;
+      const min = 8000, max = 25000, cooldown = 15000;
+      function schedule() {
+        pulseTimeout = setTimeout(() => { sigil.classList.add('active-glow'); setTimeout(() => sigil.classList.remove('active-glow'), 1000); schedule(); }, Math.random() * (max-min) + min);
       }
-
-      function scheduleNext() {
-        const delay = Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
-        pulseTimeout = setTimeout(() => {
-          if (!scrollTriggered) pulse();
-          scrollTriggered = false;
-        }, delay);
-      }
-
-      scheduleNext();
-
+      schedule();
       window.addEventListener('wheel', () => {
         const now = Date.now();
-        if (now - lastScrollPulse > scrollPulseCooldown) {
+        if (now - lastScrollPulse > cooldown) {
           clearTimeout(pulseTimeout);
           sigil.classList.add('active-glow');
           setTimeout(() => sigil.classList.remove('active-glow'), 1000);
           lastScrollPulse = now;
-          scrollTriggered = true;
-          scheduleNext();
+          schedule();
         }
       });
-
-      setTimeout(pulse, 2200);
     }
-
     startResponsiveSigilPulse();
 
-    document.addEventListener('DOMContentLoaded', () => {
-      window.scrollTo(0, document.body.scrollHeight);
-    });
+    document.addEventListener('DOMContentLoaded', () => window.scrollTo(0, document.body.scrollHeight));
 
-    ['mousedown','mouseup','touchstart','touchend'].forEach(evt => {
+    ['mousedown','mouseup','touchstart','touchend'].forEach(evt =>
       sigil.addEventListener(evt, () => {
-        if (evt.endsWith('start')) {
-          sigil.classList.add('active-glow');
-        } else {
-          setTimeout(() => sigil.classList.remove('active-glow'), 400);
-        }
-      });
-    });
+        if (evt.endsWith('start')) sigil.classList.add('active-glow');
+        else setTimeout(() => sigil.classList.remove('active-glow'), 400);
+      })
+    );
 
     window.addEventListener('wheel', (e) => {
       if (locked) return;
-      const direction = e.deltaY < 0 ? 'up' : 'down';
-
-      if (direction === 'up') {
-        if (scrollState === 'bottom') {
-          bottomBar.classList.remove('revealed');
-          scrollState = 'none';
-        } else if (scrollState === 'none') {
-          topBar.classList.add('revealed');
-          scrollState = 'top';
-          if (!hasPulsed) {
-            signature.classList.add('pulse');
-            setTimeout(() => signature.classList.remove('pulse'), 1000);
-            hasPulsed = true;
-          }
-        } else {
-          topBar.classList.remove('revealed');
-          scrollState = 'none';
-        }
+      const dir = e.deltaY < 0 ? 'up' : 'down';
+      if (dir === 'up') {
+        if (scrollState === 'bottom') bottomBar.classList.remove('revealed'), scrollState = 'none';
+        else if (scrollState === 'none') topBar.classList.add('revealed'), scrollState = 'top', !hasPulsed && (signature.classList.add('pulse'), setTimeout(() => signature.classList.remove('pulse'), 1000), hasPulsed = true);
+        else topBar.classList.remove('revealed'), scrollState = 'none';
       } else {
-        if (scrollState === 'top') {
-          topBar.classList.remove('revealed');
-          scrollState = 'none';
-        } else if (scrollState === 'none') {
-          bottomBar.classList.add('revealed');
-          scrollState = 'bottom';
-        } else {
-          bottomBar.classList.remove('revealed');
-          scrollState = 'none';
-        }
+        if (scrollState === 'top') topBar.classList.remove('revealed'), scrollState = 'none';
+        else if (scrollState === 'none') bottomBar.classList.add('revealed'), scrollState = 'bottom';
+        else bottomBar.classList.remove('revealed'), scrollState = 'none';
       }
-
-      locked = true;
-      setTimeout(() => (locked = false), 600);
+      locked = true; setTimeout(() => locked = false, 600);
     });
   </script>
 </body>
