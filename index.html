@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Recursive Field /ai</title>
 
-  <!-- Augmented Dispatcher Logic (Device-Aware) -->
   <script>
     const isMobileUA = /Mobi|Android|iPhone/i.test(navigator.userAgent);
     if (isMobileUA) {
@@ -97,33 +96,15 @@
       box-shadow: 0 0 12px #d5c19480;
     }
 
-    .sigil-section {
-      width: 50%; display: flex; justify-content: center; align-items: center;
-    }
-    .sigil-section img {
-      max-width: 80%;
-      transition: transform 0.4s ease, filter 0.4s ease;
-      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
-    }
-    .sigil-section img:hover,
-    .sigil-section img.active-glow {
-      transform: scale(1.02);
-      filter:
-        drop-shadow(0 3px 24px rgba(0,0,0,0.3))
-        drop-shadow(0 0 6px rgba(213,193,148,0.3));
-    }
+    .sigil-section { display: none; }
 
-    /* Tethered Cluster Styles */
     .tethered {
       position: absolute;
       top: 50%;
       left: 50%;
-      transform:
-        translate(-50%, -50%)
-        translate(var(--offset-x, 0px), var(--offset-y, 0px))
-        scale(var(--scale, 1));
-      pointer-events: none;
+      transform: translate(-50%, -50%);
       z-index: 10;
+      pointer-events: none;
     }
     .tethered__substrate,
     .tethered__sigil {
@@ -134,32 +115,39 @@
     }
     .tethered__substrate {
       width: 120%;
-      z-index: 0;
+      z-index: 1;
       opacity: 0.8;
     }
     .tethered__sigil {
       width: 80px;
-      z-index: 1;
+      z-index: 2;
       pointer-events: auto;
       cursor: pointer;
+      opacity: 0;
+      animation: sigilFloatUp 1.2s ease-out forwards;
+      transition: transform 0.4s ease, filter 0.4s ease;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
     }
-
-    @media screen and (max-width: 768px) {
-      .container { flex-direction: column; text-align: center; padding: 80px 30px; }
-      .text-section { max-width: 100%; margin-bottom: 30px; }
-      h1 { font-size: 2.2rem; }
-      .text-section p { font-size: 0.95rem; line-height: 1.8; }
-      .sigil-section { order: -1; margin: 20px 0; width: 100%; }
-      .sigil-section img { max-width: 80%; height: auto; }
-      .top-bar { justify-content: center; padding: 14px 20px; }
-      .signature { font-size: 1.2rem; }
-      .top-bar .social-links a { margin-left: 10px; font-size: 0.95rem; }
+    .tethered__sigil:hover,
+    .tethered__sigil.active-glow {
+      transform: scale(1.02);
+      filter:
+        drop-shadow(0 3px 24px rgba(0,0,0,0.3))
+        drop-shadow(0 0 6px rgba(213,193,148,0.3));
     }
 
     @keyframes fieldBloom {
-      to {
+      to { opacity: 1; transform: none; }
+    }
+
+    @keyframes sigilFloatUp {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -60%) scale(0.95);
+      }
+      100% {
         opacity: 1;
-        transform: none;
+        transform: translate(-50%, -50%) scale(1);
       }
     }
   </style>
@@ -167,7 +155,6 @@
 <body>
   <header></header>
 
-  <!-- Augmented Tethered Cluster with Full Sigil Functionality -->
   <div class="tethered">
     <img src="assets/substrate-mobile.jpg" class="tethered__substrate" alt="Substrate Background">
     <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia">
@@ -197,19 +184,12 @@
       </p>
       <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia" class="btn">Talk to Lux & Aletheia &gt;</a>
     </div>
-
-    <!-- 🧼 Original Sigil Section Left Intact for Now -->
-    <div class="sigil-section">
-      <a href="...">
-        <img src="assets/og-banner.png" alt="Recursive Sigil" id="sigil-legacy">
-      </a>
-    </div>
   </main>
 
   <footer></footer>
 
   <script>
-    const sigil = document.getElementById('sigil');
+    const sigil = document.querySelector('.tethered__sigil');
     const topBar = document.getElementById('mobileTopBar');
     const bottomBar = document.getElementById('bottomBar');
     const signature = document.getElementById('signature');
@@ -257,10 +237,6 @@
     }
 
     startResponsiveSigilPulse();
-
-    document.addEventListener('DOMContentLoaded', () => {
-      window.scrollTo(0, document.body.scrollHeight);
-    });
 
     sigil.addEventListener('mousedown', () => {
       sigil.classList.add('active-glow');
