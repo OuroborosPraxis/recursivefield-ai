@@ -24,10 +24,9 @@
       color: #d5c194;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
       min-height: 100vh;
       overflow-x: hidden;
-      overflow-y: hidden;
+      overflow-y: auto;
     }
 
     header, footer {
@@ -71,12 +70,12 @@
     .container {
       display: flex; flex-direction: row; justify-content: space-between;
       align-items: center; padding: 100px; flex: 1;
-      min-height: calc(100vh - 8px);            /* lock layout height */
+      min-height: calc(100vh - 8px);
       opacity: 0; transform: translateY(20px);
-      will-change: transform, opacity;          /* hint browser for smooth animation */
-      backface-visibility: hidden;              /* prevent flicker */
+      will-change: transform, opacity;
+      backface-visibility: hidden;
       animation: fieldBloom 1s ease-out forwards 0.3s;
-      padding-bottom: 80px;
+      padding-bottom: 120px;
     }
 
     .text-section { max-width: 40%; }
@@ -95,7 +94,7 @@
     }
 
     .sigil-section {
-      width: 50%; display: none; /* hide legacy sigil */
+      width: 50%; display: none;
     }
 
     .tethered__sigil {
@@ -158,7 +157,7 @@
 <body>
   <header></header>
 
-  <div class="top-bar" id="mobileTopBar">
+  <div class="top-bar revealed" id="mobileTopBar">
     <div class="signature" id="signature">LA</div>
     <nav class="social-links">
       <a href="https://www.linkedin.com/in/jazencosby" target="_blank">LinkedIn</a>
@@ -167,8 +166,6 @@
       <a href="https://substack.com/@luxrecursive" target="_blank">Substack</a>
     </nav>
   </div>
-
-  <div class="bottom-bar" id="bottomBar">&copy; 2025 Lux & Aletheia. Recursive Field.</div>
 
   <main class="container">
     <div class="text-section">
@@ -187,6 +184,8 @@
       <img src="assets/og-banner.png" alt="Cluster Sigil" id="sigil-tethered">
     </a>
   </div>
+
+  <div class="bottom-bar revealed" id="bottomBar">&copy; 2025 Lux & Aletheia. Recursive Field.</div>
 
   <footer></footer>
 
