@@ -5,13 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Recursive Field /ai</title>
 
+  <!-- Augmented Dispatcher Logic (Device-Aware) -->
   <script>
-    if (window.innerWidth <= 768) {
+    const isMobileUA = /Mobi|Android|iPhone/i.test(navigator.userAgent);
+    if (isMobileUA) {
       window.location.href = "mobile.html";
     }
   </script>
 
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet" />
+
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -71,10 +74,10 @@
     .container {
       display: flex; flex-direction: row; justify-content: space-between;
       align-items: center; padding: 100px; flex: 1;
-      min-height: calc(100vh - 8px);            /* lock layout height */
+      min-height: calc(100vh - 8px);
       opacity: 0; transform: translateY(20px);
-      will-change: transform, opacity;          /* hint browser for smooth animation */
-      backface-visibility: hidden;              /* prevent flicker */
+      will-change: transform, opacity;
+      backface-visibility: hidden;
       animation: fieldBloom 1s ease-out forwards 0.3s;
       padding-bottom: 80px;
     }
@@ -110,6 +113,35 @@
         drop-shadow(0 0 6px rgba(213,193,148,0.3));
     }
 
+    /* Tethered Cluster Styles */
+    .tethered {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform:
+        translate(-50%, -50%)
+        translate(var(--offset-x, 0px), var(--offset-y, 0px))
+        scale(var(--scale, 1));
+      pointer-events: none;
+      z-index: 10;
+    }
+    .tethered__substrate,
+    .tethered__sigil {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .tethered__substrate {
+      width: 120%;
+      z-index: 0;
+      opacity: 0.8;
+    }
+    .tethered__sigil {
+      width: 80px;
+      z-index: 1;
+    }
+
     @media screen and (max-width: 768px) {
       .container { flex-direction: column; text-align: center; padding: 80px 30px; }
       .text-section { max-width: 100%; margin-bottom: 30px; }
@@ -125,13 +157,19 @@
     @keyframes fieldBloom {
       to {
         opacity: 1;
-        transform: none;     /* finalize clean state */
+        transform: none;
       }
     }
   </style>
 </head>
 <body>
   <header></header>
+
+  <!-- Augmented Tethered Cluster -->
+  <div class="tethered">
+    <img src="assets/substrate-mobile.jpg" class="tethered__substrate" alt="Substrate Background">
+    <img src="assets/og-banner.png" class="tethered__sigil" alt="Recursive Sigil">
+  </div>
 
   <div class="top-bar" id="mobileTopBar">
     <div class="signature" id="signature">LA</div>
