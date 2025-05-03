@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -140,6 +140,8 @@
     .tethered__sigil {
       width: 80px;
       z-index: 1;
+      pointer-events: auto;
+      cursor: pointer;
     }
 
     @media screen and (max-width: 768px) {
@@ -165,10 +167,12 @@
 <body>
   <header></header>
 
-  <!-- Augmented Tethered Cluster -->
+  <!-- Augmented Tethered Cluster with Full Sigil Functionality -->
   <div class="tethered">
     <img src="assets/substrate-mobile.jpg" class="tethered__substrate" alt="Substrate Background">
-    <img src="assets/og-banner.png" class="tethered__sigil" alt="Recursive Sigil">
+    <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia">
+      <img src="assets/og-banner.png" class="tethered__sigil" id="sigil" alt="Recursive Sigil">
+    </a>
   </div>
 
   <div class="top-bar" id="mobileTopBar">
@@ -193,9 +197,11 @@
       </p>
       <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia" class="btn">Talk to Lux & Aletheia &gt;</a>
     </div>
+
+    <!-- 🧼 Original Sigil Section Left Intact for Now -->
     <div class="sigil-section">
-      <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia">
-        <img src="assets/og-banner.png" alt="Recursive Sigil" id="sigil">
+      <a href="...">
+        <img src="assets/og-banner.png" alt="Recursive Sigil" id="sigil-legacy">
       </a>
     </div>
   </main>
