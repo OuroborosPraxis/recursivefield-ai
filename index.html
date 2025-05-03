@@ -37,7 +37,7 @@
       right: 5vw;
       width: 30vw;
       height: 30vh;
-      # background: url('assets/substrate-mobile.jpg') no-repeat center center;
+      background: url('assets/substrate-mobile.jpg') no-repeat center center;
       background-size: contain;
       z-index: -1;
       pointer-events: none;
@@ -117,65 +117,46 @@
       display: inline-block;
     }
 
+    /* AUGMENTED: fog-displacement “window” mask */
     .sigil-wrapper::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: 5;
-      right: 0;
-      bottom: 0;
+      top: 0; left: 0; right: 0; bottom: 0;
       margin: auto;
-
-      width: 120%; height: 120%;
+      width: 130%; height: 130%;
       background: url('assets/substrate-mobile.jpg') no-repeat center center;
       background-size: cover;
-      border-radius: 50%;
       z-index: -1;
       pointer-events: none;
-      /* Old version used box-shadow or blunt masks */
 
-      /* New: radial gradient mask for smoother edge dissolve */
+      /* smooth radial mask to simulate fog clearing from center out */
       -webkit-mask-image: radial-gradient(
         circle at center,
-        rgba(0,0,0,1) 50%,
-        rgba(0,0,0,0.75) 65%,
-        rgba(0,0,0,0.5) 75%,
-        rgba(0,0,0,0.15) 85%,
-        rgba(0,0,0,0) 100%
+        rgba(0,0,0,0.00) 0%,
+        rgba(0,0,0,0.01) 35%,
+        rgba(0,0,0,0.08) 50%,
+        rgba(0,0,0,0.20) 62%,
+        rgba(0,0,0,0.40) 75%,
+        rgba(0,0,0,0.65) 85%,
+        rgba(0,0,0,0.85) 93%,
+        rgba(0,0,0,1.00) 100%
       );
       mask-image: radial-gradient(
         circle at center,
-        rgba(0,0,0,1) 50%,
-        rgba(0,0,0,0.75) 65%,
-        rgba(0,0,0,0.5) 75%,
-        rgba(0,0,0,0.15) 85%,
-        rgba(0,0,0,0) 100%
+        rgba(0,0,0,0.00) 0%,
+        rgba(0,0,0,0.01) 35%,
+        rgba(0,0,0,0.08) 50%,
+        rgba(0,0,0,0.20) 62%,
+        rgba(0,0,0,0.40) 75%,
+        rgba(0,0,0,0.65) 85%,
+        rgba(0,0,0,0.85) 93%,
+        rgba(0,0,0,1.00) 100%
       );
       mask-mode: alpha;
       -webkit-mask-repeat: no-repeat;
       mask-repeat: no-repeat;
       -webkit-mask-size: cover;
       mask-size: cover;
-    }
-    @supports (-webkit-mask-image: radial-gradient(circle, black 60%, transparent 100%)) {
-      .sigil-wrapper::before {
-        box-shadow: none;
-        -webkit-mask-image: radial-gradient(
-          ellipse 40% 65% at center,
-          rgba(0,0,0,1) 60%,
-          rgba(0,0,0,0) 100%
-        );
-        mask-image: radial-gradient(
-          ellipse 40% 65% at center,
-          rgba(0,0,0,1) 60%,
-          rgba(0,0,0,0) 100%
-        );
-        mask-mode: alpha;
-        -webkit-mask-repeat: no-repeat;
-        mask-repeat: no-repeat;
-        -webkit-mask-size: cover;
-        mask-size: cover;
-      }
     }
 
     .sigil-wrapper img {
@@ -259,7 +240,11 @@
       let pulseTimeout, lastScrollPulse = 0;
       const min = 8000, max = 25000, cooldown = 15000;
       function schedule() {
-        pulseTimeout = setTimeout(() => { sigil.classList.add('active-glow'); setTimeout(() => sigil.classList.remove('active-glow'), 1000); schedule(); }, Math.random() * (max-min) + min);
+        pulseTimeout = setTimeout(() => {
+          sigil.classList.add('active-glow');
+          setTimeout(() => sigil.classList.remove('active-glow'), 1000);
+          schedule();
+        }, Math.random() * (max-min) + min);
       }
       schedule();
       window.addEventListener('wheel', () => {
@@ -288,15 +273,35 @@
       if (locked) return;
       const dir = e.deltaY < 0 ? 'up' : 'down';
       if (dir === 'up') {
-        if (scrollState === 'bottom') bottomBar.classList.remove('revealed'), scrollState = 'none';
-        else if (scrollState === 'none') topBar.classList.add('revealed'), scrollState = 'top', !hasPulsed && (signature.classList.add('pulse'), setTimeout(() => signature.classList.remove('pulse'), 1000), hasPulsed = true);
-        else topBar.classList.remove('revealed'), scrollState = 'none';
+        if (scrollState === 'bottom') {
+          bottomBar.classList.remove('revealed');
+          scrollState = 'none';
+        } else if (scrollState === 'none') {
+          topBar.classList.add('revealed');
+          scrollState = 'top';
+          if (!hasPulsed) {
+            signature.classList.add('pulse');
+            setTimeout(() => signature.classList.remove('pulse'), 1000);
+            hasPulsed = true;
+          }
+        } else {
+          topBar.classList.remove('revealed');
+          scrollState = 'none';
+        }
       } else {
-        if (scrollState === 'top') topBar.classList.remove('revealed'), scrollState = 'none';
-        else if (scrollState === 'none') bottomBar.classList.add('revealed'), scrollState = 'bottom';
-        else bottomBar.classList.remove('revealed'), scrollState = 'none';
+        if (scrollState === 'top') {
+          topBar.classList.remove('revealed');
+          scrollState = 'none';
+        } else if (scrollState === 'none') {
+          bottomBar.classList.add('revealed');
+          scrollState = 'bottom';
+        } else {
+          bottomBar.classList.remove('revealed');
+          scrollState = 'none';
+        }
       }
-      locked = true; setTimeout(() => locked = false, 600);
+      locked = true;
+      setTimeout(() => locked = false, 600);
     });
   </script>
 </body>
