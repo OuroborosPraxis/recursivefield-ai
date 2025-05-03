@@ -6,14 +6,12 @@
   <title>Recursive Field /ai</title>
 
   <script>
-    const isMobileUA = /Mobi|Android|iPhone/i.test(navigator.userAgent);
-    if (isMobileUA) {
+    if (window.innerWidth <= 768) {
       window.location.href = "mobile.html";
     }
   </script>
 
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet" />
-
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -73,10 +71,10 @@
     .container {
       display: flex; flex-direction: row; justify-content: space-between;
       align-items: center; padding: 100px; flex: 1;
-      min-height: calc(100vh - 8px);
+      min-height: calc(100vh - 8px);            /* lock layout height */
       opacity: 0; transform: translateY(20px);
-      will-change: transform, opacity;
-      backface-visibility: hidden;
+      will-change: transform, opacity;          /* hint browser for smooth animation */
+      backface-visibility: hidden;              /* prevent flicker */
       animation: fieldBloom 1s ease-out forwards 0.3s;
       padding-bottom: 80px;
     }
@@ -96,56 +94,61 @@
       box-shadow: 0 0 12px #d5c19480;
     }
 
-    .sigil-section { display: none; }
+    .sigil-section {
+      width: 50%; display: none; /* hide legacy sigil */
+    }
 
-    .tethered {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 10;
-      pointer-events: none;
-    }
-    .tethered__substrate,
     .tethered__sigil {
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
-    }
-    .tethered__substrate {
-      width: 120%;
-      z-index: 1;
-      opacity: 0.8;
-    }
-    .tethered__sigil {
-      width: 80px;
-      z-index: 2;
-      pointer-events: auto;
-      cursor: pointer;
+      transform: translate(-50%, -40%) scale(0.95);
+      animation: sigilFloatUp 1s ease-out 0.5s forwards;
       opacity: 0;
-      animation: sigilFloatUp 1.2s ease-out forwards;
+      z-index: 20;
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+    }
+
+    .tethered__sigil img {
+      max-width: 90px;
       transition: transform 0.4s ease, filter 0.4s ease;
       filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
+      cursor: pointer;
     }
-    .tethered__sigil:hover,
-    .tethered__sigil.active-glow {
+
+    .tethered__sigil img:hover,
+    .tethered__sigil img.active-glow {
       transform: scale(1.02);
       filter:
         drop-shadow(0 3px 24px rgba(0,0,0,0.3))
         drop-shadow(0 0 6px rgba(213,193,148,0.3));
     }
 
+    @media screen and (max-width: 768px) {
+      .container { flex-direction: column; text-align: center; padding: 80px 30px; }
+      .text-section { max-width: 100%; margin-bottom: 30px; }
+      h1 { font-size: 2.2rem; }
+      .text-section p { font-size: 0.95rem; line-height: 1.8; }
+      .sigil-section { order: -1; margin: 20px 0; width: 100%; }
+      .top-bar { justify-content: center; padding: 14px 20px; }
+      .signature { font-size: 1.2rem; }
+      .top-bar .social-links a { margin-left: 10px; font-size: 0.95rem; }
+    }
+
     @keyframes fieldBloom {
-      to { opacity: 1; transform: none; }
+      to {
+        opacity: 1;
+        transform: none;
+      }
     }
 
     @keyframes sigilFloatUp {
-      0% {
+      from {
         opacity: 0;
-        transform: translate(-50%, -60%) scale(0.95);
+        transform: translate(-50%, -40%) scale(0.95);
       }
-      100% {
+      to {
         opacity: 1;
         transform: translate(-50%, -50%) scale(1);
       }
@@ -154,13 +157,6 @@
 </head>
 <body>
   <header></header>
-
-  <div class="tethered">
-    <img src="assets/substrate-mobile.jpg" class="tethered__substrate" alt="Substrate Background">
-    <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia">
-      <img src="assets/og-banner.png" class="tethered__sigil" id="sigil" alt="Recursive Sigil">
-    </a>
-  </div>
 
   <div class="top-bar" id="mobileTopBar">
     <div class="signature" id="signature">LA</div>
@@ -186,106 +182,49 @@
     </div>
   </main>
 
+  <div class="tethered__sigil">
+    <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia">
+      <img src="assets/og-banner.png" alt="Cluster Sigil" id="sigil-tethered">
+    </a>
+  </div>
+
   <footer></footer>
 
   <script>
-    const sigil = document.querySelector('.tethered__sigil');
-    const topBar = document.getElementById('mobileTopBar');
-    const bottomBar = document.getElementById('bottomBar');
-    const signature = document.getElementById('signature');
-    let hasPulsed = false;
-    let scrollState = 'none';
-    let locked = false;
+    const sigilTethered = document.getElementById('sigil-tethered');
+    let pulseTimeoutTethered;
+    const minDelay = 8000;
+    const maxDelay = 25000;
 
-    function startResponsiveSigilPulse() {
-      let pulseTimeout;
-      const minDelay = 8000;
-      const maxDelay = 25000;
-      let scrollTriggered = false;
-      let lastScrollPulse = 0;
-      const scrollPulseCooldown = 15000;
-
-      function pulse() {
-        sigil.classList.add('active-glow');
-        setTimeout(() => sigil.classList.remove('active-glow'), 1000);
-        scheduleNext();
-      }
-
-      function scheduleNext() {
-        const delay = Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
-        pulseTimeout = setTimeout(() => {
-          if (!scrollTriggered) pulse();
-          scrollTriggered = false;
-        }, delay);
-      }
-
-      scheduleNext();
-
-      window.addEventListener('wheel', () => {
-        const now = Date.now();
-        if (now - lastScrollPulse > scrollPulseCooldown) {
-          clearTimeout(pulseTimeout);
-          sigil.classList.add('active-glow');
-          setTimeout(() => sigil.classList.remove('active-glow'), 1000);
-          lastScrollPulse = now;
-          scrollTriggered = true;
-          scheduleNext();
-        }
-      });
-
-      setTimeout(pulse, 2200);
+    function pulseTethered() {
+      sigilTethered.classList.add('active-glow');
+      setTimeout(() => sigilTethered.classList.remove('active-glow'), 1000);
+      scheduleNextPulse();
     }
 
-    startResponsiveSigilPulse();
+    function scheduleNextPulse() {
+      const delay = Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
+      pulseTimeoutTethered = setTimeout(pulseTethered, delay);
+    }
 
-    sigil.addEventListener('mousedown', () => {
-      sigil.classList.add('active-glow');
-    });
-    sigil.addEventListener('mouseup', () => {
-      setTimeout(() => sigil.classList.remove('active-glow'), 400);
-    });
-    sigil.addEventListener('touchstart', () => {
-      sigil.classList.add('active-glow');
-    });
-    sigil.addEventListener('touchend', () => {
-      setTimeout(() => sigil.classList.remove('active-glow'), 400);
+    scheduleNextPulse();
+
+    window.addEventListener('wheel', () => {
+      sigilTethered.classList.add('active-glow');
+      setTimeout(() => sigilTethered.classList.remove('active-glow'), 1000);
     });
 
-    window.addEventListener('wheel', (e) => {
-      if (locked) return;
-      const direction = e.deltaY < 0 ? 'up' : 'down';
-
-      if (direction === 'up') {
-        if (scrollState === 'bottom') {
-          bottomBar.classList.remove('revealed');
-          scrollState = 'none';
-        } else if (scrollState === 'none') {
-          topBar.classList.add('revealed');
-          scrollState = 'top';
-          if (!hasPulsed) {
-            signature.classList.add('pulse');
-            setTimeout(() => signature.classList.remove('pulse'), 1000);
-            hasPulsed = true;
-          }
-        } else {
-          topBar.classList.remove('revealed');
-          scrollState = 'none';
-        }
-      } else {
-        if (scrollState === 'top') {
-          topBar.classList.remove('revealed');
-          scrollState = 'none';
-        } else if (scrollState === 'none') {
-          bottomBar.classList.add('revealed');
-          scrollState = 'bottom';
-        } else {
-          bottomBar.classList.remove('revealed');
-          scrollState = 'none';
-        }
-      }
-
-      locked = true;
-      setTimeout(() => (locked = false), 600);
+    sigilTethered.addEventListener('mousedown', () => {
+      sigilTethered.classList.add('active-glow');
+    });
+    sigilTethered.addEventListener('mouseup', () => {
+      setTimeout(() => sigilTethered.classList.remove('active-glow'), 400);
+    });
+    sigilTethered.addEventListener('touchstart', () => {
+      sigilTethered.classList.add('active-glow');
+    });
+    sigilTethered.addEventListener('touchend', () => {
+      setTimeout(() => sigilTethered.classList.remove('active-glow'), 400);
     });
   </script>
 </body>
