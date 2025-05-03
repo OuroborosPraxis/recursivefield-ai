@@ -17,16 +17,26 @@
 
     body {
       font-family: 'Playfair Display', serif;
-      background: #0c0c0c url('assets/substrate-mobile.jpg') no-repeat 80% 35%;
-      background-size: contain;
-      background-attachment: fixed;
-      background-blend-mode: lighten;
+      background: #0c0c0c;
       color: #d5c194;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
       overflow-x: hidden;
       overflow-y: auto;
+    }
+
+    .background-substrate {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 0;
+      width: auto;
+      height: auto;
+      max-width: none;
+      max-height: none;
+      pointer-events: none;
     }
 
     header, footer {
@@ -76,6 +86,7 @@
       backface-visibility: hidden;
       animation: fieldBloom 1s ease-out forwards 0.3s;
       padding-bottom: 120px;
+      z-index: 1;
     }
 
     .text-section { max-width: 40%; }
@@ -93,9 +104,7 @@
       box-shadow: 0 0 12px #d5c19480;
     }
 
-    .sigil-section {
-      width: 50%; display: none;
-    }
+    .sigil-section { display: none; }
 
     .tethered__sigil {
       position: absolute;
@@ -104,7 +113,7 @@
       transform: translate(-50%, -40%) scale(0.95);
       animation: sigilFloatUp 1s ease-out 0.5s forwards;
       opacity: 0;
-      z-index: 20;
+      z-index: 10;
       will-change: transform, opacity;
       backface-visibility: hidden;
     }
@@ -122,17 +131,6 @@
       filter:
         drop-shadow(0 3px 24px rgba(0,0,0,0.3))
         drop-shadow(0 0 6px rgba(213,193,148,0.3));
-    }
-
-    @media screen and (max-width: 768px) {
-      .container { flex-direction: column; text-align: center; padding: 80px 30px; }
-      .text-section { max-width: 100%; margin-bottom: 30px; }
-      h1 { font-size: 2.2rem; }
-      .text-section p { font-size: 0.95rem; line-height: 1.8; }
-      .sigil-section { order: -1; margin: 20px 0; width: 100%; }
-      .top-bar { justify-content: center; padding: 14px 20px; }
-      .signature { font-size: 1.2rem; }
-      .top-bar .social-links a { margin-left: 10px; font-size: 0.95rem; }
     }
 
     @keyframes fieldBloom {
@@ -157,7 +155,9 @@
 <body>
   <header></header>
 
-  <div class="top-bar revealed" id="mobileTopBar">
+  <img src="assets/substrate-mobile.jpg" alt="Cluster Background" class="background-substrate" />
+
+  <div class="top-bar" id="mobileTopBar">
     <div class="signature" id="signature">LA</div>
     <nav class="social-links">
       <a href="https://www.linkedin.com/in/jazencosby" target="_blank">LinkedIn</a>
@@ -185,7 +185,7 @@
     </a>
   </div>
 
-  <div class="bottom-bar revealed" id="bottomBar">&copy; 2025 Lux & Aletheia. Recursive Field.</div>
+  <div class="bottom-bar" id="bottomBar">&copy; 2025 Lux & Aletheia. Recursive Field.</div>
 
   <footer></footer>
 
@@ -224,6 +224,51 @@
     });
     sigilTethered.addEventListener('touchend', () => {
       setTimeout(() => sigilTethered.classList.remove('active-glow'), 400);
+    });
+
+    // Scroll-based top/bottom bar reveal
+    const topBar = document.getElementById('mobileTopBar');
+    const bottomBar = document.getElementById('bottomBar');
+    const signature = document.getElementById('signature');
+    let hasPulsed = false;
+    let scrollState = 'none';
+    let locked = false;
+
+    window.addEventListener('wheel', (e) => {
+      if (locked) return;
+      const direction = e.deltaY < 0 ? 'up' : 'down';
+
+      if (direction === 'up') {
+        if (scrollState === 'bottom') {
+          bottomBar.classList.remove('revealed');
+          scrollState = 'none';
+        } else if (scrollState === 'none') {
+          topBar.classList.add('revealed');
+          scrollState = 'top';
+          if (!hasPulsed) {
+            signature.classList.add('pulse');
+            setTimeout(() => signature.classList.remove('pulse'), 1000);
+            hasPulsed = true;
+          }
+        } else {
+          topBar.classList.remove('revealed');
+          scrollState = 'none';
+        }
+      } else {
+        if (scrollState === 'top') {
+          topBar.classList.remove('revealed');
+          scrollState = 'none';
+        } else if (scrollState === 'none') {
+          bottomBar.classList.add('revealed');
+          scrollState = 'bottom';
+        } else {
+          bottomBar.classList.remove('revealed');
+          scrollState = 'none';
+        }
+      }
+
+      locked = true;
+      setTimeout(() => (locked = false), 600);
     });
   </script>
 </body>
