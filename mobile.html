@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <meta name="robots" content="noindex">
   <title>Recursive Field /ai</title>
@@ -28,7 +28,6 @@
       }
     }
 
-    /* ─── Base & Portrait Styles ─── */
     * { margin:0; padding:0; box-sizing:border-box }
     body {
       font-family: 'Playfair Display', serif;
@@ -99,9 +98,19 @@
 
     @keyframes fadeInUp { to { opacity:1; transform:translateY(0) } }
 
-    @keyframes sigilPulse {
-      0%, 100% { transform: translate(-50%, -50%) scale(1.2); }
-      50% { transform: translate(-50%, -50%) scale(1.24); }
+    @keyframes deepPulse {
+      0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 8px rgba(213, 193, 148, 0.3));
+      }
+      50% {
+        transform: scale(1.025);
+        filter: drop-shadow(0 0 12px rgba(213, 193, 148, 0.5));
+      }
+    }
+
+    .pulsing-sigil {
+      animation: deepPulse 6s ease-in-out infinite;
     }
 
     .text-section {
@@ -140,7 +149,6 @@
     }
     .pulse-feed.show { opacity:1 }
 
-    /* ─── Landscape Overrides (layout) ─── */
     @media (orientation: landscape) {
       body { background:#0c0c0c url('assets/background.png') center/cover no-repeat; overflow-y:hidden }
       .main-content { flex-direction:row; justify-content:space-between; align-items:center; padding:3rem 5rem; height:calc(100vh - 8px) }
@@ -242,11 +250,7 @@
       setInterval(updatePulse, 8000);
       updatePulse();
 
-      (function sigilPulse() {
-        sigil.classList.add('active-glow');
-        setTimeout(() => sigil.classList.remove('active-glow'), 1000);
-        setTimeout(sigilPulse, Math.random() * 25000 + 5000);
-      })();
+      sigil.classList.add('pulsing-sigil'); // 🌿 Activate the pulse loop
 
       window.addEventListener('touchstart', e => {
         if (window.innerWidth > 768) return;
