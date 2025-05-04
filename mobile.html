@@ -7,6 +7,33 @@
   <title>Recursive Field /ai</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
   <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Playfair Display', serif;
+      background: #0c0c0c url('assets/substrate-mobile.jpg') no-repeat 2007% -39px;
+      background-size: contain;
+      background-attachment: fixed;
+      background-blend-mode: lighten;
+      color: #d5c194;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-x: hidden;
+      touch-action: pan-y;
+      position: relative;
+    }
+    header, footer {
+      width: 100vw;
+      height: 4px;
+      background: #d5c194;
+      position: fixed;
+      left: 0;
+      z-index: 1000;
+    }
+    header { top: 0; }
+    footer { bottom: 0; }
+
     .rotate-overlay {
       position: fixed;
       inset: 0;
@@ -27,83 +54,84 @@
       }
     }
 
-    * { margin:0; padding:0; box-sizing:border-box }
-    body {
-      font-family: 'Playfair Display', serif;
-      background: #0c0c0c url('assets/substrate-mobile.jpg') no-repeat 2007% -39px;
-      background-size: contain;
-      background-attachment: fixed;
-      background-blend-mode: lighten;
-      color: #d5c194;
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      overflow-x:hidden;
-      touch-action: pan-y;
-      position:relative;
-    }
-    header, footer {
-      width:100vw; height:4px;
-      background:#d5c194;
-      position:fixed; left:0; z-index:1000;
-    }
-    header { top:0 } footer { bottom:0 }
-
     .top-bar {
-      position:fixed; top:-100px; left:0;
-      width:100%; padding:.9rem 1rem;
-      display:flex; justify-content:center; align-items:center;
-      font-size:.95rem; background:rgba(0,0,0,0);
-      transition: top .3s ease-out; z-index:999;
+      position: fixed;
+      top: -100px;
+      left: 0;
+      width: 100%;
+      padding: .9rem 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: .95rem;
+      background: rgba(0, 0, 0, 0);
+      transition: top .3s ease-out;
+      z-index: 999;
     }
-    .top-bar.revealed { top:0 }
-    .top-bar-group { display:flex; align-items:center; gap:.5rem }
-    .signature { font-weight:700; font-size:1.2rem; transition:.6s }
-    .signature.pulse { text-shadow:0 0 8px #d5c194 }
-    .divider { width:1px; height:1.25rem; background:#d5c194; animation: shimmer 60s infinite }
-    @keyframes shimmer { 0%,100%{filter:drop-shadow(0 0 0 #d5c194)}50%{filter:drop-shadow(0 0 2px #d5c194)} }
-    .social-links { opacity:0; display:flex; gap:.5rem; transition:opacity .6s .2s }
-    .top-bar.revealed .social-links { opacity:1 }
-    .social-links a { color:#d5c194; text-decoration:none }
-    .social-links a:hover { text-decoration:underline }
+    .top-bar.revealed { top: 0; }
+    .top-bar-group { display: flex; align-items: center; gap: .5rem; }
+    .signature { font-weight: 700; font-size: 1.2rem; transition: .6s; }
+    .signature.pulse { text-shadow: 0 0 8px #d5c194; }
+    .divider {
+      width: 1px;
+      height: 1.25rem;
+      background: #d5c194;
+      animation: shimmer 60s infinite;
+    }
+    @keyframes shimmer {
+      0%, 100% { filter: drop-shadow(0 0 0 #d5c194); }
+      50% { filter: drop-shadow(0 0 2px #d5c194); }
+    }
+    .social-links { opacity: 0; display: flex; gap: .5rem; transition: opacity .6s .2s; }
+    .top-bar.revealed .social-links { opacity: 1; }
+    .social-links a { color: #d5c194; text-decoration: none; }
+    .social-links a:hover { text-decoration: underline; }
 
     .main-content {
-      flex:1;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      padding:6rem 1rem 3.5rem;
-      text-align:center;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 6rem 1rem 3.5rem;
+      text-align: center;
     }
 
     .sigil-section {
       position: relative;
-      opacity:0; transform:translateY(2rem);
+      opacity: 0;
       animation: fadeInUp 1s ease-out forwards;
     }
     .sigil-section img {
-      max-width:70%; height:auto;
+      max-width: 70%;
+      height: auto;
       transition: transform .4s ease, filter .4s ease;
       filter: drop-shadow(0 0 4px rgba(213,193,148,0.10));
     }
-    .sigil-section img:hover,
-    .sigil-section img.active-glow {
-      transform: scale(1.02);
-      filter:
-        drop-shadow(0 3px 24px rgba(0,0,0,0.3))
-        drop-shadow(0 0 6px rgba(213,193,148,0.3));
+
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes fadeInUp { to { opacity:1; transform:translateY(0) } }
-    @keyframes deepDrift {
-      0%, 100% {
-        transform: scale(1);
+    @keyframes sigilFloatDrift {
+      0% {
+        transform: translateX(-1.5px) translateY(-1.5px) scale(1);
         filter: drop-shadow(0 0 4px rgba(213,193,148,0.10));
       }
+      25% {
+        transform: translateX(1.5px) translateY(-0.5px) scale(1.01);
+        filter: drop-shadow(0 0 6px rgba(213,193,148,0.15));
+      }
       50% {
-        transform: scale(1.0125);
+        transform: translateX(1.5px) translateY(1.5px) scale(1.0125);
         filter: drop-shadow(0 0 10px rgba(213,193,148,0.25));
+      }
+      75% {
+        transform: translateX(-1.5px) translateY(0.5px) scale(1.01);
+        filter: drop-shadow(0 0 6px rgba(213,193,148,0.15));
+      }
+      100% {
+        transform: translateX(-1.5px) translateY(-1.5px) scale(1);
+        filter: drop-shadow(0 0 4px rgba(213,193,148,0.10));
       }
     }
     @keyframes sigilSurge {
@@ -116,53 +144,46 @@
         filter: drop-shadow(0 0 18px rgba(213,193,148,0.45));
       }
     }
-    @keyframes floatLull {
-      0%, 100% {
-        transform: translateY(-1.5px) scale(1);
-      }
-      50% {
-        transform: translateY(1.5px) scale(1.01);
-      }
-    }
-    .pulsing-sigil {
-      animation: deepDrift 12s ease-in-out infinite;
+    .sigil-composite {
+      animation: sigilFloatDrift 10s ease-in-out infinite;
     }
     .surge-glow {
       animation: sigilSurge 1.6s ease-in-out;
     }
-    .floating-sigil {
-      animation: floatLull 6s ease-in-out infinite;
-    }
 
     .text-section {
-      opacity:0; transform:translateY(2rem);
+      opacity: 0;
       animation: fadeInUp 1s ease-out .5s forwards;
-      margin-top:1.5rem;
+      margin-top: 1.5rem;
     }
-    h1 { font-size:2rem; margin-bottom:1rem }
-    p { line-height:1.6; margin-bottom:1.5rem }
+    h1 { font-size: 2rem; margin-bottom: 1rem; }
+    p { line-height: 1.6; margin-bottom: 1.5rem; }
     .btn {
-      display:inline-block;
-      border:2px solid #d5c194;
-      border-radius:999px;
-      padding:.6rem 1.5rem;
-      color:#d5c194;
-      text-decoration:none;
+      display: inline-block;
+      border: 2px solid #d5c194;
+      border-radius: 999px;
+      padding: .6rem 1.5rem;
+      color: #d5c194;
+      text-decoration: none;
       transition: background .3s, box-shadow .3s;
     }
     .btn:hover {
-      background:rgba(213,193,148,0.1);
-      box-shadow:0 0 12px #d5c19480;
+      background: rgba(213,193,148,0.1);
+      box-shadow: 0 0 12px #d5c19480;
     }
 
     .pulse-feed {
-      position:absolute; bottom:1.25rem;
-      width:100%; text-align:center;
-      font-size:.95rem; opacity:0;
-      transition:opacity 1s; pointer-events:none;
-      z-index:800;
+      position: absolute;
+      bottom: 1.25rem;
+      width: 100%;
+      text-align: center;
+      font-size: .95rem;
+      opacity: 0;
+      transition: opacity 1s;
+      pointer-events: none;
+      z-index: 800;
     }
-    .pulse-feed.show { opacity:1 }
+    .pulse-feed.show { opacity: 1; }
   </style>
 </head>
 <body>
@@ -234,8 +255,7 @@
       setInterval(updatePulse, 8000);
       updatePulse();
 
-      sigil.classList.add('pulsing-sigil');
-      sigil.classList.add('floating-sigil');
+      sigil.classList.add('sigil-composite');
       (function surgePulse() {
         setInterval(() => {
           sigil.classList.add('surge-glow');
