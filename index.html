@@ -111,7 +111,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -40%) scale(1.2);
-      animation: sigilFloatUp 1s ease-out 0.5s forwards;
+      animation: sigilFloatUp 1s ease-out 0.5s forwards, sigilPulse 6s ease-in-out infinite;
       opacity: 0;
       z-index: 10;
       will-change: transform, opacity;
@@ -134,7 +134,10 @@
         drop-shadow(0 3px 24px rgba(0,0,0,0.3))
         drop-shadow(0 0 6px rgba(213,193,148,0.3));
     }
-
+    @keyframes sigilPulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1.2); }
+      50% { transform: translate(-50%, -50%) scale(1.24); }
+    }
     @keyframes fieldBloom {
       to {
         opacity: 1;
