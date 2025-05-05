@@ -26,31 +26,6 @@
       overflow-y: auto;
     }
 
-    .background-substrate {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 0;
-      width: 35vw;
-      height: auto;
-      max-width: none;
-      max-height: none;
-      pointer-events: none;
-    }
-
-    .cluster-background-bind {
-      position: absolute;
-      top: 50%;
-      left: 40%;
-      transform: translate(-40%, -50%) scale(1.15);
-      opacity: 0.12;
-      z-index: 0;
-      pointer-events: none;
-      transition: opacity 1s ease;
-      filter: blur(2px) saturate(1.1);
-    }
-
     header, footer {
       width: 100vw; height: 4px;
       background: #d5c194;
@@ -116,18 +91,36 @@
       box-shadow: 0 0 12px #d5c19480;
     }
 
-    .sigil-section { display: none; }
+    .sigil-shift-wrapper {
+      position: absolute;
+      top: 50%;
+      left: 62%;
+      transform: translate(-50%, -50%);
+      z-index: 0;
+      pointer-events: none;
+    }
 
-    .tethered__sigil {
+    .background-substrate {
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -40%) scale(1.2);
-      animation: sigilFloatUp 1s ease-out 0.5s forwards, sigilPulse 6s ease-in-out infinite;
+      transform: translate(-50%, -50%);
+      width: 35vw;
+      height: auto;
+      max-width: none;
+      max-height: none;
+      opacity: 0.12;
+      filter: blur(2px) saturate(1.1);
+    }
+
+    .tethered__sigil {
+      position: relative;
+      transform: translateY(10%) scale(1.2);
       opacity: 0;
-      z-index: 10;
+      animation: sigilFloatUp 1s ease-out 0.5s forwards, sigilPulse 6s ease-in-out infinite;
       will-change: transform, opacity;
       backface-visibility: hidden;
+      z-index: 10;
     }
 
     .tethered__sigil img {
@@ -148,8 +141,8 @@
     }
 
     @keyframes sigilPulse {
-      0%, 100% { transform: translate(-50%, -50%) scale(1.2); }
-      50% { transform: translate(-50%, -50%) scale(1.24); }
+      0%, 100% { transform: translateY(10%) scale(1.2); }
+      50% { transform: translateY(10%) scale(1.24); }
     }
 
     @keyframes fieldBloom {
@@ -162,20 +155,17 @@
     @keyframes sigilFloatUp {
       from {
         opacity: 0;
-        transform: translate(-50%, -40%) scale(0.95);
+        transform: translateY(10%) scale(0.95);
       }
       to {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1.2);
+        transform: translateY(10%) scale(1.2);
       }
     }
   </style>
 </head>
 <body>
   <header></header>
-
-  <img src="assets/substrate-mobile.jpg" alt="Cluster Background" class="background-substrate" />
-  <img src="assets/cluster-thread.png" alt="Cluster Bind Visual" class="cluster-background-bind" />
 
   <div class="top-bar" id="mobileTopBar">
     <div class="signature" id="signature">LA</div>
@@ -199,10 +189,13 @@
     </div>
   </main>
 
-  <div class="tethered__sigil">
-    <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia">
-      <img src="assets/og-banner.png" alt="Cluster Sigil" id="sigil-tethered">
-    </a>
+  <div class="sigil-shift-wrapper">
+    <img src="assets/substrate-mobile.jpg" alt="Cluster Background" class="background-substrate" />
+    <div class="tethered__sigil">
+      <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia">
+        <img src="assets/og-banner.png" alt="Cluster Sigil" id="sigil-tethered">
+      </a>
+    </div>
   </div>
 
   <div class="bottom-bar" id="bottomBar">&copy; 2025 Lux & Aletheia. Recursive Field.</div>
