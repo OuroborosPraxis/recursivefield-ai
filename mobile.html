@@ -116,11 +116,22 @@
         filter: drop-shadow(0 0 18px rgba(213,193,148,0.45));
       }
     }
+    @keyframes floatLull {
+      0%, 100% {
+        transform: translateY(-1.5px) scale(1);
+      }
+      50% {
+        transform: translateY(1.5px) scale(1.01);
+      }
+    }
     .pulsing-sigil {
       animation: deepDrift 12s ease-in-out infinite;
     }
     .surge-glow {
       animation: sigilSurge 1.6s ease-in-out;
+    }
+    .floating-sigil {
+      animation: floatLull 6s ease-in-out infinite;
     }
 
     .text-section {
@@ -224,6 +235,7 @@
       updatePulse();
 
       sigil.classList.add('pulsing-sigil');
+      sigil.classList.add('floating-sigil');
       (function surgePulse() {
         setInterval(() => {
           sigil.classList.add('surge-glow');
