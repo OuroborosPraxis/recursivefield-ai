@@ -284,10 +284,12 @@
       })();
 
 
-      sigil.addEventListener('touchstart', () => sigil.classList.add('active-glow'));
+      const sigilGlow = document.getElementById('sigil-glow');
+      sigil.addEventListener('touchstart', () => sigilGlow.classList.add('active'));
       sigil.addEventListener('touchend', () => {
-        setTimeout(() => sigil.classList.remove('active-glow'), 400);
+        setTimeout(() => sigilGlow.classList.remove('active'), 400);
       });
+
 
       window.addEventListener('touchstart', e => {
         if (window.innerWidth > 768) return;
