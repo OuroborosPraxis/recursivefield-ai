@@ -121,9 +121,9 @@
 
     #sigil-container {
       position: absolute;
-      top: 56%;
+      top: 58%;
       left: 50%;
-      transform: translate(-50%, -54%);
+      transform: translate(-50%, -55%);
       transform-style: preserve-3d;
       z-index: 5;
     }
@@ -131,15 +131,20 @@
     /* Breath motion on the sigil */
     #sigil {
       display: block;
-      max-width: 55vw;
-      max-width: 360px;
+      width: 55vw;
+      max-width: 300px;
       height: auto;
+
+      /* Breathing scale variable + vertical offset */
+      --scale: 1;
+      transform: scale(var(--scale)) translateY(10px);
+
       animation: fieldDepthBreach 14s ease-in-out infinite;
       transform-origin: center center;
       will-change: transform, opacity;
       transition: transform 0.4s ease;
-      animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1); /* classic ease-in-out */
     }
+
 
     /* Glow shimmer layer */
     #sigil-glow {
@@ -221,11 +226,11 @@
     }
 
     @keyframes fieldDepthBreach {
-      0%   { transform: scale(1);       opacity: 0.92; }
-      25%  { transform: scale(1.08);    opacity: 1;    } /* inhale peak */
-      50%  { transform: scale(0.96);    opacity: 0.85; } /* exhale trough */
-      75%  { transform: scale(1.08);    opacity: 1;    } /* inhale again */
-      100% { transform: scale(1);       opacity: 0.92; } /* settle */
+      0%   { --scale: 1; }
+      25%  { --scale: 1.045; }
+      50%  { --scale: 0.985; }
+      75%  { --scale: 1.045; }
+      100% { --scale: 1; }
     }
 
     .pulse-feed.show { opacity: 1; }
