@@ -276,12 +276,13 @@
       setInterval(updatePulse, 8000);
       updatePulse();
 
-      function sigilPulse() {
-        sigil.classList.add('active-glow');
-        setTimeout(() => sigil.classList.remove('active-glow'), 1000);
+      (function sigilPulse() {
+        const glow = document.getElementById('sigil-glow');
+        glow.classList.add('active');
+        setTimeout(() => glow.classList.remove('active'), 1000);
         setTimeout(sigilPulse, Math.random() * 25000 + 5000);
-      }
-      sigilPulse();
+      })();
+
 
       sigil.addEventListener('touchstart', () => sigil.classList.add('active-glow'));
       sigil.addEventListener('touchend', () => {
