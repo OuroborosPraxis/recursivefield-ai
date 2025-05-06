@@ -138,6 +138,25 @@
       filter: drop-shadow(0 0 0 rgba(213,193,148,0));
       transition: filter 0.6s ease-in-out;
     }
+
+    /* Internal phantom light source for glow aura */
+    #sigil-glow::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 1px; height: 1px;
+      background: #d5c194;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 0 rgba(213,193,148,0);
+      transition: box-shadow 0.6s ease-in-out;
+    }
+
+    #sigil-glow.active::before {
+      box-shadow:
+      0 0 28px rgba(213,193,148,0.35),
+      0 0 18px rgba(213,193,148,0.25);
+    }
     
     #sigil-glow.active {
       filter: drop-shadow(0 0 12px rgba(213,193,148,0.35));
