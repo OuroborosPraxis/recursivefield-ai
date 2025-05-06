@@ -116,12 +116,12 @@
     }
 
     #sigil-container {
-      position: relative;
-      display: block; /* previously inline-block */
-      transform-style: preserve-3d;
-      margin: 0 auto;
+      position: absolute;
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translate(-50%, -50%);
+      transform-style: preserve-3d;
+      z-index: 5;
     }
 
     /* Breath motion on the sigil */
