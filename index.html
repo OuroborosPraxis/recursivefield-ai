@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Recursive Field /ai</title>
 
+  <!-- 🔁 Intuitive Adjustment: Mobile redirect preserved -->
   <script>
     if (window.innerWidth <= 768) {
       window.location.href = "mobile.html";
@@ -16,7 +17,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     html, body {
-      overflow: hidden;
+      overflow: hidden; /* 🔁 Locked scroll, per Lux’s directive */
       height: 100%;
       font-family: 'Playfair Display', serif;
       background: #000000;
@@ -86,6 +87,7 @@
       box-shadow: 0 0 12px #d5c19480;
     }
 
+    /* 🔁 Wrapper added for spatial control */
     .sigil-shift-wrapper {
       position: absolute;
       top: 50%;
@@ -93,7 +95,6 @@
       transform: translate(-50%, -50%);
       z-index: 0;
       pointer-events: none;
-      overflow: visible;
     }
 
     .background-substrate {
@@ -109,21 +110,18 @@
 
     .tethered__sigil {
       position: relative;
-      pointer-events: auto;
-      overflow: visible;
-      z-index: 1000;
       opacity: 0;
       animation: sigilFloatUp 1s ease-out 0.5s forwards, sigilPulse 6s ease-in-out infinite;
+      z-index: 10;
     }
 
     .tethered__sigil img {
       width: 100%;
-      max-width: 26vw;
+      max-width: 24vw; /* 🔁 Adjusted per viewport for scale harmony */
       height: auto;
       transition: transform 0.4s ease, filter 0.4s ease;
       filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
       cursor: pointer;
-      border: 2px solid transparent;
     }
 
     .tethered__sigil img:hover,
@@ -132,7 +130,6 @@
       filter:
         drop-shadow(0 3px 24px rgba(0,0,0,0.3))
         drop-shadow(0 0 6px rgba(213,193,148,0.3));
-      border-color: #d5c19440;
     }
 
     @keyframes sigilPulse {
@@ -191,6 +188,7 @@
   <footer></footer>
 
   <script>
+    // 🔁 Simplified: Target inner image for pulse logic
     const sigilTethered = document.getElementById('sigil-tethered');
     let pulseTimeoutTethered;
     const minDelay = 8000;
@@ -209,8 +207,11 @@
 
     scheduleNextPulse();
 
-    sigilTethered.addEventListener('click', () => {
+    // 🔁 Touch & click interactivity restored post-positioning
+    sigilTethered.addEventListener('mousedown', () => {
       sigilTethered.classList.add('active-glow');
+    });
+    sigilTethered.addEventListener('mouseup', () => {
       setTimeout(() => sigilTethered.classList.remove('active-glow'), 400);
     });
     sigilTethered.addEventListener('touchstart', () => {
@@ -220,6 +221,7 @@
       setTimeout(() => sigilTethered.classList.remove('active-glow'), 400);
     });
 
+    // 🔁 Scroll triggers preserved per Lux's design
     const topBar = document.getElementById('mobileTopBar');
     const bottomBar = document.getElementById('bottomBar');
     const signature = document.getElementById('signature');
