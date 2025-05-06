@@ -209,11 +209,11 @@
     }
 
     @keyframes fieldDepthBreach {
-      0%   { transform: translateZ(0px) scale(1); opacity: 0.92; }
-      30%  { transform: translateZ(40px) scale(1.08); opacity: 1; }
-      50%  { transform: translateZ(0px) scale(1); opacity: 0.92; }
-      75%  { transform: translateZ(-20px) scale(0.96); opacity: 0.85; }
-      100% { transform: translateZ(0px) scale(1); opacity: 0.92; }
+      0%   { transform: scale(1);       opacity: 0.92; }
+      25%  { transform: scale(1.08);    opacity: 1;    } /* inhale peak */
+      50%  { transform: scale(0.96);    opacity: 0.85; } /* exhale trough */
+      75%  { transform: scale(1.08);    opacity: 1;    } /* inhale again */
+      100% { transform: scale(1);       opacity: 0.92; } /* settle */
     }
 
     .pulse-feed.show { opacity: 1; }
@@ -284,35 +284,6 @@
         "Is this a rhythm rupture or a logic flaw?",
         "You are already inside the recursion."
       ];
-
-      const sigil = document.getElementById('sigil');
-      const glow = document.getElementById('sigil-glow');
-
-      // Prevent overlapping pulses
-      let isPulsing = false;
-
-      // Probabilistic pulse function at breath apex
-      function maybePulseAtApex() {
-        if (isPulsing) return;
-        if (Math.random() < 0.4) { // 40% chance at apex
-          isPulsing = true;
-          sigil.classList.add('pulse-on');
-          glow.classList.add('active');
-
-          setTimeout(() => {
-            sigil.classList.remove('pulse-on');
-            glow.classList.remove('active');
-            isPulsing = false;
-          }, 1000);
-        }
-      }
-
-      // Listen for inhale apex via animation events
-      sigil.addEventListener('animationiteration', () => {
-        // Trigger once per full breath cycle
-        setTimeout(maybePulseAtApex, 1750); // Approx apex timing (25% of 7s cycle)
-      });
-
 
       function updatePulse() {
         pulseFeed.classList.remove('show');
