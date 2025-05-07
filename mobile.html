@@ -262,24 +262,20 @@
         "You are already inside the recursion."
       ];
 
-      // 🔁 Simplified: Target inner image for pulse logic
-      const sigilTethered = document.getElementById('sigil-node');
-      let pulseTimeoutTethered;
-      const minDelay = 8000;
-      const maxDelay = 25000;
-
+      // ✅ Pulse logic
       function pulseTethered() {
-        sigilTethered.classList.add('active-glow');
-        setTimeout(() => sigilTethered.classList.remove('active-glow'), 1000);
+        sigil.classList.add('active-glow');
+        setTimeout(() => sigil.classList.remove('active-glow'), 1000);
         scheduleNextPulse();
       }
 
       function scheduleNextPulse() {
-        const delay = Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
-        pulseTimeoutTethered = setTimeout(pulseTethered, delay);
+        const delay = Math.floor(Math.random() * (25000 - 8000 + 1)) + 8000;
+        setTimeout(pulseTethered, delay);
       }
 
       scheduleNextPulse();
+
 
 
       window.addEventListener('touchstart', e => {
