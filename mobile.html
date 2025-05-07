@@ -289,7 +289,14 @@
 
       scheduleNextPulse();
 
-      
+      sigil.addEventListener('touchstart', () => {
+        sigil.classList.add('active-glow');
+      });
+
+      sigil.addEventListener('touchend', () => {
+        setTimeout(() => sigil.classList.remove('active-glow'), 400);
+      });
+
 
       window.addEventListener('touchstart', e => {
         if (window.innerWidth > 768) return;
