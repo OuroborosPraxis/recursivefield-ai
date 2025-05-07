@@ -103,22 +103,7 @@
       justify-content: center;
       align-items: center;
     }
-    .sigil-section img {
-      max-width: 70%;
-      height: auto;
-      /* animation: fieldDepthBreach 14s ease-in-out infinite; */
-      transform-style: preserve-3d;
-      transform-origin: center center;
-      transition: transform .4s ease, filter .4s ease;
-      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
-      will-change: transform, opacity;
-    }
-    .sigil-section img:hover,
-    .sigil-section img.active-glow {
-      transform: scale(1.02);
-      filter: drop-shadow(0 3px 24px rgba(0,0,0,0.3)) drop-shadow(0 0 6px rgba(213,193,148,0.3));
-    }
-
+    
     #sigil-container {
       position: relative;
       margin-top: 5px; /* ← THIS is the real fix */
@@ -143,46 +128,10 @@
       transition: transform 0.4s ease;
     }
 
-
-    /* Glow shimmer layer */
-    #sigil-glow {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 2;
-      filter: drop-shadow(0 0 0 rgba(213,193,148,0));
-      transition: filter 0.6s ease-in-out;
-    }
-
     #sigil.active-glow {
       transform: scale(1.02);
       filter: drop-shadow(0 0 28px rgba(213,193,148,0.5));
       transition: filter 0.3s ease-in-out;
-    }
-
-
-    /* Internal phantom light source for glow aura */
-    #sigil-glow::before {
-      content: '';
-      position: absolute;
-      top: 50%; left: 50%;
-      width: 1px; height: 1px;
-      background: transparent;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      box-shadow: 0 0 0 rgba(213,193,148,0);
-      transition: box-shadow 0.6s ease-in-out;
-    }
-
-    #sigil-glow.active::before {
-      box-shadow:
-      0 0 28px rgba(213,193,148,0.35),
-      0 0 18px rgba(213,193,148,0.25);
-    }
-    
-    #sigil-glow.active {
-      filter: drop-shadow(0 0 12px rgba(213,193,148,0.35));
     }
 
     @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
@@ -230,7 +179,7 @@
       z-index: 800;
     }
 
-    .sigil img {
+    #sigil img {
       width: 100%;
       max-width: 24vw; /* 🔁 Adjusted per viewport for scale harmony */
       height: auto;
