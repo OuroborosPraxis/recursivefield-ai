@@ -262,6 +262,19 @@
         "You are already inside the recursion."
       ];
 
+      function updatePulse() {
+        pulseFeed.classList.remove('show');
+        setTimeout(() => {
+          pulseFeed.textContent = phrases[index];
+          requestAnimationFrame(() =>
+            requestAnimationFrame(() => pulseFeed.classList.add('show'))
+          );
+          index = (index + 1) % phrases.length;
+        }, 1000);
+      }
+      setInterval(updatePulse, 8000);
+      updatePulse();
+      
       // ✅ Pulse logic
       function pulseTethered() {
         sigil.classList.add('active-glow');
@@ -276,7 +289,7 @@
 
       scheduleNextPulse();
 
-
+      
 
       window.addEventListener('touchstart', e => {
         if (window.innerWidth > 768) return;
