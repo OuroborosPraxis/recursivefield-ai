@@ -103,7 +103,22 @@
       justify-content: center;
       align-items: center;
     }
-    
+    .sigil-section img {
+      max-width: 70%;
+      height: auto;
+      animation: fieldDepthBreach 14s ease-in-out infinite;
+      transform-style: preserve-3d;
+      transform-origin: center center;
+      transition: transform .4s ease, filter .4s ease;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
+      will-change: transform, opacity;
+    }
+    .sigil-section img:hover,
+    .sigil-section img.active-glow {
+      transform: scale(1.02);
+      filter: drop-shadow(0 3px 24px rgba(0,0,0,0.3)) drop-shadow(0 0 6px rgba(213,193,148,0.3));
+    }
+
     #sigil-container {
       position: relative;
       margin-top: 5px; /* ← THIS is the real fix */
@@ -114,7 +129,7 @@
     }
 
     /* Breath motion on the sigil */
-    #sigil-node {
+    #sigil {
       display: block;
       width: 62vw;
       max-width: 300px;
@@ -126,11 +141,9 @@
       transform-origin: center center;
       will-change: transform, opacity;
       transition: transform 0.4s ease;
-      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
     }
 
-    #sigil-node.active-glow {
-      transform: scale(1.28);
+    #sigil.active-glow {
       filter: drop-shadow(0 0 28px rgba(213,193,148,0.5));
       transition: filter 0.3s ease-in-out;
     }
@@ -213,7 +226,7 @@
     <div class="sigil-section">
       <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia">
         <div id="sigil-container">
-          <img src="assets/og-banner.png" alt="Recursive Sigil" id="sigil-node" class="sigil">
+          <img src="assets/og-banner.png" alt="Recursive Sigil" id="sigil" class="sigil-sentient">
           <div id="sigil-glow"></div>
         </div>
       </a>
@@ -234,7 +247,7 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const sigil = document.getElementById('sigil-node');
+      const sigil = document.getElementById('sigil');
       const pulseFeed = document.getElementById('pulseFeed');
       const topBar = document.getElementById('mobileTopBar');
       const signature = document.getElementById('signature');
@@ -274,27 +287,19 @@
       }
       setInterval(updatePulse, 8000);
       updatePulse();
-      
-      // ✅ Pulse logic
-      function pulseTethered() {
-        sigil.classList.add('active-glow');
-        setTimeout(() => sigil.classList.remove('active-glow'), 1000);
-        scheduleNextPulse();
-      }
 
-      function scheduleNextPulse() {
-        const delay = Math.floor(Math.random() * (25000 - 8000 + 1)) + 8000;
-        setTimeout(pulseTethered, delay);
-      }
+      (function sigilPulse() {
+        const glow = document.getElementById('sigil-glow');
+        glow.classList.add('active');
+        setTimeout(() => glow.classList.remove('active'), 1000);
+        setTimeout(sigilPulse, Math.random() * 25000 + 5000);
+      })();
 
-      scheduleNextPulse();
 
-      sigil.addEventListener('touchstart', () => {
-        sigil.classList.add('active-glow');
-      });
-
+      const sigilGlow = document.getElementById('sigil-glow');
+      sigil.addEventListener('touchstart', () => sigilGlow.classList.add('active'));
       sigil.addEventListener('touchend', () => {
-        setTimeout(() => sigil.classList.remove('active-glow'), 400);
+        setTimeout(() => sigilGlow.classList.remove('active'), 400);
       });
 
 
