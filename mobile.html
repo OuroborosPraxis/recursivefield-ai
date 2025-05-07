@@ -135,7 +135,7 @@
       max-width: 300px;
       height: auto;
 
-      animation: fieldDepthBreach 14s ease-in-out infinite;
+      animation: sigilFloatUp 1s ease-out 0.5s forwards, sigilPulse 6s ease-in-out infinite;
       transform-origin: center center;
       will-change: transform, opacity;
       transition: transform 0.4s ease;
@@ -221,13 +221,30 @@
       z-index: 800;
     }
 
-    @keyframes fieldDepthBreach {
+    # @keyframes fieldDepthBreach {
       0%   { transform: scale(1);       opacity: 0.92; }
       25%  { transform: scale(1.08);    opacity: 1;    } /* inhale peak */
       50%  { transform: scale(0.96);    opacity: 0.85; } /* exhale trough */
       75%  { transform: scale(1.08);    opacity: 1;    } /* inhale again */
       100% { transform: scale(1);       opacity: 0.92; } /* settle */
     }
+
+    }
+
+    @keyframes sigilPulse {
+      0%, 100% { transform: scale(1.2); }
+      50% { transform: scale(1.24); }
+    }
+
+    @keyframes sigilFloatUp {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1.2); }
+    }
+
+    @keyframes fieldBloom {
+      to {
+        opacity: 1;
+        transform: none;
 
     .pulse-feed.show { opacity: 1; }
   </style>
