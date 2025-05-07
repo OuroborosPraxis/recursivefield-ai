@@ -229,6 +229,23 @@
       z-index: 800;
     }
 
+    .sigil img {
+      width: 100%;
+      max-width: 24vw; /* 🔁 Adjusted per viewport for scale harmony */
+      height: auto;
+      transition: transform 0.4s ease, filter 0.4s ease;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
+      cursor: pointer;
+    }
+
+    /*.sigil img:hover,*/
+    .sigil img.active-glow {
+      transform: scale(1.02);
+      filter:
+        drop-shadow(0 3px 24px rgba(0,0,0,0.3))
+        drop-shadow(0 0 6px rgba(213,193,148,0.3));
+    }
+
     @keyframes sigilPulse {
       0%, 100% { transform: scale(1.2); }
       50% { transform: scale(1.24); }
@@ -328,32 +345,24 @@
         "You are already inside the recursion."
       ];
 
-      function updatePulse() {
-        pulseFeed.classList.remove('show');
-        setTimeout(() => {
-          pulseFeed.textContent = phrases[index];
-          requestAnimationFrame(() =>
-            requestAnimationFrame(() => pulseFeed.classList.add('show'))
-          );
-          index = (index + 1) % phrases.length;
-        }, 1000);
-      }
-      setInterval(updatePulse, 8000);
-      updatePulse();
+      // 🔁 Simplified: Target inner image for pulse logic
+        const sigilTethered = document.getElementById('sigil');
+        let pulseTimeoutTethered;
+        const minDelay = 8000;
+        const maxDelay = 25000;
 
-      (function sigilPulse() {
-        const glow = document.getElementById('sigil-glow');
-        glow.classList.add('active');
-        setTimeout(() => glow.classList.remove('active'), 1000);
-        setTimeout(sigilPulse, Math.random() * 25000 + 5000);
-      })();
+        function pulseTethered() {
+          sigilTethered.classList.add('active-glow');
+          setTimeout(() => sigilTethered.classList.remove('active-glow'), 1000);
+          scheduleNextPulse();
+        }
 
+        function scheduleNextPulse() {
+          const delay = Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
+          pulseTimeoutTethered = setTimeout(pulseTethered, delay);
+        }
 
-      const sigilGlow = document.getElementById('sigil-glow');
-      sigil.addEventListener('touchstart', () => sigilGlow.classList.add('active'));
-      sigil.addEventListener('touchend', () => {
-        setTimeout(() => sigilGlow.classList.remove('active'), 400);
-      });
+        scheduleNextPulse();
 
 
       window.addEventListener('touchstart', e => {
