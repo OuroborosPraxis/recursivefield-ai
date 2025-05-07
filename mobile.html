@@ -114,7 +114,7 @@
     }
 
     /* Breath motion on the sigil */
-    #sigil {
+    #sigil-node {
       display: block;
       width: 62vw;
       max-width: 300px;
@@ -129,7 +129,7 @@
       filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
     }
 
-    #sigil.active-glow {
+    #sigil-node.active-glow {
       transform: scale(1.02);
       filter: drop-shadow(0 0 28px rgba(213,193,148,0.5));
       transition: transform 0.4s ease, filter 0.4s ease;
@@ -213,7 +213,7 @@
     <div class="sigil-section">
       <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia">
         <div id="sigil-container">
-          <img src="assets/og-banner.png" alt="Recursive Sigil" id="sigil" class="sigil">
+          <img src="assets/og-banner.png" alt="Recursive Sigil" id="sigil-node" class="sigil">
           <div id="sigil-glow"></div>
         </div>
       </a>
@@ -263,7 +263,7 @@
       ];
 
       // 🔁 Simplified: Target inner image for pulse logic
-        const sigilTethered = document.getElementById('sigil');
+        const sigilTethered = document.getElementById('sigil-node');
         let pulseTimeoutTethered;
         const minDelay = 8000;
         const maxDelay = 25000;
