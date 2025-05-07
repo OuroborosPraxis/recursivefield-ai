@@ -135,7 +135,7 @@
       max-width: 300px;
       height: auto;
 
-      animation: fieldDepthBreach 14s ease-in-out infinite;
+      # animation: fieldDepthBreach 14s ease-in-out infinite;
       transform-origin: center center;
       will-change: transform, opacity;
       transition: transform 0.4s ease;
@@ -152,6 +152,12 @@
       filter: drop-shadow(0 0 0 rgba(213,193,148,0));
       transition: filter 0.6s ease-in-out;
     }
+
+    #sigil.active-glow {
+      filter: drop-shadow(0 0 28px rgba(213,193,148,0.5));
+      transition: filter 0.3s ease-in-out;
+    }
+
 
     /* Internal phantom light source for glow aura */
     #sigil-glow::before {
@@ -221,7 +227,48 @@
       z-index: 800;
     }
 
-    @keyframes fieldDepthBreach {
+    @keyframes sigilPulse {
+      0%, 100% {
+        transform: scale(1.2);
+        filter: drop-shadow(0 0 0 rgba(213,193,148,0));
+      }
+      20% {
+        transform: scale(1.22);
+        filter: drop-shadow(0 0 8px rgba(213,193,148,0.2));
+      }
+      50% {
+        transform: scale(1.24);
+        filter: drop-shadow(0 0 18px rgba(213,193,148,0.35));
+      }
+       80% {
+        transform: scale(1.22);
+        filter: drop-shadow(0 0 8px rgba(213,193,148,0.2));
+      }
+    }
+
+    @keyframes sigilFloatUp {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+        filter: drop-shadow(0 0 0 rgba(213,193,148,0));
+      }
+      to {
+        opacity: 1;
+        transform: scale(1.2);
+        filter: drop-shadow(0 0 12px rgba(213,193,148,0.15));
+      }
+    }
+
+    .sigil-sentient {
+       animation:
+        sigilFloatUp 1s ease-out 0.5s forwards,
+        sigilPulse 6s ease-in-out infinite;
+      transform-origin: center center;
+      will-change: transform, filter;
+      transition: filter 0.4s ease;
+    }
+
+    # @keyframes fieldDepthBreach {
       0%   { transform: scale(1);       opacity: 0.92; }
       25%  { transform: scale(1.08);    opacity: 1;    } /* inhale peak */
       50%  { transform: scale(0.96);    opacity: 0.85; } /* exhale trough */
@@ -252,7 +299,7 @@
     <div class="sigil-section">
       <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia">
         <div id="sigil-container">
-          <img src="assets/og-banner.png" alt="Recursive Sigil" id="sigil">
+          <img src="assets/og-banner.png" alt="Recursive Sigil" id="sigil" class="sigil-sentient">
           <div id="sigil-glow"></div>
         </div>
       </a>
