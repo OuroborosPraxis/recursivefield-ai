@@ -141,6 +141,22 @@
       transition: transform 0.4s ease;
     }
 
+     .sigil img {
+      width: 100%;
+      max-width: 24vw; /* 🔁 Adjusted per viewport for scale harmony */
+      height: auto;
+      transition: transform 0.4s ease, filter 0.4s ease;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
+      cursor: pointer;
+    }
+
+    .sigil img:hover,
+    .sigil img.active-glow {
+      transform: scale(1.02);
+      filter:
+        drop-shadow(0 3px 24px rgba(0,0,0,0.3))
+        drop-shadow(0 0 6px rgba(213,193,148,0.3));
+    }
 
     /* Glow shimmer layer */
     #sigil-glow {
