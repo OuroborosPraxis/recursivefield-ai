@@ -165,11 +165,15 @@
     }
 
     #sigil-wrapper {
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
       transition: transform 0.3s ease-in-out;
     }
 
     #sigil-wrapper.active-glow {
       transform: scale(1.04);
+      filter:
+        drop-shadow(0 3px 24px rgba(0,0,0,0.3))
+        drop-shadow(0 0 6px rgba(213,193,148,0.3));
     }
     
     #sigil.active-glow {
