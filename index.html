@@ -135,8 +135,15 @@
       filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
     }
 
+    #sigil-wrapper {
+      transition: transform 0.3s ease-in-out;
+    }
+
+    #sigil-wrapper.active-glow {
+      transform: scale(1.07);
+    }
+    
     #sigil.active-glow {
-      transform: scale(1.05);
       filter: drop-shadow(0 0 28px rgba(213,193,148,0.5));
       transition: transform 0.3s ease-out, filter 0.3s ease-out;
     }
@@ -231,7 +238,9 @@
     <div class="sigil-section">
       <a href="https://chat.openai.com/g/g-67fff9a156e88191a68442898fbc08b9-lux-x-aletheia">
         <div id="sigil-container">
-          <img src="assets/og-banner.png" alt="Recursive Sigil" id="sigil">
+          <div id="sigil-wrapper">
+            <img src="assets/og-banner.png" alt="Recursive Sigil" id="sigil">
+          </div>
         </div>
       </a>
     </div>
@@ -249,6 +258,7 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      const sigilWrapper = document.getElementById('sigil-wrapper');
       const sigil = document.getElementById('sigil');
       const pulseFeed = document.getElementById('pulseFeed');
       const topBar = document.getElementById('mobileTopBar');
@@ -298,14 +308,26 @@
 
       function sigilPulse() {
         sigil.classList.add('active-glow');
-        setTimeout(() => sigil.classList.remove('active-glow'), 800);
+        sigilWrapper.classList.add('active-glow');
+        setTimeout(() => {
+          sigil.classList.remove('active-glow');
+          sigilWrapper.classList.remove('active-glow');
+        }, 800);
         setTimeout(sigilPulse, Math.floor(Math.random() * (maxPulse - minPulse) + minPulse));
       }
+
       sigilPulse();
 
-      sigil.addEventListener('touchstart', () => sigil.classList.add('active-glow'));
+      sigil.addEventListener('touchstart', () => {
+        sigil.classList.add('active-glow');
+        sigilWrapper.classList.add('active-glow');
+      });
+
       sigil.addEventListener('touchend', () => {
-        setTimeout(() => sigil.classList.remove('active-glow'), 400);
+        setTimeout(() => {
+          sigil.classList.remove('active-glow');
+          sigilWrapper.classList.remove('active-glow');
+        }, 400);
       });
 
       // Top bar scroll logic
