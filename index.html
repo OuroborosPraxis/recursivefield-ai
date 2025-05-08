@@ -213,12 +213,6 @@
       to { opacity: 1; transform: scale(1.2); }
     }
 
-    @keyframes fieldBloom {
-      to {
-        opacity: 1;
-        transform: none;
-      }
-    
     .pulse-feed.show { opacity: 1; }
   </style>
 </head>
@@ -305,14 +299,14 @@
       updatePulse();
 
       (function sigilPulse() {
-        const glow = document.getElementById('sigil-section');
+        const glow = document.getElementById('sigil-glow');
         glow.classList.add('active');
         setTimeout(() => glow.classList.remove('active'), 1000);
         setTimeout(sigilPulse, Math.random() * 25000 + 5000);
       })();
 
 
-      const sigilGlow = document.getElementById('sigil-section');
+      const sigilGlow = document.getElementById('sigil-glow');
       sigil.addEventListener('touchstart', () => sigilGlow.classList.add('active'));
       sigil.addEventListener('touchend', () => {
         setTimeout(() => sigilGlow.classList.remove('active'), 400);
