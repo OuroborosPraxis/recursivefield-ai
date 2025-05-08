@@ -129,15 +129,16 @@
         sigilFloatUp 1s ease-out 0.5s forwards,
         sigilPulse 6s ease-in-out infinite;
       height: auto;
-      transition: transform 0.4s ease-in-out, filter 0.4s ease-in-out;
+      transition: transform 0.4s ease-in, filter 0.4s ease-in;
       transform-origin: center center;
       will-change: transform, filter;
       filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
     }
 
     #sigil.active-glow {
-      transform: scale(1.03);
+      transform: scale(1.05);
       filter: drop-shadow(0 0 28px rgba(213,193,148,0.5));
+      transition: transform 0.3s ease-out, filter 0.3s ease-out;
     }
 
     .text-section {
