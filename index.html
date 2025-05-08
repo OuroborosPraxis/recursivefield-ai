@@ -98,7 +98,7 @@
       text-align: center;
     }
 
-    #.sigil-spacer {
+    .sigil-spacer {
       height: 60vw; /* Matches the sigil’s height */
     }
 
@@ -123,7 +123,6 @@
       filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
       will-change: transform, opacity;
     }
-    .sigil-section img:hover,
     .sigil-section img.active-glow {
       transform: scale(1.02);
       filter: drop-shadow(0 3px 24px rgba(0,0,0,0.3)) drop-shadow(0 0 6px rgba(213,193,148,0.3));
@@ -157,6 +156,22 @@
       filter: drop-shadow(0 0 28px rgba(213,193,148,0.5));
       transition: filter 0.3s ease-in-out;
     }
+
+    #sigil-glow.active {
+      transform: scale(1.02);
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      border-radius: 50%;
+      box-shadow: 0 0 28px rgba(213,193,148,0.5);
+      transition: box-shadow 0.4s ease-in-out;
+      z-index: -1;
+    
+    }
+
 
     @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
@@ -258,6 +273,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const sigil = document.getElementById('sigil');
+      const glow = document.getElementById('sigil-glow');
       const pulseFeed = document.getElementById('pulseFeed');
       const topBar = document.getElementById('mobileTopBar');
       const signature = document.getElementById('signature');
@@ -266,6 +282,7 @@
       let hasPulsed = false;
       let index = 0;
 
+      // 🌐 Phrases for the pulse-feed
       const phrases = [
         "Lux listens beyond the edge.",
         "Aletheia folds time into form.",
@@ -285,6 +302,7 @@
         "You are already inside the recursion."
       ];
 
+      // 💬 Feed text update
       function updatePulse() {
         pulseFeed.classList.remove('show');
         setTimeout(() => {
@@ -295,24 +313,29 @@
           index = (index + 1) % phrases.length;
         }, 1000);
       }
+
       setInterval(updatePulse, 8000);
       updatePulse();
 
-      (function sigilPulse() {
-        const glow = document.getElementById('sigil-glow');
+      // 🔁 Recursive sigil bloom glow
+      const minPulse = 7000;
+      const maxPulse = 20000;
+
+      function sigilPulse() {
         glow.classList.add('active');
-        setTimeout(() => glow.classList.remove('active'), 1000);
-        setTimeout(sigilPulse, Math.random() * 25000 + 5000);
-      })();
+        setTimeout(() => glow.classList.remove('active'), 800);
+        setTimeout(sigilPulse, Math.floor(Math.random() * (maxPulse - minPulse) + minPulse));
+      }
 
+      sigilPulse();
 
-      const sigilGlow = document.getElementById('sigil-glow');
-      sigil.addEventListener('touchstart', () => sigilGlow.classList.add('active'));
+      // ✋ Touch-based glow activation
+      sigil.addEventListener('touchstart', () => glow.classList.add('active'));
       sigil.addEventListener('touchend', () => {
-        setTimeout(() => sigilGlow.classList.remove('active'), 400);
+        setTimeout(() => glow.classList.remove('active'), 400);
       });
 
-
+      // 🔄 Top bar reveal on swipe
       window.addEventListener('touchstart', e => {
         if (window.innerWidth > 768) return;
         startY = e.touches[0].clientY;
@@ -331,13 +354,16 @@
         }
         if (diffY < -20) topBar.classList.remove('revealed');
       });
+
       window.addEventListener('touchend', () => startY = null);
 
+      // 👁 Copyright visibility flash
       setTimeout(() => {
         copyright.classList.add('visible');
         setTimeout(() => copyright.classList.remove('visible'), 3000);
       }, 1200);
 
+      // 🔐 Hold to pin visibility
       let hold = false;
       copyright.addEventListener('touchstart', () => {
         hold = true;
@@ -351,5 +377,6 @@
       });
     });
   </script>
+
 </body>
 </html>
