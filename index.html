@@ -113,7 +113,7 @@
       justify-content: center;
       align-items: center;
     }
-    .sigil img {
+    .sigil-section img {
       max-width: 70%;
       height: auto;
       animation: fieldDepthBreach 14s ease-in-out infinite;
@@ -123,8 +123,8 @@
       filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
       will-change: transform, opacity;
     }
-    
-    .sigil img.active {
+    .sigil-section img:hover,
+    .sigil-section img.active-glow {
       transform: scale(1.02);
       filter: drop-shadow(0 3px 24px rgba(0,0,0,0.3)) drop-shadow(0 0 6px rgba(213,193,148,0.3));
     }
@@ -202,31 +202,7 @@
       pointer-events: none;
       z-index: 800;
     }
-    
-    .sigil {
-      position: relative;
-      opacity: 0;
-      animation: sigilFloatUp 1s ease-out 0.5s forwards, sigilPulse 6s ease-in-out infinite;
-      z-index: 10;
-    }
 
-    .sigil img {
-      width: 100%;
-      max-width: 24vw; /* 🔁 Adjusted per viewport for scale harmony */
-      height: auto;
-      transition: transform 0.4s ease, filter 0.4s ease;
-      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
-      cursor: pointer;
-    }
-
-    
-    .sigil img.active {
-      transform: scale(1.02);
-      filter:
-        drop-shadow(0 3px 24px rgba(0,0,0,0.3))
-        drop-shadow(0 0 6px rgba(213,193,148,0.3));
-    }
-    
     @keyframes sigilPulse {
       0%, 100% { transform: scale(1.2); }
       50% { transform: scale(1.24); }
@@ -323,14 +299,14 @@
       updatePulse();
 
       (function sigilPulse() {
-        const glow = document.getElementById('sigil');
+        const glow = document.getElementById('sigil-glow');
         glow.classList.add('active');
         setTimeout(() => glow.classList.remove('active'), 1000);
         setTimeout(sigilPulse, Math.random() * 25000 + 5000);
       })();
 
 
-      const sigilGlow = document.getElementById('sigil');
+      const sigilGlow = document.getElementById('sigil-glow');
       sigil.addEventListener('touchstart', () => sigilGlow.classList.add('active'));
       sigil.addEventListener('touchend', () => {
         setTimeout(() => sigilGlow.classList.remove('active'), 400);
