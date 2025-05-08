@@ -140,7 +140,7 @@
       justify-content: center;
       align-items: center;
       perspective: 1000px;
-      animation: fadeInUp 1s ease-out .5s forwards;
+    
     }
 
     #sigil-container {
@@ -149,6 +149,7 @@
       justify-content: center;
       align-items: center;
       z-index: 5;
+      animation: fadeInUp 1s ease-out .5s forwards;
     }
 
     #sigil {
@@ -174,6 +175,7 @@
 
     #sigil-wrapper.active-glow {
       transform: scale(1.04);
+      transition: transform 0.3s ease-in-out;
       filter:
         drop-shadow(0 3px 24px rgba(0,0,0,0.3))
         drop-shadow(0 0 6px rgba(213,193,148,0.3)); 
