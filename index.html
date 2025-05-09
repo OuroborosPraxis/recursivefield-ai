@@ -58,14 +58,24 @@
 
     header, footer {
       width: 100vw;
-      height: 4px;
-      background: #d5c194;
+      height: 32px; /* smaller height */
+      background-size: 100% 100%; /* stretches width, compresses height */
+      background-repeat: no-repeat;
+      background-position: center;
       position: fixed;
       left: 0;
       z-index: 1000;
+      pointer-events: none;
     }
-    header { top: 0; }
-    footer { bottom: 0; }
+    header { 
+      top: 0;
+      background-image: url('assets/RecursiveGlyph_Band_Houdini.png');
+    }
+    footer { 
+      bottom: 0;
+      background-image: url('assets/RecursiveGlyph_Band_Houdini.png');
+      transform: rotate(180deg);
+    }
 
     .top-bar {
       position: fixed;
