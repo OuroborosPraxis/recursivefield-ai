@@ -144,6 +144,38 @@
         transform: none;
       }
     }
+    @media (max-width: 860px) {
+      .container {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 60px 24px;
+        text-align: center;
+        gap: 40px;
+        transition: all 0.5s ease;
+      }
+
+      .text-section {
+        max-width: 100%;
+      }
+
+      .sigil-shift-wrapper {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        margin-bottom: 24px;
+        transition: all 0.5s ease;
+      }
+
+      .background-substrate {
+        width: 60vw;
+      }
+
+      .tethered__sigil img {
+        max-width: 40vw;
+      }
+    }
   </style>
 </head>
 <body>
