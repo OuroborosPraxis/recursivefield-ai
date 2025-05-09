@@ -58,25 +58,14 @@
 
     header, footer {
       width: 100vw;
-      height: 8px; /* smaller height */
-      background-size: 100% 100%; /* stretches width, compresses height */
-      background-repeat: no-repeat;
-      background-position: center;
+      height: 4px;
+      background: #d5c194;
       position: fixed;
       left: 0;
       z-index: 1000;
-      pointer-events: none;
-      opacity: 0.95; /* Optional: soften */
     }
-    header { 
-      top: 0;
-      background-image: url('assets/RecursiveCompressionRelic.png');
-    }
-    footer { 
-      bottom: 0;
-      background-image: url('assets/RecursiveCompressionRelic.png');
-      transform: rotate(180deg);
-    }
+    header { top: 0; }
+    footer { bottom: 0; }
 
     .top-bar {
       position: fixed;
