@@ -160,7 +160,7 @@
       }
 
       .sigil-shift-wrapper {
-        position: relative !important; /* Override absolute positioning */
+        position: relative !important;
         top: auto !important;
         left: auto !important;
         transform: none !important;
@@ -170,17 +170,27 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        transition: all 0.5s ease;
+        transition: none;
+        animation: none !important;
       }
 
       .background-substrate {
-        position: relative;
-        top: auto;
-        left: auto;
-        transform: none;
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
         width: 60vw;
         max-width: 300px;
         margin: 0 auto;
+        opacity: 1 !important;
+        filter: none !important;
+        animation: none !important;
+      }
+      
+      .tethered__sigil {
+        opacity: 1 !important;
+        animation: none !important;
+        transform: none !important;
       }
 
       .tethered__sigil img {
@@ -188,6 +198,8 @@
         min-width: 180px;
         height: auto;
         margin: 0 auto;
+        filter: none !important;
+        transform: none !important;
       }
     }
   </style>
