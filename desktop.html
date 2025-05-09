@@ -160,20 +160,34 @@
       }
 
       .sigil-shift-wrapper {
-        position: relative;
-        top: auto;
-        left: auto;
-        transform: none;
+        position: relative !important; /* Override absolute positioning */
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
         margin-bottom: 24px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         transition: all 0.5s ease;
       }
 
       .background-substrate {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
         width: 60vw;
+        max-width: 300px;
+        margin: 0 auto;
       }
 
       .tethered__sigil img {
         max-width: 40vw;
+        min-width: 180px;
+        height: auto;
+        margin: 0 auto;
       }
     }
   </style>
