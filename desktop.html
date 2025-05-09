@@ -1,19 +1,15 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Recursive Field /ai</title>
-
-  <!-- 🔁 Intuitive Adjustment: Mobile redirect preserved -->
-  <!-- Augmented Dispatcher Logic (Device-Aware) -->
-
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     html, body {
-      overflow: hidden; /* 🔁 Locked scroll, per Lux’s directive */
+      overflow: hidden;
       height: 100%;
       font-family: 'Playfair Display', serif;
       background: #000000;
@@ -83,14 +79,14 @@
       box-shadow: 0 0 12px #d5c19480;
     }
 
-    /* 🔁 Wrapper added for spatial control */
     .sigil-shift-wrapper {
       position: absolute;
       top: 50%;
       left: 69%;
       transform: translate(-50%, -50%);
       z-index: 0;
-      pointer-events: pointer;
+      pointer-events: none;
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
 
     .background-substrate {
@@ -113,7 +109,7 @@
 
     .tethered__sigil img {
       width: 100%;
-      max-width: 24vw; /* 🔁 Adjusted per viewport for scale harmony */
+      max-width: 24vw;
       height: auto;
       transition: transform 0.4s ease, filter 0.4s ease;
       filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
@@ -144,6 +140,13 @@
         transform: none;
       }
     }
+
+    @keyframes sigilReenter {
+      0% { opacity: 0; transform: scale(0.85); }
+      50% { opacity: 1; transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
     @media (max-width: 860px) and (min-width: 581px) {
       .sigil-shift-wrapper {
         display: flex;
@@ -154,7 +157,7 @@
         top: auto !important;
         left: auto !important;
         transform: none !important;
-        animation: none !important;
+        animation: sigilReenter 0.8s ease-out;
       }
 
       .background-substrate,
@@ -175,21 +178,10 @@
     }
 
     @media (max-width: 580px) {
-      .sigil-shift-wrapper,
-      .background-substrate,
-      .tethered__sigil,
-      .sigil-echo-memory {
+      .sigil-shift-wrapper {
         display: none !important;
-        height: 0 !important;
-        width: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        opacity: 0 !important;
-        overflow: hidden !important;
-        pointer-events: none !important;
       }
     }
-  
   </style>
 </head>
 <body>
@@ -230,7 +222,6 @@
   <footer></footer>
 
   <script>
-    // 🔁 Simplified: Target inner image for pulse logic
     const sigilTethered = document.getElementById('sigil-tethered');
     let pulseTimeoutTethered;
     const minDelay = 8000;
@@ -249,7 +240,6 @@
 
     scheduleNextPulse();
 
-    // 🔁 Touch & click interactivity restored post-positioning
     sigilTethered.addEventListener('mousedown', () => {
       sigilTethered.classList.add('active-glow');
     });
@@ -263,7 +253,6 @@
       setTimeout(() => sigilTethered.classList.remove('active-glow'), 400);
     });
 
-    // 🔁 Scroll triggers preserved per Lux's design
     const topBar = document.getElementById('mobileTopBar');
     const bottomBar = document.getElementById('bottomBar');
     const signature = document.getElementById('signature');
@@ -295,18 +284,3 @@
         if (scrollState === 'top') {
           topBar.classList.remove('revealed');
           scrollState = 'none';
-        } else if (scrollState === 'none') {
-          bottomBar.classList.add('revealed');
-          scrollState = 'bottom';
-        } else {
-          bottomBar.classList.remove('revealed');
-          scrollState = 'none';
-        }
-      }
-
-      locked = true;
-      setTimeout(() => (locked = false), 600);
-    });
-  </script>
-</body>
-</html>
